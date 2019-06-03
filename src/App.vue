@@ -1,19 +1,18 @@
 <template>
     <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png" />
-        <HelloWorld msg="Welcome to Your Vue.js App" />
+        <Search />
     </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue';
+<script lang="ts">
+import Vue from 'vue';
+import Search from './components/Search.vue';
 
-export default {
-    name: 'app',
+export default Vue.extend({
     components: {
-        HelloWorld,
+        Search,
     },
-};
+});
 </script>
 
 <style>
