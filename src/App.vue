@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Search from './components/Search.vue';
+import Search from '@/components/Search.vue';
 
 export default Vue.extend({
     components: {
