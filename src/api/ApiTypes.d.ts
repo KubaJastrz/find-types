@@ -1,6 +1,17 @@
+// source: https://api-docs.npms.io/#api-Package-GetPackageInfo
+// irrelevant fields are skipped, see source above for more data
+export interface PackageResponseData {
+    collected: {
+        metadata: {
+            name: string;
+            version: string;
+        };
+    };
+}
+
 // source: https://api-docs.npms.io/#api-Search-SearchSuggestions
 // irrelevant fields are skipped, see source above for more data
-export interface SuggestionsResponseResult {
+export interface SuggestionsResponseData {
     package: {
         name: string;
         version: string;

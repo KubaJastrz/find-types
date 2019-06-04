@@ -1,6 +1,6 @@
 import ky, { Options } from 'ky';
 
-import { SuggestionsResponseResult } from './ApiTypes';
+import { PackageResponseData, SuggestionsResponseData } from './ApiTypes';
 
 export default class API {
     static async get<Response>(url: string, options?: Options) {
@@ -8,8 +8,12 @@ export default class API {
         return response;
     }
 
+    static getPackageDetails(packageName: string) {
+        return API.get<PackageResponseData>(`https://api.npms.io/v2/package/${packageName}`);
+    }
+
     static getSuggestions(query: string) {
-        return API.get<SuggestionsResponseResult[]>(`https://api.npms.io/v2/search/suggestions`, {
+        return API.get<SuggestionsResponseData[]>(`https://api.npms.io/v2/search/suggestions`, {
             searchParams: {
                 q: query,
                 size: 10,

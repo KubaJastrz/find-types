@@ -10,12 +10,14 @@
     },
     "dependencies": {
         "core-js": "^2.6.5",
+        "debounce": "^1.2.0",
         "ky": "^0.11.0",
         "vue": "^2.6.10",
         "vue-class-component": "^7.0.2",
         "vue-property-decorator": "^8.1.0"
     },
     "devDependencies": {
+        "@types/debounce": "^1.2.0",
         "@vue/cli-plugin-babel": "^3.8.0",
         "@vue/cli-plugin-eslint": "^3.8.0",
         "@vue/cli-plugin-typescript": "^3.8.1",
