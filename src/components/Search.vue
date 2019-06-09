@@ -20,7 +20,7 @@ import { debounce } from 'lodash';
 import SuggestionBox from './SuggestionBox.vue';
 import API from '@/api/Api';
 import { SuggestionsResponseData } from '@/api/ApiTypes';
-import { parsePackageString, makePackageString } from '@/helpers';
+import { parsePackageString, createPackageString } from '@/helpers';
 
 type NpmPackage = SuggestionsResponseData['package'];
 
@@ -58,7 +58,7 @@ export default Vue.extend({
             const npmPackage = await API.getPackageDetails(name);
         },
         selectPackage(npmPackage: NpmPackage) {
-            this.packageString = makePackageString(npmPackage.name, npmPackage.version);
+            this.packageString = createPackageString(npmPackage.name, npmPackage.version);
             this.suggestions = [];
         },
     },
