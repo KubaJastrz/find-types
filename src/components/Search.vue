@@ -1,6 +1,6 @@
 <template>
     <div class="search">
-        <input v-model="packageName" @input="getSuggestions" />
+        <input v-model="packageString" @input="getSuggestions" />
         <button @click="onSearch">Search</button>
         <SuggestionBox :suggestions="suggestions">
             <template v-slot:item="{ suggestion }">
@@ -20,18 +20,22 @@ import { debounce } from 'lodash';
 import SuggestionBox from './SuggestionBox.vue';
 import API from '@/api/Api';
 import { SuggestionsResponseData } from '@/api/ApiTypes';
+import { parsePackageString, makePackageString } from '@/helpers';
 
 type NpmPackage = SuggestionsResponseData['package'];
 
 interface Data {
-    packageName: string;
+    /**
+     * eg. vue@2.6.10
+     */
+    packageString: string;
     suggestions: SuggestionsResponseData[];
 }
 
 export default Vue.extend({
     data(): Data {
         return {
-            packageName: '',
+            packageString: '',
             suggestions: [],
         };
     },
@@ -41,18 +45,20 @@ export default Vue.extend({
     methods: {
         getSuggestions() {},
         async fetchSuggestions() {
-            if (this.packageName) {
-                const suggestions = await API.getSuggestions(this.packageName);
+            if (this.packageString) {
+                const { name } = parsePackageString(this.packageString);
+                const suggestions = await API.getSuggestions(name);
                 this.suggestions = suggestions;
             } else {
                 this.suggestions = [];
             }
         },
         async onSearch() {
-            const npmPackage = await API.getPackageDetails(this.packageName);
+            const { name } = parsePackageString(this.packageString);
+            const npmPackage = await API.getPackageDetails(name);
         },
         selectPackage(npmPackage: NpmPackage) {
-            this.packageName = npmPackage.name;
+            this.packageString = makePackageString(npmPackage.name, npmPackage.version);
             this.suggestions = [];
         },
     },
