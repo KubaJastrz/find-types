@@ -1,22 +1,23 @@
 <template>
     <div class="search">
         <input v-model="packageName" @input="getSuggestions" />
-        <button @click="search">Search</button>
-        <ul>
-            <li v-for="suggestion in suggestions" v-bind:key="suggestion.package.name">
-                <a
-                    :href="getPackageUrl(suggestion.package)"
+        <button @click="onSearch">Search</button>
+        <SuggestionBox :suggestions="suggestions">
+            <template v-slot:item="{ suggestion }">
+                <button
                     @click.prevent="selectPackage(suggestion.package)"
                     v-html="suggestion.highlight || suggestion.package.name"
                 />
-            </li>
-        </ul>
+            </template>
+        </SuggestionBox>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import debounce from 'debounce';
+
+import SuggestionBox from './SuggestionBox.vue';
 import API from '@/api/Api';
 import { SuggestionsResponseData } from '@/api/ApiTypes';
 
@@ -25,7 +26,6 @@ type NpmPackage = SuggestionsResponseData['package'];
 interface Data {
     packageName: string;
     suggestions: SuggestionsResponseData[];
-    isSuggestionsOpen: boolean;
 }
 
 export default Vue.extend({
@@ -33,7 +33,6 @@ export default Vue.extend({
         return {
             packageName: '',
             suggestions: [],
-            isSuggestionsOpen: false,
         };
     },
     created() {
@@ -49,15 +48,16 @@ export default Vue.extend({
                 this.suggestions = [];
             }
         },
-        async search() {
+        async onSearch() {
             const npmPackage = await API.getPackageDetails(this.packageName);
         },
-        getPackageUrl(npmPackage: NpmPackage) {
-            return `/?package=${npmPackage.name}@${npmPackage.version}`;
-        },
         selectPackage(npmPackage: NpmPackage) {
-            console.log(npmPackage);
+            this.packageName = npmPackage.name;
+            this.suggestions = [];
         },
+    },
+    components: {
+        SuggestionBox,
     },
 });
 </script>
