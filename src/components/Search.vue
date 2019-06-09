@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import debounce from 'debounce';
+import { debounce } from 'lodash';
 
 import SuggestionBox from './SuggestionBox.vue';
 import API from '@/api/Api';
