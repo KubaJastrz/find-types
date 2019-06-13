@@ -1,3 +1,5 @@
+import 'modern-normalize';
+
 import Vue from 'vue';
 import App from './App.vue';
 
