@@ -1,12 +1,18 @@
 <template>
     <ul class="suggestion-box" :class="{ '-open': isVisible }">
-        <li v-for="(suggestion, index) of suggestions" :key="suggestion.package.name">
+        <li
+            v-for="(suggestion, index) of suggestions"
+            :key="suggestion.package.name"
+            class="suggestion-box__item"
+        >
             <slot name="item" :suggestion="suggestion" :index="index"></slot>
         </li>
     </ul>
 </template>
 
 <script lang="ts">
+import './SuggestionBox.scss';
+
 import Vue, { PropType } from 'vue';
 import { SuggestionsResponseData } from '@/api/ApiTypes';
 

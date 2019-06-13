@@ -1,4 +1,5 @@
 import 'modern-normalize';
+import './styles/index.scss';
 
 import Vue from 'vue';
 import App from './App.vue';

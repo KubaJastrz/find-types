@@ -1,32 +1,35 @@
 <template>
     <div class="search" @mouseenter="toggleIgnoreBlur(true)" @mouseleave="toggleIgnoreBlur(false)">
-        <input
-            v-model="packageString"
-            @input="getSuggestions"
-            @keydown.enter="selectPackageAt(highlightedItem)"
-            @keydown.up="moveSuggestionHighlight('up')"
-            @keydown.down="moveSuggestionHighlight('down')"
-            @focus="toggleSuggestionBox(true)"
-            @blur="toggleSuggestionBox(false)"
-        />
-        <button @click="onSearch" tabindex="-1">Search</button>
-        <SuggestionBox :suggestions="suggestions" :isVisible="isSuggestionBoxVisible">
+        <form class="search-bar" :class="{ '-focus': isSearchFocused }">
+            <input
+                v-model="packageString"
+                @input="getSuggestions"
+                @keydown.enter="selectPackageAt(highlightedItem)"
+                @keydown.up="moveSuggestionHighlight('up')"
+                @keydown.down="moveSuggestionHighlight('down')"
+                @focus="onInputFocus"
+                @blur="onInputBlur"
+            />
+            <button tabindex="-1" aria-label="Search" @click.prevent="onSearch"></button>
+        </form>
+        <suggestion-box :suggestions="suggestions" :is-visible="isSuggestionBoxVisible">
             <template v-slot:item="{ suggestion, index }">
                 <button
+                    tabindex="-1"
+                    class="suggestion"
+                    :class="{ '-highlight': highlightedItem === index }"
                     @click.prevent="selectPackageAt(index)"
                     @mouseenter="moveSuggestionHighlightTo(index)"
                     v-html="suggestion.highlight || suggestion.package.name"
-                    tabindex="-1"
-                    :class="{
-                        '-highlight': highlightedItem === index,
-                    }"
                 />
             </template>
-        </SuggestionBox>
+        </suggestion-box>
     </div>
 </template>
 
 <script lang="ts">
+import './Search.scss';
+
 import Vue from 'vue';
 import { debounce } from 'lodash';
 
@@ -49,9 +52,13 @@ interface Data {
      * temporarily disable blur event on input to prevent hiding menu before interaction
      */
     ignoreBlur: boolean;
+    isSearchFocused: boolean;
 }
 
 export default Vue.extend({
+    components: {
+        'suggestion-box': SuggestionBox,
+    },
     data(): Data {
         return {
             packageString: '',
@@ -59,6 +66,7 @@ export default Vue.extend({
             isSuggestionBoxVisible: false,
             highlightedItem: 0,
             ignoreBlur: false,
+            isSearchFocused: false,
         };
     },
     created() {
@@ -79,7 +87,10 @@ export default Vue.extend({
         },
         async onSearch() {
             const { name } = parsePackageString(this.packageString);
-            const npmPackage = await API.getPackageDetails(name);
+            if (!name) {
+                return;
+            }
+            await API.getPackageDetails(name);
         },
         selectPackageAt(index: number) {
             const npmPackage = this.suggestions[index].package;
@@ -117,15 +128,16 @@ export default Vue.extend({
         toggleIgnoreBlur(shouldIgnore: boolean) {
             this.ignoreBlur = shouldIgnore;
         },
-    },
-    components: {
-        SuggestionBox,
+        onInputFocus() {
+            this.isSearchFocused = true;
+            if (this.suggestions.length) {
+                this.toggleSuggestionBox(true);
+            }
+        },
+        onInputBlur() {
+            this.isSearchFocused = false;
+            this.toggleSuggestionBox(false);
+        },
     },
 });
 </script>
-
-<style>
-.-highlight {
-    color: red;
-}
-</style>

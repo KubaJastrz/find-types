@@ -1,0 +1,60 @@
+@import 'helpers';
+
+$search-width: 400px;
+
+.search {
+    position: relative;
+    width: $search-width;
+
+    .suggestion-box {
+        margin-top: 8px;
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+
+    .suggestion {
+        @extend %button-unstyled;
+
+        flex: 1;
+        padding: 0.4em 0.8em;
+
+        &.-highlight {
+            background: #eee;
+        }
+
+        em {
+            font-style: normal;
+            font-weight: bold;
+        }
+    }
+}
+
+.search-bar {
+    display: inline-flex;
+    background: #eee;
+    width: $search-width;
+    align-items: center;
+    padding-right: 0.4em;
+    padding-left: 0.9em;
+
+    &.-focus {
+        @extend %default-outline;
+    }
+
+    input {
+        border: 0;
+        padding: 0.6em 0;
+        background: transparent;
+        flex: 1;
+        outline: 0;
+    }
+
+    button {
+        @extend %button-unstyled;
+
+        background: url('~@/assets/icons/search.svg') center / contain no-repeat;
+        width: 20px;
+        height: 20px;
+    }
+}

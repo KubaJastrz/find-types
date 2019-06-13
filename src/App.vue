@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Search from '@/components/Search.vue';
+import Search from '@/components/search/Search.vue';
 
 export default Vue.extend({
     components: {
@@ -23,5 +23,8 @@ export default Vue.extend({
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 </style>

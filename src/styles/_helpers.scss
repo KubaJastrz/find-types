@@ -1,0 +1,12 @@
+%button-unstyled {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+}
+
+%default-outline {
+    outline-offset: -2px;
+    outline-width: 5px;
+    outline-style: auto;
+    outline-color: rgb(77, 144, 254);
+}
