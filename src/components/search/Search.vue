@@ -93,6 +93,9 @@ export default Vue.extend({
             await API.getPackageDetails(name);
         },
         selectPackageAt(index: number) {
+            if (!(index in this.suggestions)) {
+                return;
+            }
             const npmPackage = this.suggestions[index].package;
             this.packageString = createPackageString(npmPackage.name, npmPackage.version);
             this.suggestions = [];
@@ -132,11 +135,14 @@ export default Vue.extend({
             this.isSearchFocused = true;
             if (this.suggestions.length) {
                 this.toggleSuggestionBox(true);
+            } else {
+                this.getSuggestions();
             }
         },
         onInputBlur() {
             this.isSearchFocused = false;
             this.toggleSuggestionBox(false);
+            this.toggleIgnoreBlur(false);
         },
     },
 });
