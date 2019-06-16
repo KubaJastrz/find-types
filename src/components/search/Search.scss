@@ -32,14 +32,16 @@ $search-width: 400px;
 
 .search-bar {
     display: inline-flex;
-    background: #eee;
     width: $search-width;
     align-items: center;
     padding-right: 0.4em;
-    padding-left: 0.9em;
+    padding-left: 0.8em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 
     &.-focus {
-        @extend %default-outline;
+        border-color: #377acc;
+        box-shadow: 0 0 0 1px #377acc;
     }
 
     input {
@@ -52,9 +54,8 @@ $search-width: 400px;
 
     button {
         @extend %button-unstyled;
-
-        background: url('~@/assets/icons/search.svg') center / contain no-repeat;
-        width: 20px;
-        height: 20px;
+        background: url('~@/assets/icons/search.svg') center / 20px 20px no-repeat;
+        width: 24px;
+        height: 24px;
     }
 }

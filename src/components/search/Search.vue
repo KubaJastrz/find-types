@@ -1,8 +1,10 @@
 <template>
     <div class="search" @mouseenter="toggleIgnoreBlur(true)" @mouseleave="toggleIgnoreBlur(false)">
-        <form class="search-bar" :class="{ '-focus': isSearchFocused }">
+        <form class="search-bar" :class="{ '-focus': isSearchFocused }" @submit.prevent="onSearch">
             <input
                 v-model="packageString"
+                placeholder="look for package"
+                spellcheck="false"
                 @input="getSuggestions"
                 @keydown.enter="selectPackageAt(highlightedItem)"
                 @keydown.up="moveSuggestionHighlight('up')"
@@ -10,7 +12,7 @@
                 @focus="onInputFocus"
                 @blur="onInputBlur"
             />
-            <button tabindex="-1" aria-label="Search" @click.prevent="onSearch"></button>
+            <button tabindex="-1" aria-label="Search" type="submit"></button>
         </form>
         <suggestion-box :suggestions="suggestions" :is-visible="isSuggestionBoxVisible">
             <template v-slot:item="{ suggestion, index }">
@@ -71,7 +73,7 @@ export default Vue.extend({
         };
     },
     created() {
-        this.getSuggestions = debounce(this.fetchSuggestions, 150);
+        this.getSuggestions = debounce(this.fetchSuggestions, 250);
     },
     methods: {
         getSuggestions() {},
@@ -91,14 +93,15 @@ export default Vue.extend({
             if (!name) {
                 return;
             }
-            await API.getPackageDetails(name);
+            const npmPackage = await API.getPackageDetails(name);
+            console.log(npmPackage);
         },
         selectPackageAt(index: number) {
             if (!(index in this.suggestions)) {
                 return;
             }
             const npmPackage = this.suggestions[index].package;
-            this.packageString = createPackageString(npmPackage.name, npmPackage.version);
+            this.packageString = createPackageString(npmPackage.name /*, npmPackage.version */);
             this.suggestions = [];
             this.ignoreBlur = false;
             this.isSuggestionBoxVisible = false;
@@ -136,8 +139,6 @@ export default Vue.extend({
             this.isSearchFocused = true;
             if (this.suggestions.length) {
                 this.toggleSuggestionBox(true);
-            } else {
-                this.getSuggestions();
             }
         },
         onInputBlur() {
