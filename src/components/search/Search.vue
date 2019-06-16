@@ -20,6 +20,7 @@
                     :class="{ '-highlight': highlightedItem === index }"
                     @click.prevent="selectPackageAt(index)"
                     @mouseenter="moveSuggestionHighlightTo(index)"
+                    @blur="onInputBlur"
                     v-html="suggestion.highlight || suggestion.package.name"
                 />
             </template>
@@ -79,10 +80,10 @@ export default Vue.extend({
                 const { name } = parsePackageString(this.packageString);
                 const suggestions = await API.getSuggestions(name);
                 this.suggestions = suggestions;
-                this.toggleSuggestionBox(!!suggestions.length);
+                this.isSuggestionBoxVisible = !!suggestions.length;
             } else {
                 this.suggestions = [];
-                this.toggleSuggestionBox(false);
+                this.isSuggestionBoxVisible = false;
             }
         },
         async onSearch() {
@@ -99,8 +100,8 @@ export default Vue.extend({
             const npmPackage = this.suggestions[index].package;
             this.packageString = createPackageString(npmPackage.name, npmPackage.version);
             this.suggestions = [];
-            this.toggleIgnoreBlur(false);
-            this.toggleSuggestionBox(false);
+            this.ignoreBlur = false;
+            this.isSuggestionBoxVisible = false;
             this.highlightedItem = 0;
         },
         moveSuggestionHighlight(direction: 'up' | 'down') {
