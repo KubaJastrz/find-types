@@ -40,14 +40,10 @@ import SuggestionBox from './SuggestionBox.vue';
 import API from '@/api/Api';
 import { SuggestionsResponseData } from '@/api/ApiTypes';
 import { parsePackageString, createPackageString } from '@/helpers';
-
-type NpmPackage = SuggestionsResponseData['package'];
+import { PackageString } from '@/types';
 
 interface Data {
-    /**
-     * eg. vue@2.6.10
-     */
-    packageString: string;
+    packageString: PackageString;
     suggestions: SuggestionsResponseData[];
     isSuggestionBoxVisible: boolean;
     highlightedItem: number;
@@ -61,6 +57,12 @@ interface Data {
 export default Vue.extend({
     components: {
         'suggestion-box': SuggestionBox,
+    },
+    props: {
+        handleSearchResponse: {
+            type: Function,
+            required: true,
+        },
     },
     data(): Data {
         return {
@@ -88,19 +90,26 @@ export default Vue.extend({
                 this.isSuggestionBoxVisible = false;
             }
         },
-        async onSearch() {
+        onSearch() {
             const { name } = parsePackageString(this.packageString);
             if (!name) {
                 return;
             }
-            await API.getPackageDetails(name);
+            API.getPackageDetails(name)
+                .then(response => {
+                    this.handleSearchResponse({ data: response });
+                })
+                .catch(error => {
+                    this.handleSearchResponse({ error });
+                });
         },
         selectPackageAt(index: number) {
             if (!(index in this.suggestions)) {
                 return;
             }
-            const npmPackage = this.suggestions[index].package;
-            this.packageString = createPackageString(npmPackage.name /*, npmPackage.version */);
+            const { name } = this.suggestions[index].package;
+            this.packageString = createPackageString(name /*, version */);
+            // TODO: don't clear suggestions after package selection
             this.suggestions = [];
             this.ignoreBlur = false;
             this.isSuggestionBoxVisible = false;

@@ -1,16 +1,61 @@
 <template>
     <div id="app">
-        <Search />
+        <Search :handle-search-response="handlePackageSearchResponse" />
+        <Results :package-data="packageSearchResults.data" />
     </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import { HTTPError } from 'ky';
+
 import Search from '@/components/search/Search.vue';
+import Results from '@/components/results/Results.vue';
+import { PackageResponseData } from '@/api/ApiTypes';
+import { PackageSearchStatus } from '@/types';
+
+interface Data {
+    packageSearchResults: {
+        status: PackageSearchStatus;
+        data?: PackageResponseData;
+    };
+}
 
 export default Vue.extend({
     components: {
         Search,
+        Results,
+    },
+    data(): Data {
+        return {
+            packageSearchResults: {
+                status: PackageSearchStatus.Init,
+                data: undefined,
+            },
+        };
+    },
+    methods: {
+        handlePackageSearchResponse({
+            data,
+            error,
+        }: Partial<{ data: PackageResponseData; error: HTTPError }>) {
+            if (data) {
+                this.packageSearchResults = {
+                    status: PackageSearchStatus.Success,
+                    data,
+                };
+            } else if (error && error.response) {
+                if (error.response.status === 404) {
+                    this.packageSearchResults = {
+                        status: PackageSearchStatus.NotFound,
+                    };
+                } else {
+                    this.packageSearchResults = {
+                        status: PackageSearchStatus.GenericError,
+                    };
+                }
+            }
+        },
     },
 });
 </script>
