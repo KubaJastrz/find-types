@@ -9,7 +9,8 @@ export default class API {
     }
 
     public static getPackageDetails(packageName: string) {
-        return API.get<PackageResponseData>(`https://api.npms.io/v2/package/${packageName}`);
+        const encodedName = encodeURIComponent(packageName);
+        return API.get<PackageResponseData>(`https://api.npms.io/v2/package/${encodedName}`);
     }
 
     public static getSuggestions(query: string) {
