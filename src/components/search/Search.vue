@@ -3,7 +3,7 @@
         <form class="search-bar" :class="{ '-focus': isSearchFocused }" @submit.prevent="onSearch">
             <input
                 v-model="packageString"
-                placeholder="look for package"
+                placeholder="look for npm package"
                 spellcheck="false"
                 @input="getSuggestions"
                 @keydown.enter="selectPackageAt(highlightedItem)"
@@ -93,8 +93,7 @@ export default Vue.extend({
             if (!name) {
                 return;
             }
-            const npmPackage = await API.getPackageDetails(name);
-            console.log(npmPackage);
+            await API.getPackageDetails(name);
         },
         selectPackageAt(index: number) {
             if (!(index in this.suggestions)) {
