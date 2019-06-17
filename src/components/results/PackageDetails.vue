@@ -27,12 +27,13 @@ export default Vue.extend({
 
 <style scoped>
 .package-string {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
 }
 
 .name {
     font-weight: bold;
-    display: inline;
 }
 
 .version {

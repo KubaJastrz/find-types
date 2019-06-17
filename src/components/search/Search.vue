@@ -6,7 +6,7 @@
                 placeholder="look for npm package"
                 spellcheck="false"
                 @input="getSuggestions"
-                @keydown.enter="selectPackageAt(highlightedItem)"
+                @keydown.prevent.enter="selectPackageAt(highlightedItem)"
                 @keydown.up="moveSuggestionHighlight('up')"
                 @keydown.down="moveSuggestionHighlight('down')"
                 @focus="onInputFocus"
@@ -14,7 +14,7 @@
             />
             <button tabindex="-1" aria-label="Search" type="submit"></button>
         </form>
-        <suggestion-box :suggestions="suggestions" :is-visible="isSuggestionBoxVisible">
+        <SuggestionBox :suggestions="suggestions.list" :is-visible="isSuggestionBoxVisible">
             <template v-slot:item="{ suggestion, index }">
                 <button
                     tabindex="-1"
@@ -26,7 +26,7 @@
                     v-html="suggestion.highlight || suggestion.package.name"
                 />
             </template>
-        </suggestion-box>
+        </SuggestionBox>
     </div>
 </template>
 
@@ -42,9 +42,14 @@ import { SuggestionsResponseData } from '@/api/ApiTypes';
 import { parsePackageString, createPackageString } from '@/helpers';
 import { PackageString } from '@/types';
 
+type Suggestion = SuggestionsResponseData;
+
 interface Data {
     packageString: PackageString;
-    suggestions: SuggestionsResponseData[];
+    suggestions: {
+        forPackage: string;
+        list: Suggestion[];
+    };
     isSuggestionBoxVisible: boolean;
     highlightedItem: number;
     /**
@@ -52,11 +57,12 @@ interface Data {
      */
     ignoreBlur: boolean;
     isSearchFocused: boolean;
+    canSuggestionsBeShown: boolean;
 }
 
 export default Vue.extend({
     components: {
-        'suggestion-box': SuggestionBox,
+        SuggestionBox,
     },
     props: {
         handleSearch: {
@@ -67,11 +73,15 @@ export default Vue.extend({
     data(): Data {
         return {
             packageString: '',
-            suggestions: [],
+            suggestions: {
+                forPackage: '',
+                list: [],
+            },
             isSuggestionBoxVisible: false,
             highlightedItem: 0,
             ignoreBlur: false,
             isSearchFocused: false,
+            canSuggestionsBeShown: true,
         };
     },
     created() {
@@ -83,11 +93,14 @@ export default Vue.extend({
             if (this.packageString) {
                 const { name } = parsePackageString(this.packageString);
                 const suggestions = await API.getSuggestions(name);
-                this.suggestions = suggestions;
-                this.isSuggestionBoxVisible = !!suggestions.length;
+                this.suggestions = {
+                    forPackage: name,
+                    list: suggestions,
+                };
+                this.toggleSuggestionBox(!!suggestions.length);
             } else {
-                this.suggestions = [];
-                this.isSuggestionBoxVisible = false;
+                this.resetSuggestions();
+                this.toggleSuggestionBox(false, true);
             }
         },
         onSearch() {
@@ -95,22 +108,21 @@ export default Vue.extend({
             if (!name) {
                 return;
             }
+            this.canSuggestionsBeShown = false;
             this.handleSearch(name);
         },
         selectPackageAt(index: number) {
-            if (!(index in this.suggestions)) {
+            if (!(index in this.suggestions.list)) {
                 return;
             }
-            const { name } = this.suggestions[index].package;
+            const { name } = this.suggestions.list[index].package;
             this.packageString = createPackageString(name /*, version */);
-            // TODO: don't clear suggestions after package selection
-            this.suggestions = [];
+            this.onSearch();
             this.ignoreBlur = false;
-            this.isSuggestionBoxVisible = false;
-            this.highlightedItem = 0;
+            this.toggleSuggestionBox(false, true);
         },
         moveSuggestionHighlight(direction: 'up' | 'down') {
-            const lastSuggestionIndex = this.suggestions.length - 1;
+            const lastSuggestionIndex = this.suggestions.list.length - 1;
             if (direction === 'up') {
                 if (this.highlightedItem === 0) {
                     this.highlightedItem = lastSuggestionIndex;
@@ -128,25 +140,46 @@ export default Vue.extend({
         moveSuggestionHighlightTo(index: number) {
             this.highlightedItem = index;
         },
-        toggleSuggestionBox(isVisible: boolean) {
-            if (this.ignoreBlur && !isVisible) {
+        toggleSuggestionBox(isVisible: boolean, forceClose: boolean = false) {
+            if (this.ignoreBlur && !forceClose && !isVisible) {
                 return;
             }
-            this.isSuggestionBoxVisible = isVisible;
+            this.isSuggestionBoxVisible = this.canSuggestionsBeShown && isVisible;
+            if (this.isSuggestionBoxVisible) {
+                this.highlightedItem = 0;
+            } else {
+                this.highlightedItem = -1;
+            }
         },
         toggleIgnoreBlur(shouldIgnore: boolean) {
             this.ignoreBlur = shouldIgnore;
         },
+        resetSuggestions() {
+            this.suggestions = {
+                forPackage: '',
+                list: [],
+            };
+        },
         onInputFocus() {
             this.isSearchFocused = true;
-            if (this.suggestions.length) {
+            this.canSuggestionsBeShown = true;
+            const { name } = parsePackageString(this.packageString);
+            if (!name) {
+                return;
+            }
+
+            const { forPackage, list } = this.suggestions;
+            if (forPackage === name && list.length) {
                 this.toggleSuggestionBox(true);
+            } else {
+                this.getSuggestions();
             }
         },
         onInputBlur() {
             this.isSearchFocused = false;
             this.toggleSuggestionBox(false);
             this.toggleIgnoreBlur(false);
+            this.canSuggestionsBeShown = true;
         },
     },
 });
