@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <Search :handle-search="handlePackageSearch" />
+        <Search :handle-search="searchPackageDetails" />
         <Results :package-data="packageSearchResults.data" />
     </div>
 </template>
@@ -36,9 +36,10 @@ export default Vue.extend({
         };
     },
     methods: {
-        async handlePackageSearch(packageName: string) {
+        async searchPackageDetails(packageName: string) {
             try {
                 const data = await API.getPackageDetails(packageName);
+
                 this.packageSearchResults = {
                     status: PackageSearchStatus.Success,
                     data,
@@ -68,8 +69,6 @@ export default Vue.extend({
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
     margin-top: 60px;
     display: flex;
     flex-direction: column;

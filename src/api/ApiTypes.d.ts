@@ -5,6 +5,12 @@ export interface PackageResponseData {
         metadata: {
             name: string;
             version: string;
+            description: string;
+            links: {
+                homepage: string;
+                npm: string;
+                repository: string;
+            };
         };
     };
 }

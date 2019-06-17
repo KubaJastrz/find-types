@@ -1,8 +1,6 @@
 <template>
     <div class="results">
-        <p v-if="packageName">
-            Package: <strong>{{ packageName }}</strong>
-        </p>
+        <PackageDetails v-if="packageData" :package-data="packageData.collected.metadata" />
     </div>
 </template>
 
@@ -10,17 +8,16 @@
 import Vue, { PropType } from 'vue';
 
 import { PackageResponseData } from '@/api/ApiTypes';
+import PackageDetails from './PackageDetails.vue';
 
 export default Vue.extend({
+    components: {
+        PackageDetails,
+    },
     props: {
         packageData: {
             type: Object as PropType<PackageResponseData | null>,
             default: null,
-        },
-    },
-    computed: {
-        packageName(): string | false {
-            return this.packageData !== null && this.packageData.collected.metadata.name;
         },
     },
 });
@@ -28,6 +25,7 @@ export default Vue.extend({
 
 <style scoped>
 .results {
-    margin-top: 40px;
+    margin-top: 50px;
+    width: 500px;
 }
 </style>
