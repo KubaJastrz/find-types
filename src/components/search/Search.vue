@@ -59,7 +59,7 @@ export default Vue.extend({
         'suggestion-box': SuggestionBox,
     },
     props: {
-        handleSearchResponse: {
+        handleSearch: {
             type: Function,
             required: true,
         },
@@ -95,13 +95,7 @@ export default Vue.extend({
             if (!name) {
                 return;
             }
-            API.getPackageDetails(name)
-                .then(response => {
-                    this.handleSearchResponse({ data: response });
-                })
-                .catch(error => {
-                    this.handleSearchResponse({ error });
-                });
+            this.handleSearch(name);
         },
         selectPackageAt(index: number) {
             if (!(index in this.suggestions)) {

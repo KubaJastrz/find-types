@@ -1,8 +1,8 @@
 import 'modern-normalize';
-import './styles/index.scss';
+import '@/styles/index.scss';
 
 import Vue from 'vue';
-import App from './App.vue';
+import App from '@/components/app/App.vue';
 
 Vue.config.productionTip = false;
 

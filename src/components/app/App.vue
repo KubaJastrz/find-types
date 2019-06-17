@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <Search :handle-search-response="handlePackageSearchResponse" />
+        <Search :handle-search="handlePackageSearch" />
         <Results :package-data="packageSearchResults.data" />
     </div>
 </template>
@@ -9,6 +9,7 @@
 import Vue from 'vue';
 import { HTTPError } from 'ky';
 
+import API from '@/api/Api';
 import Search from '@/components/search/Search.vue';
 import Results from '@/components/results/Results.vue';
 import { PackageResponseData } from '@/api/ApiTypes';
@@ -35,16 +36,18 @@ export default Vue.extend({
         };
     },
     methods: {
-        handlePackageSearchResponse({
-            data,
-            error,
-        }: Partial<{ data: PackageResponseData; error: HTTPError }>) {
-            if (data) {
+        async handlePackageSearch(packageName: string) {
+            try {
+                const data = await API.getPackageDetails(packageName);
                 this.packageSearchResults = {
                     status: PackageSearchStatus.Success,
                     data,
                 };
-            } else if (error && error.response) {
+            } catch (error) {
+                if (!(error instanceof HTTPError)) {
+                    return;
+                }
+
                 if (error.response.status === 404) {
                     this.packageSearchResults = {
                         status: PackageSearchStatus.NotFound,

@@ -1,5 +1,5 @@
 // FIXME: rename to `index.d.ts` and remove this
-// not actually what is causing the 'module not found' TS error
+// I don't actually know what is causing the 'module not found' TS error (@vue/cli@4-alpha maybe?)
 export default {};
 
 /**
