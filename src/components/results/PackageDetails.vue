@@ -1,8 +1,24 @@
 <template>
     <div class="package-details">
-        <div class="package-string">
+        <div class="package-meta">
             <h4 class="name">{{ packageData.name }}</h4>
-            <span class="version">{{ packageData.version }}</span>
+            <div class="version">{{ packageData.version }}</div>
+            <div class="links">
+                <external-link
+                    v-if="packageData.links.npm"
+                    :href="packageData.links.npm"
+                    class="link -npm"
+                >
+                    <NpmIcon />
+                </external-link>
+                <external-link
+                    v-if="packageData.links.repository"
+                    :href="packageData.links.repository"
+                    class="link -repo"
+                >
+                    <GithubIcon />
+                </external-link>
+            </div>
         </div>
         <p class="description">{{ packageData.description }}</p>
     </div>
@@ -12,10 +28,16 @@
 import Vue, { PropType } from 'vue';
 
 import { PackageResponseData } from '@/api/ApiTypes';
+import GithubIcon from '@/components/common/icons/GithubIcon.vue';
+import NpmIcon from '@/components/common/icons/NpmIcon.vue';
 
 type PackageDetails = PackageResponseData['collected']['metadata'];
 
 export default Vue.extend({
+    components: {
+        GithubIcon,
+        NpmIcon,
+    },
     props: {
         packageData: {
             type: Object as PropType<PackageDetails>,
@@ -25,8 +47,8 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
-.package-string {
+<style lang="scss" scoped>
+.package-meta {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
@@ -49,5 +71,39 @@ export default Vue.extend({
 
 .description {
     font-size: 0.9em;
+}
+
+$fill: #7b93ad;
+
+.links {
+    display: flex;
+    align-items: center;
+    margin-left: 1.6em;
+
+    /deep/ .npm-icon,
+    /deep/ .github-icon {
+        fill: $fill;
+    }
+}
+
+.link {
+    width: 28px;
+    height: 1.1em;
+    margin-right: 0.3em;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    &:hover {
+        svg {
+            fill: darken($fill, 30);
+        }
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
 }
 </style>
