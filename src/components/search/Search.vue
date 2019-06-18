@@ -7,8 +7,9 @@
                 spellcheck="false"
                 @input="getSuggestions"
                 @keydown.prevent.enter="selectPackageAt(highlightedItem)"
-                @keydown.up="moveSuggestionHighlight('up')"
-                @keydown.down="moveSuggestionHighlight('down')"
+                @keydown.up="onInputKeyUp($event)"
+                @keydown.down="onInputKeyDown($event)"
+                @keydown.escape="toggleSuggestionBox(false, true)"
                 @focus="onInputFocus"
                 @blur="onInputBlur"
             />
@@ -144,7 +145,8 @@ export default Vue.extend({
             if (this.ignoreBlur && !forceClose && !isVisible) {
                 return;
             }
-            this.isSuggestionBoxVisible = this.canSuggestionsBeShown && isVisible;
+            this.isSuggestionBoxVisible =
+                this.canSuggestionsBeShown && this.suggestions.list.length > 0 && isVisible;
             if (this.isSuggestionBoxVisible) {
                 this.highlightedItem = 0;
             } else {
@@ -180,6 +182,20 @@ export default Vue.extend({
             this.toggleSuggestionBox(false);
             this.toggleIgnoreBlur(false);
             this.canSuggestionsBeShown = true;
+        },
+        onInputKeyUp(event: KeyboardEvent) {
+            if (this.isSuggestionBoxVisible) {
+                event.preventDefault();
+                this.moveSuggestionHighlight('up');
+            }
+        },
+        onInputKeyDown(event: KeyboardEvent) {
+            if (this.isSuggestionBoxVisible) {
+                event.preventDefault();
+                this.moveSuggestionHighlight('down');
+            } else {
+                this.toggleSuggestionBox(true);
+            }
         },
     },
 });
