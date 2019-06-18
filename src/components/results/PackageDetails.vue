@@ -73,32 +73,29 @@ export default Vue.extend({
     font-size: 0.9em;
 }
 
-$fill: #7b93ad;
-
 .links {
     display: flex;
     align-items: center;
     margin-left: 1.6em;
-
-    /deep/ .npm-icon,
-    /deep/ .github-icon {
-        fill: $fill;
-    }
 }
 
 .link {
+    $icon-color: #7b93ad;
     width: 28px;
     height: 1.1em;
     margin-right: 0.3em;
+    color: $icon-color;
 
     &:last-child {
         margin-right: 0;
     }
 
     &:hover {
-        svg {
-            fill: darken($fill, 30);
+        &.-npm {
+            color: #cb3837;
         }
+
+        color: darken($icon-color, 40);
     }
 
     svg {
