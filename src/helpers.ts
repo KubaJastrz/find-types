@@ -7,9 +7,15 @@ export function parsePackageString(packageString: string) {
 
     if (trimmedString.charAt(0) === '@') {
         const [, name, version] = trimmedString.split('@');
-        return { name: `@${name}`, version };
+        return {
+            name: `@${name}`.trimRight(),
+            version: version && version.trim(),
+        };
     }
 
     const [name, version] = trimmedString.split('@');
-    return { name, version };
+    return {
+        name: name && name.trim(),
+        version: version && version.trim(),
+    };
 }

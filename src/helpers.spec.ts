@@ -29,4 +29,17 @@ describe('parsePackageString', () => {
             version: '3.0',
         });
     });
+
+    it('trims name and version', () => {
+        expect(parsePackageString(' vue ')).toMatchObject({ name: 'vue' });
+        expect(parsePackageString(' vue @ 3.0 ')).toMatchObject({ name: 'vue', version: '3.0' });
+    });
+
+    it('trims scoped name and version', () => {
+        expect(parsePackageString(' @vue/cli ')).toMatchObject({ name: '@vue/cli' });
+        expect(parsePackageString(' @vue/cli @ 3.0 ')).toMatchObject({
+            name: '@vue/cli',
+            version: '3.0',
+        });
+    });
 });
