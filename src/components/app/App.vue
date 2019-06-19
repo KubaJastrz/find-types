@@ -1,7 +1,8 @@
 <template>
     <div id="app">
+        <h1 class="title">Find Types</h1>
         <Search :handle-search="searchPackageDetails" />
-        <Results :package-data="packageSearchResults.data" />
+        <Results v-if="!isPackageLoading" :package-data="packageSearchResults.data" />
     </div>
 </template>
 
@@ -20,6 +21,7 @@ interface Data {
         status: PackageSearchStatus;
         data?: PackageResponseData;
     };
+    isPackageLoading: boolean;
 }
 
 export default Vue.extend({
@@ -33,11 +35,14 @@ export default Vue.extend({
                 status: PackageSearchStatus.Init,
                 data: undefined,
             },
+            isPackageLoading: false,
         };
     },
     methods: {
         async searchPackageDetails(packageName: string) {
             try {
+                this.isPackageLoading = true;
+
                 const data = await API.getPackageDetails(packageName);
 
                 this.packageSearchResults = {
@@ -58,6 +63,8 @@ export default Vue.extend({
                         status: PackageSearchStatus.GenericError,
                     };
                 }
+            } finally {
+                this.isPackageLoading = false;
             }
         },
     },
@@ -66,12 +73,15 @@ export default Vue.extend({
 
 <style>
 #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     margin-top: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+</style>
+
+<style scoped>
+.title {
+    margin-bottom: 1em;
 }
 </style>

@@ -6,9 +6,9 @@
                 placeholder="look for npm package"
                 spellcheck="false"
                 @input="getSuggestions"
-                @keydown.prevent.enter="selectPackageAt(highlightedItem)"
-                @keydown.up="onInputKeyUp($event)"
-                @keydown.down="onInputKeyDown($event)"
+                @keydown.prevent.enter="onInputKeydownEnter"
+                @keydown.up="onInputKeydownUp($event)"
+                @keydown.down="onInputKeydownDown($event)"
                 @keydown.escape="toggleSuggestionBox(false, true)"
                 @focus="onInputFocus"
                 @blur="onInputBlur"
@@ -181,13 +181,20 @@ export default Vue.extend({
             this.toggleIgnoreBlur(false);
             this.canSuggestionsBeShown = true;
         },
-        onInputKeyUp(event: KeyboardEvent) {
+        onInputKeydownEnter() {
+            if (this.isSuggestionBoxVisible) {
+                this.selectPackageAt(this.highlightedItem);
+            } else {
+                this.onSearch();
+            }
+        },
+        onInputKeydownUp(event: KeyboardEvent) {
             if (this.isSuggestionBoxVisible) {
                 event.preventDefault();
                 this.moveSuggestionHighlight('up');
             }
         },
-        onInputKeyDown(event: KeyboardEvent) {
+        onInputKeydownDown(event: KeyboardEvent) {
             if (this.isSuggestionBoxVisible) {
                 event.preventDefault();
                 this.moveSuggestionHighlight('down');
