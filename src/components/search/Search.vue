@@ -23,7 +23,6 @@
                     :class="{ '-highlight': highlightedItem === index }"
                     @click.prevent="selectPackageAt(index)"
                     @mouseenter="moveSuggestionHighlightTo(index)"
-                    @blur="onInputBlur"
                     v-html="suggestion.highlight || suggestion.package.name"
                 />
             </template>
@@ -85,6 +84,10 @@ export default Vue.extend({
     },
     created() {
         this.getSuggestions = debounce(this.fetchSuggestions, 350);
+        document.addEventListener('click', this.handleDocumentClick, false);
+    },
+    destroyed() {
+        document.removeEventListener('click', this.handleDocumentClick, false);
     },
     methods: {
         getSuggestions() {},
@@ -153,6 +156,15 @@ export default Vue.extend({
         },
         toggleIgnoreBlur(shouldIgnore: boolean) {
             this.ignoreBlur = shouldIgnore;
+        },
+        handleDocumentClick({ target }: MouseEvent) {
+            if (
+                this.isSuggestionBoxVisible &&
+                target &&
+                !(target as Element).closest('.suggestion-box')
+            ) {
+                this.toggleSuggestionBox(false);
+            }
         },
         resetSuggestions() {
             this.suggestions = {
