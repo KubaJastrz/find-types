@@ -32,8 +32,6 @@
 </template>
 
 <script lang="ts">
-import './Search.scss';
-
 import Vue from 'vue';
 import { debounce } from 'lodash';
 
@@ -200,3 +198,5 @@ export default Vue.extend({
     },
 });
 </script>
+
+<style lang="scss" scoped src="./Search.scss"></style>

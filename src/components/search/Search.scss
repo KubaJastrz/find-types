@@ -23,7 +23,7 @@ $search-width: 400px;
             background: #eee;
         }
 
-        em {
+        /deep/ em {
             font-style: normal;
             font-weight: bold;
         }
