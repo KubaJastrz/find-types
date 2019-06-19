@@ -84,7 +84,7 @@ export default Vue.extend({
         };
     },
     created() {
-        this.getSuggestions = debounce(this.fetchSuggestions, 250);
+        this.getSuggestions = debounce(this.fetchSuggestions, 350);
     },
     methods: {
         getSuggestions() {},
