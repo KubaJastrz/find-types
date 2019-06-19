@@ -48,6 +48,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import 'helpers';
+
 .package-meta {
     display: flex;
     align-items: center;
@@ -56,21 +58,23 @@ export default Vue.extend({
 
 .name {
     font-weight: bold;
+    font-family: $font-mono;
+    font-size: 20px;
 }
 
 .version {
     display: inline-block;
     padding: 1px 6px;
-    font-size: 0.7em;
+    font-size: 11px;
     font-weight: bold;
     background: #778798;
     color: #fff;
     border-radius: 2px;
-    margin-left: 1em;
+    margin-left: 1.6em;
 }
 
 .description {
-    font-size: 0.9em;
+    font-size: 15px;
 }
 
 .links {

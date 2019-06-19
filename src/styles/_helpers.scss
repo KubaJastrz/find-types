@@ -1,5 +1,12 @@
+$font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
 %button-unstyled {
     padding: 0;
     background-color: transparent;
     border: 0;
+}
+
+%link-unstyled {
+    color: inherit;
+    text-decoration: none;
 }

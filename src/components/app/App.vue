@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <h1 class="title">Find Types</h1>
+        <h1 class="title"><a href="/">Find Types</a></h1>
         <Search :handle-search="searchPackageDetails" />
         <Results v-if="!isPackageLoading" :package-data="packageSearchResults.data" />
     </div>
@@ -80,8 +80,15 @@ export default Vue.extend({
 }
 </style>
 
-<style scoped>
+<style lang="scss" scoped>
+@import 'helpers';
+
 .title {
+    font-size: 2.33em;
     margin-bottom: 1em;
+
+    a {
+        @extend %link-unstyled;
+    }
 }
 </style>
