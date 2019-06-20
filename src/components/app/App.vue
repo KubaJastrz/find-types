@@ -1,8 +1,12 @@
 <template>
     <div id="app">
         <h1 class="title"><a href="/">Find Types</a></h1>
-        <Search :handle-search="searchPackageDetails" />
-        <Results v-if="!isPackageLoading" :package-data="packageSearchResults.data" />
+        <Search :handle-search="handlePackageSearch" />
+        <Results
+            v-if="!isPackageLoading"
+            :package-data="packageSearchResults.data"
+            :types-package-data="typesPackageResults.data"
+        />
     </div>
 </template>
 
@@ -15,13 +19,21 @@ import Search from '@/components/search/Search.vue';
 import Results from '@/components/results/Results.vue';
 import { PackageResponseData } from '@/api/ApiTypes';
 import { PackageSearchStatus } from '@/types';
+import { getTypesPackageName } from '@/helpers';
+
+type PackageData = PackageResponseData['collected']['metadata'];
 
 interface Data {
     packageSearchResults: {
         status: PackageSearchStatus;
-        data?: PackageResponseData;
+        data?: PackageData;
     };
     isPackageLoading: boolean;
+    typesPackageResults: {
+        status: PackageSearchStatus;
+        data?: PackageData;
+    };
+    isTypesPackageLoading: boolean;
 }
 
 export default Vue.extend({
@@ -33,13 +45,22 @@ export default Vue.extend({
         return {
             packageSearchResults: {
                 status: PackageSearchStatus.Init,
-                data: undefined,
             },
             isPackageLoading: false,
+            typesPackageResults: {
+                status: PackageSearchStatus.Init,
+            },
+            isTypesPackageLoading: false,
         };
     },
     methods: {
-        async searchPackageDetails(packageName: string) {
+        async handlePackageSearch(packageName: string) {
+            const success = await this.getPackageDetails(packageName);
+            if (success) {
+                this.getTypesPackage(packageName);
+            }
+        },
+        async getPackageDetails(packageName: string) {
             try {
                 this.isPackageLoading = true;
 
@@ -65,6 +86,38 @@ export default Vue.extend({
                 }
             } finally {
                 this.isPackageLoading = false;
+            }
+
+            return this.packageSearchResults.status === PackageSearchStatus.Success;
+        },
+        async getTypesPackage(packageName: string) {
+            const typesPackage = getTypesPackageName(packageName);
+
+            try {
+                this.isTypesPackageLoading = false;
+
+                const data = await API.getPackageDetails(typesPackage);
+
+                this.typesPackageResults = {
+                    status: PackageSearchStatus.Success,
+                    data,
+                };
+            } catch (error) {
+                if (!(error instanceof HTTPError)) {
+                    return;
+                }
+
+                if (error.response.status === 404) {
+                    this.typesPackageResults = {
+                        status: PackageSearchStatus.NotFound,
+                    };
+                } else {
+                    this.typesPackageResults = {
+                        status: PackageSearchStatus.GenericError,
+                    };
+                }
+            } finally {
+                this.isTypesPackageLoading = false;
             }
         },
     },

@@ -11,6 +11,7 @@ export interface PackageResponseData {
                 npm: string;
                 repository: string;
             };
+            deprecated?: string;
         };
     };
 }

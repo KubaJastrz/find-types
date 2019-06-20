@@ -1,24 +1,34 @@
 <template>
     <div class="results">
-        <PackageDetails v-if="packageData" :package-data="packageData.collected.metadata" />
+        <PackageDetails v-if="packageData" :package-data="packageData" />
+        <PackageDetails
+            v-if="typesPackageData"
+            :package-data="typesPackageData"
+            style="margin-top: 20px"
+        />
     </div>
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue';
+import Vue, { PropType, PropOptions } from 'vue';
 
 import { PackageResponseData } from '@/api/ApiTypes';
 import PackageDetails from './PackageDetails.vue';
+
+type PackageData = PackageResponseData['collected']['metadata'];
+
+const packageProp: PropOptions = {
+    type: Object as PropType<PackageData | null>,
+    default: null,
+};
 
 export default Vue.extend({
     components: {
         PackageDetails,
     },
     props: {
-        packageData: {
-            type: Object as PropType<PackageResponseData | null>,
-            default: null,
-        },
+        packageData: packageProp,
+        typesPackageData: packageProp,
     },
 });
 </script>

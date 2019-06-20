@@ -1,4 +1,4 @@
-import { createPackageString, parsePackageString } from './helpers';
+import { createPackageString, parsePackageString, getTypesPackageName } from './helpers';
 
 describe('createPackageString', () => {
     it('concats name and version', () => {
@@ -41,5 +41,15 @@ describe('parsePackageString', () => {
             name: '@vue/cli',
             version: '3.0',
         });
+    });
+});
+
+describe('getTypesPackageName', () => {
+    it('parses given package name and prepends types prefix', () => {
+        expect(getTypesPackageName('vue')).toBe('@types/vue');
+    });
+
+    it('handles scoped packages', () => {
+        expect(getTypesPackageName('@vue/cli')).toBe('@types/vue__cli');
     });
 });
