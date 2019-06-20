@@ -13,7 +13,9 @@
                 @focus="onInputFocus"
                 @blur="onInputBlur"
             />
-            <button tabindex="-1" aria-label="Search" type="submit"></button>
+            <button tabindex="-1" aria-label="Search" type="submit" class="search-button">
+                <SearchIcon />
+            </button>
         </form>
         <SuggestionBox :suggestions="suggestions.list" :is-visible="isSuggestionBoxVisible">
             <template v-slot:item="{ suggestion, index }">
@@ -34,6 +36,7 @@
 import Vue from 'vue';
 import { debounce } from 'lodash';
 
+import SearchIcon from '@/assets/icons/search.svg';
 import SuggestionBox from './SuggestionBox.vue';
 import API from '@/api/Api';
 import { SuggestionsResponseData } from '@/api/ApiTypes';
@@ -60,6 +63,7 @@ interface Data {
 
 export default Vue.extend({
     components: {
+        SearchIcon,
         SuggestionBox,
     },
     props: {

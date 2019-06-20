@@ -28,8 +28,8 @@
 import Vue, { PropType } from 'vue';
 
 import { PackageResponseData } from '@/api/ApiTypes';
-import GithubIcon from '@/components/common/icons/GithubIcon.vue';
-import NpmIcon from '@/components/common/icons/NpmIcon.vue';
+import GithubIcon from '@/assets/icons/github.svg';
+import NpmIcon from '@/assets/icons/npm.svg';
 
 type PackageDetails = PackageResponseData['collected']['metadata'];
 
