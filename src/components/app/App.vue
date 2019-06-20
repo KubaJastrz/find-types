@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <h1 class="title"><a href="/">Find Types</a></h1>
-        <Search :handle-search="handlePackageSearch" />
+        <Search :on-search="handlePackageSearch" />
         <div class="results-wrapper">
             <Results
                 v-if="isPackageSuccess"

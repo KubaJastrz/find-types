@@ -1,34 +1,20 @@
 <template>
-    <div class="search" @mouseenter="toggleIgnoreBlur(true)" @mouseleave="toggleIgnoreBlur(false)">
-        <form class="search-bar" :class="{ '-focus': isSearchFocused }" @submit.prevent="onSearch">
-            <input
-                v-model="packageString"
+    <div class="search">
+        <form @submit.prevent="handleSearch">
+            <Autocomplete
                 placeholder="look for npm package"
-                spellcheck="false"
-                @input="getSuggestions"
-                @keydown.prevent.enter="onInputKeydownEnter"
-                @keydown.up="onInputKeydownUp($event)"
-                @keydown.down="onInputKeydownDown($event)"
-                @keydown.escape="toggleSuggestionBox(false, true)"
-                @focus="onInputFocus"
-                @blur="onInputBlur"
-            />
-            <button tabindex="-1" aria-label="Search" type="submit" class="search-button">
-                <SearchIcon />
-            </button>
+                :on-select="handleSelect"
+                :on-input="handleInput"
+                :items="suggestions.list"
+                :get-value-from-item="extractNameFromSuggestion"
+            >
+                <template v-slot:button-right>
+                    <button aria-label="Search" type="submit" class="search-button">
+                        <SearchIcon />
+                    </button>
+                </template>
+            </Autocomplete>
         </form>
-        <SuggestionBox :suggestions="suggestions.list" :is-visible="isSuggestionBoxVisible">
-            <template v-slot:item="{ suggestion, index }">
-                <button
-                    tabindex="-1"
-                    class="suggestion"
-                    :class="{ '-highlight': highlightedItem === index }"
-                    @click.prevent="selectPackageAt(index)"
-                    @mouseenter="moveSuggestionHighlightTo(index)"
-                    v-html="suggestion.highlight || suggestion.package.name"
-                />
-            </template>
-        </SuggestionBox>
     </div>
 </template>
 
@@ -36,38 +22,29 @@
 import Vue from 'vue';
 import { debounce } from 'lodash';
 
+import Autocomplete from './Autocomplete.vue';
 import SearchIcon from '@/assets/icons/search.svg';
-import SuggestionBox from './SuggestionBox.vue';
 import API from '@/api/Api';
-import { SuggestionsResponseData } from '@/api/ApiTypes';
 import { parsePackageString, createPackageString } from '@/helpers';
-import { PackageString } from '@/types';
+import { SuggestionsResponseData } from '@/api/ApiTypes';
 
 type Suggestion = SuggestionsResponseData;
 
 interface Data {
-    packageString: PackageString;
+    packageString: string;
     suggestions: {
         forPackage: string;
         list: Suggestion[];
     };
-    isSuggestionBoxVisible: boolean;
-    highlightedItem: number;
-    /**
-     * temporarily disable blur event on input to prevent hiding menu before interaction
-     */
-    ignoreBlur: boolean;
-    isSearchFocused: boolean;
-    canSuggestionsBeShown: boolean;
 }
 
 export default Vue.extend({
     components: {
+        Autocomplete,
         SearchIcon,
-        SuggestionBox,
     },
     props: {
-        handleSearch: {
+        onSearch: {
             type: Function,
             required: true,
         },
@@ -79,147 +56,71 @@ export default Vue.extend({
                 forPackage: '',
                 list: [],
             },
-            isSuggestionBoxVisible: false,
-            highlightedItem: 0,
-            ignoreBlur: false,
-            isSearchFocused: false,
-            canSuggestionsBeShown: true,
         };
     },
     created() {
         this.getSuggestions = debounce(this.fetchSuggestions, 350);
-        document.addEventListener('click', this.handleDocumentClick, false);
-    },
-    destroyed() {
-        document.removeEventListener('click', this.handleDocumentClick, false);
     },
     methods: {
-        getSuggestions() {},
-        async fetchSuggestions() {
-            if (this.packageString) {
-                const { name } = parsePackageString(this.packageString);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        getSuggestions(packageString: string) {},
+        async fetchSuggestions(packageString: string) {
+            if (packageString) {
+                const { name } = parsePackageString(packageString);
                 const suggestions = await API.getSuggestions(name);
                 this.suggestions = {
                     forPackage: name,
                     list: suggestions,
                 };
-                this.toggleSuggestionBox(!!suggestions.length);
             } else {
-                this.resetSuggestions();
-                this.toggleSuggestionBox(false, true);
+                this.suggestions = {
+                    forPackage: '',
+                    list: [],
+                };
             }
         },
-        onSearch() {
-            const { name } = parsePackageString(this.packageString);
-            if (!name) {
+        handleSearch() {
+            if (!this.packageString) {
                 return;
             }
-            this.canSuggestionsBeShown = false;
-            this.handleSearch(name);
+            this.onSearch(this.packageString);
         },
-        selectPackageAt(index: number) {
-            if (!(index in this.suggestions.list)) {
-                return;
-            }
-            const { name } = this.suggestions.list[index].package;
-            this.packageString = createPackageString(name /*, version */);
-            this.onSearch();
-            this.ignoreBlur = false;
-            this.toggleSuggestionBox(false, true);
+        handleSelect(inputText: string) {
+            const { name } = parsePackageString(inputText);
+            this.packageString = name;
+            this.handleSearch();
         },
-        moveSuggestionHighlight(direction: 'up' | 'down') {
-            const lastSuggestionIndex = this.suggestions.list.length - 1;
-            if (direction === 'up') {
-                if (this.highlightedItem === 0) {
-                    this.highlightedItem = lastSuggestionIndex;
-                } else {
-                    this.highlightedItem--;
-                }
-            } else if (direction === 'down') {
-                if (this.highlightedItem === lastSuggestionIndex) {
-                    this.highlightedItem = 0;
-                } else {
-                    this.highlightedItem++;
-                }
-            }
+        handleInput(inputText: string) {
+            const { name } = parsePackageString(inputText);
+            this.packageString = name;
+            this.getSuggestions(name);
         },
-        moveSuggestionHighlightTo(index: number) {
-            this.highlightedItem = index;
-        },
-        toggleSuggestionBox(isVisible: boolean, forceClose: boolean = false) {
-            if (this.ignoreBlur && !forceClose && !isVisible) {
-                return;
-            }
-            this.isSuggestionBoxVisible =
-                this.canSuggestionsBeShown && this.suggestions.list.length > 0 && isVisible;
-            if (this.isSuggestionBoxVisible) {
-                this.highlightedItem = 0;
-            } else {
-                this.highlightedItem = -1;
-            }
-        },
-        toggleIgnoreBlur(shouldIgnore: boolean) {
-            this.ignoreBlur = shouldIgnore;
-        },
-        handleDocumentClick({ target }: MouseEvent) {
-            if (
-                this.isSuggestionBoxVisible &&
-                target &&
-                !(target as Element).closest('.suggestion-box')
-            ) {
-                this.toggleSuggestionBox(false);
-            }
-        },
-        resetSuggestions() {
-            this.suggestions = {
-                forPackage: '',
-                list: [],
-            };
-        },
-        onInputFocus() {
-            this.isSearchFocused = true;
-            this.canSuggestionsBeShown = true;
-            const { name } = parsePackageString(this.packageString);
-            if (!name) {
-                return;
-            }
-
-            const { forPackage, list } = this.suggestions;
-            if (forPackage === name && list.length) {
-                this.toggleSuggestionBox(true);
-            } else {
-                this.getSuggestions();
-            }
-        },
-        onInputBlur() {
-            this.isSearchFocused = false;
-            this.toggleSuggestionBox(false);
-            this.toggleIgnoreBlur(false);
-            this.canSuggestionsBeShown = true;
-        },
-        onInputKeydownEnter() {
-            if (this.isSuggestionBoxVisible) {
-                this.selectPackageAt(this.highlightedItem);
-            } else {
-                this.onSearch();
-            }
-        },
-        onInputKeydownUp(event: KeyboardEvent) {
-            if (this.isSuggestionBoxVisible) {
-                event.preventDefault();
-                this.moveSuggestionHighlight('up');
-            }
-        },
-        onInputKeydownDown(event: KeyboardEvent) {
-            if (this.isSuggestionBoxVisible) {
-                event.preventDefault();
-                this.moveSuggestionHighlight('down');
-            } else {
-                this.toggleSuggestionBox(true);
-            }
+        extractNameFromSuggestion(suggestion: Suggestion): string {
+            return suggestion ? createPackageString(suggestion.package.name) : '';
         },
     },
 });
 </script>
 
-<style lang="scss" scoped src="./Search.scss"></style>
+<style lang="scss" scoped>
+@import 'helpers';
+
+.search {
+    position: relative;
+    width: 400px;
+}
+
+.search-button {
+    @extend %button-unstyled;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+</style>

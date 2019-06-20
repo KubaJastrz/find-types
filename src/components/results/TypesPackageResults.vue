@@ -23,7 +23,7 @@
         <PackageDetails :package-data="packageData" :hide-description="true" :small="true" />
     </ResultsEntry>
 
-    <ResultsEntry v-else-if="packageData" :gray="true">
+    <ResultsEntry v-else :gray="true">
         <template v-slot:icon>
             <ErrorIcon />
         </template>
