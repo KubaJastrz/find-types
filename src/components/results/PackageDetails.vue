@@ -1,5 +1,5 @@
 <template>
-    <div class="package-details">
+    <div class="package-details" :class="{ '-small': small }">
         <div class="package-meta">
             <h4 class="name">{{ packageData.name }}</h4>
             <div class="version">{{ packageData.version }}</div>
@@ -20,7 +20,7 @@
                 </external-link>
             </div>
         </div>
-        <p class="description">{{ packageData.description }}</p>
+        <p v-if="!hideDescription" class="description">{{ packageData.description }}</p>
     </div>
 </template>
 
@@ -43,6 +43,14 @@ export default Vue.extend({
             type: Object as PropType<PackageDetails>,
             required: true,
         },
+        hideDescription: {
+            type: Boolean,
+            default: false,
+        },
+        small: {
+            type: Boolean,
+            default: false,
+        },
     },
 });
 </script>
@@ -50,22 +58,35 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import 'helpers';
 
+$base: 16px;
+
+.package-details {
+    font-size: $base;
+
+    &.-small {
+        font-size: 13.5px;
+
+        .version {
+            font-size: 11px;
+        }
+    }
+}
+
 .package-meta {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .name {
     font-weight: bold;
     font-family: $font-mono;
-    font-size: 20px;
+    font-size: em(20px, $base);
 }
 
 .version {
     display: inline-block;
     padding: 1px 6px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
     background: #778798;
     color: #fff;
@@ -74,7 +95,8 @@ export default Vue.extend({
 }
 
 .description {
-    font-size: 15px;
+    margin-top: 10px;
+    font-size: em(15px, $base);
 }
 
 .links {

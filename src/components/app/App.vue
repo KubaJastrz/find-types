@@ -2,11 +2,19 @@
     <div id="app">
         <h1 class="title"><a href="/">Find Types</a></h1>
         <Search :handle-search="handlePackageSearch" />
-        <Results
-            v-if="!isPackageLoading"
-            :package-data="packageSearchResults.data"
-            :types-package-data="typesPackageResults.data"
-        />
+        <div class="results-wrapper">
+            <Results
+                v-if="isPackageSuccess"
+                :package-data="packageSearchResults.data"
+                :types-package-data="typesPackageResults.data"
+            />
+            <div v-else-if="isPackageNotFound">
+                Package not found
+            </div>
+            <div v-else-if="isPackageError">
+                Unexpected error happened, try again
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,13 +53,35 @@ export default Vue.extend({
         return {
             packageSearchResults: {
                 status: PackageSearchStatus.Init,
+                data: undefined,
             },
             isPackageLoading: false,
             typesPackageResults: {
                 status: PackageSearchStatus.Init,
+                data: undefined,
             },
             isTypesPackageLoading: false,
         };
+    },
+    computed: {
+        isPackageSuccess(): boolean {
+            return (
+                !this.isPackageLoading &&
+                this.packageSearchResults.status === PackageSearchStatus.Success
+            );
+        },
+        isPackageNotFound(): boolean {
+            return (
+                !this.isPackageLoading &&
+                this.packageSearchResults.status === PackageSearchStatus.NotFound
+            );
+        },
+        isPackageError(): boolean {
+            return (
+                !this.isPackageLoading &&
+                this.packageSearchResults.status === PackageSearchStatus.GenericError
+            );
+        },
     },
     methods: {
         async handlePackageSearch(packageName: string) {
@@ -61,9 +91,13 @@ export default Vue.extend({
             }
         },
         async getPackageDetails(packageName: string) {
-            try {
-                this.isPackageLoading = true;
+            this.isPackageLoading = true;
+            this.packageSearchResults = {
+                status: PackageSearchStatus.Init,
+                data: undefined,
+            };
 
+            try {
                 const data = await API.getPackageDetails(packageName);
 
                 this.packageSearchResults = {
@@ -75,7 +109,7 @@ export default Vue.extend({
                     return;
                 }
 
-                if (error.response.status === 404) {
+                if (error.response.status === 400 || error.response.status === 404) {
                     this.packageSearchResults = {
                         status: PackageSearchStatus.NotFound,
                     };
@@ -93,9 +127,13 @@ export default Vue.extend({
         async getTypesPackage(packageName: string) {
             const typesPackage = getTypesPackageName(packageName);
 
-            try {
-                this.isTypesPackageLoading = false;
+            this.isTypesPackageLoading = true;
+            this.typesPackageResults = {
+                status: PackageSearchStatus.Init,
+                data: undefined,
+            };
 
+            try {
                 const data = await API.getPackageDetails(typesPackage);
 
                 this.typesPackageResults = {
@@ -107,7 +145,7 @@ export default Vue.extend({
                     return;
                 }
 
-                if (error.response.status === 404) {
+                if (error.response.status === 400 || error.response.status === 404) {
                     this.typesPackageResults = {
                         status: PackageSearchStatus.NotFound,
                     };
@@ -143,5 +181,9 @@ export default Vue.extend({
     a {
         @extend %link-unstyled;
     }
+}
+
+.results-wrapper {
+    margin-top: 50px;
 }
 </style>
