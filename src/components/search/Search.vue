@@ -2,11 +2,11 @@
     <div class="search">
         <form @submit.prevent="handleSearch">
             <Autocomplete
-                placeholder="look for npm package"
                 :on-select="handleSelect"
                 :on-input="handleInput"
                 :items="suggestions.list"
                 :get-value-from-item="extractNameFromSuggestion"
+                placeholder="look for npm package"
             >
                 <template v-slot:button-right>
                     <button aria-label="Search" type="submit" class="search-button">

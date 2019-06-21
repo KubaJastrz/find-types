@@ -1,7 +1,7 @@
 <template>
-    <ul class="suggestion-box" :class="{ '-open': isVisible }">
+    <ul :class="{ '-open': isVisible }" class="suggestion-box">
         <li v-for="(suggestion, index) of suggestions" :key="suggestion.package.name" class="item">
-            <slot name="item" :suggestion="suggestion" :index="index"></slot>
+            <slot :suggestion="suggestion" :index="index" name="item"></slot>
         </li>
     </ul>
 </template>

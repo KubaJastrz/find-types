@@ -1,6 +1,6 @@
 <template>
     <div class="results-entry">
-        <div class="status" :class="{ '-green': green, '-orange': orange, '-gray': gray }">
+        <div :class="{ '-green': green, '-orange': orange, '-gray': gray }" class="status">
             <div class="status-icon">
                 <slot name="icon"></slot>
             </div>

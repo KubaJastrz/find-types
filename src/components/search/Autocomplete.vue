@@ -1,6 +1,6 @@
 <template>
     <div class="autocomplete" @mouseenter="ignoreBlur = true" @mouseleave="ignoreBlur = false">
-        <div class="autocomplete-bar" :class="{ '-focus': isFocused }">
+        <div :class="{ '-focus': isFocused }" class="autocomplete-bar">
             <input
                 v-model="inputText"
                 :placeholder="placeholder"
@@ -20,8 +20,8 @@
         <SuggestionBox :suggestions="items" :is-visible="isVisible">
             <template v-slot:item="{ suggestion, index }">
                 <div
-                    class="suggestion"
                     :class="{ '-highlight': highlightedIndex === index }"
+                    class="suggestion"
                     @click="selectItemFromMouse(index)"
                     @mouseenter="highlightItemFromMouse(index)"
                     v-html="suggestion.highlight || suggestion.package.name"

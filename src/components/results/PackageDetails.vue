@@ -1,5 +1,5 @@
 <template>
-    <div class="package-details" :class="{ '-small': small }">
+    <div :class="{ '-small': small }" class="package-details">
         <div class="package-meta">
             <h4 class="name">{{ packageData.name }}</h4>
             <div class="version">{{ packageData.version }}</div>
