@@ -17,7 +17,7 @@ module.exports = {
             .options({
                 svgo: {
                     // https://github.com/svg/svgo/blob/master/.svgo.yml
-                    plugins: [{ removeViewBox: false }],
+                    plugins: [{ removeViewBox: false }, { removeTitle: false }],
                 },
             });
     },

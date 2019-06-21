@@ -16,7 +16,10 @@
                     :href="packageData.links.repository"
                     class="link -repo"
                 >
-                    <GithubIcon />
+                    <GithubIcon v-if="isRepoGithub" />
+                    <GitlabIcon v-else-if="isRepoGitlab" />
+                    <BitbucketIcon v-else-if="isRepoBitbucket" />
+                    <GithubIcon v-else />
                 </external-link>
             </div>
         </div>
@@ -27,20 +30,22 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue';
 
-import { PackageResponseData } from '@/api/ApiTypes';
-import GithubIcon from '@/assets/icons/github.svg';
 import NpmIcon from '@/assets/icons/npm.svg';
-
-type PackageDetails = PackageResponseData['collected']['metadata'];
+import GithubIcon from '@/assets/icons/github.svg';
+import GitlabIcon from '@/assets/icons/gitlab.svg';
+import BitbucketIcon from '@/assets/icons/bitbucket.svg';
+import { PackageData } from '@/types';
 
 export default Vue.extend({
     components: {
-        GithubIcon,
         NpmIcon,
+        GithubIcon,
+        GitlabIcon,
+        BitbucketIcon,
     },
     props: {
         packageData: {
-            type: Object as PropType<PackageDetails>,
+            type: Object as PropType<PackageData>,
             required: true,
         },
         hideDescription: {
@@ -50,6 +55,22 @@ export default Vue.extend({
         small: {
             type: Boolean,
             default: false,
+        },
+    },
+    computed: {
+        isRepoGithub(): boolean {
+            return this.matchRepoDomain('github.com');
+        },
+        isRepoGitlab(): boolean {
+            return this.matchRepoDomain('gitlab.com');
+        },
+        isRepoBitbucket(): boolean {
+            return this.matchRepoDomain('bitbucket.org');
+        },
+    },
+    methods: {
+        matchRepoDomain(domain: string) {
+            return this.packageData && !!this.packageData.links.repository.match(domain);
         },
     },
 });
@@ -107,26 +128,75 @@ $base: 16px;
 
 .link {
     $icon-color: #7b93ad;
-    width: 28px;
     height: 1.1em;
-    margin-right: 0.3em;
+    margin-right: 0.9em;
     color: $icon-color;
 
     &:last-child {
         margin-right: 0;
     }
 
+    &:focus,
     &:hover {
         &.-npm {
             color: #cb3837;
+        }
+
+        .gitlab-1 {
+            fill: #fc6d26;
+        }
+
+        .gitlab-2 {
+            fill: #e24329;
+        }
+
+        .gitlab-3 {
+            fill: #fca326;
+        }
+
+        .bitbucket-icon-color {
+            fill: #2684ff;
+        }
+
+        .bitbucket-icon-gradient-stop-1 {
+            stop-color: #2684ff;
+        }
+
+        .bitbucket-icon-gradient-stop-2 {
+            stop-color: #0052cc;
         }
 
         color: darken($icon-color, 40);
     }
 
     svg {
-        width: 100%;
         height: 100%;
+        width: auto;
+        max-width: 28px;
     }
+}
+
+.gitlab-1 {
+    fill: lighten(#768ea8, 5);
+}
+
+.gitlab-2 {
+    fill: lighten(#647c96, 7);
+}
+
+.gitlab-3 {
+    fill: lighten(#8199b3, 10);
+}
+
+.bitbucket-icon-color {
+    fill: lighten(#637b95, 10);
+}
+
+.bitbucket-icon-gradient-stop-1 {
+    stop-color: lighten(#637b95, 10);
+}
+
+.bitbucket-icon-gradient-stop-2 {
+    stop-color: lighten(#364e68, 10);
 }
 </style>
