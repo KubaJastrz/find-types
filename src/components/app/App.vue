@@ -1,13 +1,16 @@
 <template>
     <div id="app">
         <h1 class="title"><a href="/">Find Types</a></h1>
-        <Search :on-search="handlePackageSearch" />
+        <Search :on-search="handlePackageSearch" :initial-query="initialQuery" />
         <div class="results-wrapper">
             <Results
                 v-if="isPackageSuccess"
                 :package-data="packageSearchResults.data"
                 :types-package-data="typesPackageResults.data"
             />
+            <div v-else-if="isPackageTypesPackage">
+                DefinitelyTyped package detected, enter valid package name
+            </div>
             <div v-else-if="isPackageNotFound">
                 Package not found
             </div>
@@ -21,6 +24,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { HTTPError } from 'ky';
+import { parse } from 'query-string';
 
 import API from '@/api/Api';
 import Search from '@/components/search/Search.vue';
@@ -40,6 +44,7 @@ interface Data {
         data?: PackageData;
     };
     isTypesPackageLoading: boolean;
+    initialQuery?: string | null;
 }
 
 export default Vue.extend({
@@ -63,32 +68,43 @@ export default Vue.extend({
     },
     computed: {
         isPackageSuccess(): boolean {
-            return (
-                !this.isPackageLoading &&
-                this.packageSearchResults.status === PackageSearchStatus.Success
-            );
+            return this.isPackageOfStatus(PackageSearchStatus.Success);
         },
         isPackageNotFound(): boolean {
-            return (
-                !this.isPackageLoading &&
-                this.packageSearchResults.status === PackageSearchStatus.NotFound
-            );
+            return this.isPackageOfStatus(PackageSearchStatus.NotFound);
         },
         isPackageError(): boolean {
-            return (
-                !this.isPackageLoading &&
-                this.packageSearchResults.status === PackageSearchStatus.GenericError
-            );
+            return this.isPackageOfStatus(PackageSearchStatus.GenericError);
+        },
+        isPackageTypesPackage(): boolean {
+            return this.isPackageOfStatus(PackageSearchStatus.TypesPackage);
         },
     },
+    created() {
+        const { q } = parse(location.search);
+        this.initialQuery = Array.isArray(q) ? q[0] : q;
+    },
     methods: {
+        isPackageOfStatus(status: PackageSearchStatus) {
+            return !this.isPackageLoading && this.packageSearchResults.status === status;
+        },
+
         async handlePackageSearch(packageName: string) {
             const success = await this.getPackageDetails(packageName);
             if (success) {
                 this.getTypesPackage(packageName);
             }
         },
+
         async getPackageDetails(packageName: string) {
+            if (packageName.startsWith('@types/')) {
+                this.packageSearchResults = {
+                    status: PackageSearchStatus.TypesPackage,
+                    data: undefined,
+                };
+                return false;
+            }
+
             this.isPackageLoading = true;
             this.packageSearchResults = {
                 status: PackageSearchStatus.Init,
@@ -122,6 +138,7 @@ export default Vue.extend({
 
             return this.packageSearchResults.status === PackageSearchStatus.Success;
         },
+
         async getTypesPackage(packageName: string) {
             const typesPackage = getTypesPackageName(packageName);
 

@@ -50,6 +50,10 @@ export default Vue.extend({
         SuggestionBox,
     },
     props: {
+        initialValue: {
+            type: String,
+            default: undefined,
+        },
         placeholder: {
             type: String,
             default: undefined,
@@ -107,6 +111,11 @@ export default Vue.extend({
             this.maybeOpen();
         },
     },
+    created() {
+        if (this.initialValue) {
+            this.inputText = this.initialValue;
+        }
+    },
     methods: {
         maybeOpen() {
             this.isOpen = this.canBeOpened(this.inputText);
@@ -135,7 +144,8 @@ export default Vue.extend({
 
         handleFocus() {
             this.isFocused = true;
-            this.maybeOpen();
+            const wasOpened = this.maybeOpen();
+            this.onFocus(wasOpened);
         },
 
         handleBlur() {

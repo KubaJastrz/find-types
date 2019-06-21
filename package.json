@@ -13,6 +13,7 @@
         "ky": "^0.11.1",
         "lodash": "^4.17.11",
         "modern-normalize": "^0.5.0",
+        "query-string": "^6.8.1",
         "vue": "^2.6.10"
     },
     "devDependencies": {

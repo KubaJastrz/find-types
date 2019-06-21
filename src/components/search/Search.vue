@@ -2,6 +2,7 @@
     <div class="search">
         <form @submit.prevent="handleSearch">
             <Autocomplete
+                :initial-value="packageString"
                 :can-be-opened="handleOpen"
                 :on-select="handleSelect"
                 :on-input="handleInput"
@@ -24,6 +25,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { debounce } from 'lodash';
+import { stringify } from 'query-string';
 
 import Autocomplete from './Autocomplete.vue';
 import SearchIcon from '@/assets/icons/search.svg';
@@ -50,6 +52,10 @@ export default Vue.extend({
             type: Function,
             required: true,
         },
+        initialQuery: {
+            type: String,
+            default: undefined,
+        },
     },
     data(): Data {
         return {
@@ -63,6 +69,11 @@ export default Vue.extend({
     },
     created() {
         this.debouncedFetchSuggestions = debounce(this.fetchSuggestions, 350);
+        if (this.initialQuery) {
+            const { name } = parsePackageString(this.initialQuery);
+            this.packageString = name;
+            this.handleSearch();
+        }
     },
     methods: {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -100,6 +111,8 @@ export default Vue.extend({
             const { name } = parsePackageString(inputText);
             this.packageString = name;
             this.handleSearch();
+            const url = stringify({ q: name });
+            window.history.pushState(null, '', `/?${url}`);
         },
 
         handleInput(inputText: string) {
@@ -110,6 +123,7 @@ export default Vue.extend({
         },
 
         handleFocus(wasOpened: boolean) {
+            this.canSuggestionsBeShown = true;
             if (!wasOpened) {
                 this.debouncedFetchSuggestions(this.packageString);
             }
