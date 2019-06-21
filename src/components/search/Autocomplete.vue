@@ -32,7 +32,6 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable vue/require-default-prop */
 import Vue, { PropType } from 'vue';
 
 import SuggestionBox from './SuggestionBox.vue';
@@ -51,12 +50,38 @@ export default Vue.extend({
         SuggestionBox,
     },
     props: {
-        placeholder: String,
-        value: String,
-        onSelect: Function,
-        onInput: Function,
-        items: Array as PropType<Suggestion[]>,
-        getValueFromItem: Function,
+        placeholder: {
+            type: String,
+            default: undefined,
+        },
+        onSelect: {
+            type: Function,
+            required: true,
+        },
+        onInput: {
+            type: Function,
+            required: true,
+        },
+        onFocus: {
+            type: Function,
+            required: true,
+        },
+        items: {
+            type: Array as PropType<Suggestion[]>,
+            required: true,
+        },
+        itemsKey: {
+            type: String,
+            required: true,
+        },
+        getValueFromItem: {
+            type: Function,
+            required: true,
+        },
+        canBeOpened: {
+            type: Function,
+            required: true,
+        },
     },
     data(): Data {
         return {
@@ -72,31 +97,53 @@ export default Vue.extend({
             return this.isOpen && this.items.length > 0;
         },
     },
+    watch: {
+        itemsKey() {
+            // Every time items key changes, trigger the opening event.
+            // This forces the parent to re-evaluate if suggestions can be visible
+            // without "controlled" isOpen prop.
+            // Another solution would be to emit events from child to parent,
+            // but this is considered an anti-pattern.
+            this.maybeOpen();
+        },
+    },
     methods: {
+        maybeOpen() {
+            this.isOpen = this.canBeOpened(this.inputText);
+            return this.isOpen;
+        },
+
+        close() {
+            this.isOpen = false;
+            this.highlightedIndex = null;
+        },
+
         handleSelect(item: Suggestion) {
             const value = this.getValueFromItem(item);
             this.onSelect(value);
-            this.isOpen = false;
-            this.highlightedIndex = null;
+            this.close();
             this.inputText = value;
         },
 
         handleInput() {
             this.onInput(this.inputText);
+            this.maybeOpen();
+            if (!this.inputText) {
+                this.close();
+            }
         },
 
         handleFocus() {
-            this.isOpen = true;
             this.isFocused = true;
+            this.maybeOpen();
         },
 
         handleBlur() {
             if (this.ignoreBlur) {
                 return;
             }
-            this.isOpen = false;
             this.isFocused = false;
-            this.highlightedIndex = null;
+            this.close();
         },
 
         handleKeydownEnter(event: KeyboardEvent) {
@@ -104,10 +151,8 @@ export default Vue.extend({
             if (!this.isOpen) {
                 return;
             } else if (this.highlightedIndex === null) {
-                // TODO: select input text
                 this.isOpen = false;
             } else {
-                // TODO: select input text
                 event.preventDefault();
                 this.selectHighlightedItem();
             }
@@ -121,15 +166,13 @@ export default Vue.extend({
                 if (value) {
                     this.inputText = value;
                 }
-                this.isOpen = false;
-                this.highlightedIndex = null;
+                this.close();
             }
         },
 
         handleKeydownEscape() {
             this.ignoreBlur = false;
-            this.isOpen = false;
-            this.highlightedIndex = null;
+            this.close();
         },
 
         handleKeydownUp(event: KeyboardEvent) {
@@ -147,8 +190,8 @@ export default Vue.extend({
         handleKeydownDown(event: KeyboardEvent) {
             event.preventDefault();
             if (!this.isOpen || this.highlightedIndex === null) {
-                this.isOpen = true;
                 this.highlightedIndex = 0;
+                this.maybeOpen();
                 return;
             }
             if (this.highlightedIndex === this.items.length - 1) {
@@ -201,7 +244,7 @@ export default Vue.extend({
 
     input {
         border: 0;
-        padding: 0.6em 0;
+        line-height: 2.2em;
         background: transparent;
         flex: 1;
         outline: 0;
