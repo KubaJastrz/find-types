@@ -36,9 +36,7 @@
 import Vue, { PropType } from 'vue';
 
 import SuggestionBox from './SuggestionBox.vue';
-import { SuggestionsResponseData } from '@/api/ApiTypes';
-
-type Suggestion = SuggestionsResponseData;
+import { Suggestion } from '@/types';
 
 interface Data {
     inputText: string;

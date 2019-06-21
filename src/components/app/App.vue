@@ -25,11 +25,9 @@ import { HTTPError } from 'ky';
 import API from '@/api/Api';
 import Search from '@/components/search/Search.vue';
 import Results from '@/components/results/Results.vue';
-import { PackageResponseData } from '@/api/ApiTypes';
-import { PackageSearchStatus } from '@/types';
 import { getTypesPackageName } from '@/helpers';
-
-type PackageData = PackageResponseData['collected']['metadata'];
+import { PackageData } from '@/types';
+import { PackageSearchStatus } from '@/types/enums';
 
 interface Data {
     packageSearchResults: {

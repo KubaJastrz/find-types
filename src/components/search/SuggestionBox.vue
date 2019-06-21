@@ -8,12 +8,13 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import { SuggestionsResponseData } from '@/api/ApiTypes';
+
+import { Suggestion } from '@/types';
 
 export default Vue.extend({
     props: {
         suggestions: {
-            type: Array as PropType<SuggestionsResponseData[]>,
+            type: Array as PropType<Suggestion[]>,
             required: true,
         },
         isVisible: {

@@ -26,9 +26,7 @@ import Autocomplete from './Autocomplete.vue';
 import SearchIcon from '@/assets/icons/search.svg';
 import API from '@/api/Api';
 import { parsePackageString, createPackageString } from '@/helpers';
-import { SuggestionsResponseData } from '@/api/ApiTypes';
-
-type Suggestion = SuggestionsResponseData;
+import { Suggestion } from '@/types';
 
 interface Data {
     packageString: string;

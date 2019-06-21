@@ -42,9 +42,7 @@ import PackageDetails from './PackageDetails.vue';
 import SuccessIcon from '@/assets/icons/check-circle.svg';
 import WarningIcon from '@/assets/icons/alert-triangle.svg';
 import ErrorIcon from '@/assets/icons/x.svg';
-import { PackageResponseData } from '@/api/ApiTypes';
-
-type PackageData = PackageResponseData['collected']['metadata'];
+import { PackageData } from '@/types';
 
 export default Vue.extend({
     components: {
@@ -56,8 +54,8 @@ export default Vue.extend({
     },
     props: {
         packageData: {
-            type: Object as PropType<PackageData | null>,
-            default: null,
+            type: Object as PropType<PackageData>,
+            default: undefined,
         },
     },
 });
