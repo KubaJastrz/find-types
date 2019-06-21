@@ -1,6 +1,7 @@
 import ky, { Options } from 'ky';
 
 import { PackageResponseData, SuggestionsResponseData } from './ApiTypes';
+import { PackageJson } from '@/types';
 
 export default class API {
     public static async get<Response>(url: string, options?: Options) {
@@ -23,5 +24,10 @@ export default class API {
                 size: 10,
             },
         });
+    }
+
+    public static getPackageJson(packageString: string) {
+        const encodedString = encodeURIComponent(packageString);
+        return API.get<PackageJson>(`https://cdn.jsdelivr.net/npm/${encodedString}/package.json`);
     }
 }

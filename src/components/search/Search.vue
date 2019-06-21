@@ -105,14 +105,14 @@ export default Vue.extend({
             }
             this.canSuggestionsBeShown = false;
             this.onSearch(this.packageString);
+            const url = stringify({ q: this.packageString });
+            window.history.pushState(null, '', `/?${url}`);
         },
 
         handleSelect(inputText: string) {
             const { name } = parsePackageString(inputText);
             this.packageString = name;
             this.handleSearch();
-            const url = stringify({ q: name });
-            window.history.pushState(null, '', `/?${url}`);
         },
 
         handleInput(inputText: string) {

@@ -7,6 +7,7 @@
                 v-if="isPackageSuccess"
                 :package-data="packageSearchResults.data"
                 :types-package-data="typesPackageResults.data"
+                :package-json-data="packageJsonResults.data"
             />
             <div v-else-if="isPackageTypesPackage">
                 DefinitelyTyped package detected, enter valid package name
@@ -30,10 +31,11 @@ import API from '@/api/Api';
 import Search from '@/components/search/Search.vue';
 import Results from '@/components/results/Results.vue';
 import { getTypesPackageName } from '@/helpers';
-import { PackageData } from '@/types';
+import { PackageData, PackageJson } from '@/types';
 import { PackageSearchStatus } from '@/types/enums';
 
 interface Data {
+    initialQuery?: string | null;
     packageSearchResults: {
         status: PackageSearchStatus;
         data?: PackageData;
@@ -44,7 +46,11 @@ interface Data {
         data?: PackageData;
     };
     isTypesPackageLoading: boolean;
-    initialQuery?: string | null;
+    packageJsonResults: {
+        status: PackageSearchStatus;
+        data?: PackageJson;
+    };
+    isPackageJsonLoading: boolean;
 }
 
 export default Vue.extend({
@@ -64,6 +70,11 @@ export default Vue.extend({
                 data: undefined,
             },
             isTypesPackageLoading: false,
+            packageJsonResults: {
+                status: PackageSearchStatus.Init,
+                data: undefined,
+            },
+            isPackageJsonLoading: false,
         };
     },
     computed: {
@@ -93,6 +104,7 @@ export default Vue.extend({
             const success = await this.getPackageDetails(packageName);
             if (success) {
                 this.getTypesPackage(packageName);
+                this.getPackageJson(packageName);
             }
         },
 
@@ -171,6 +183,29 @@ export default Vue.extend({
                 }
             } finally {
                 this.isTypesPackageLoading = false;
+            }
+        },
+
+        async getPackageJson(packageName: string) {
+            this.isPackageJsonLoading = true;
+
+            try {
+                const data = await API.getPackageJson(packageName);
+
+                this.packageJsonResults = {
+                    status: PackageSearchStatus.Success,
+                    data,
+                };
+            } catch (error) {
+                if (!(error instanceof HTTPError)) {
+                    return;
+                }
+
+                this.typesPackageResults = {
+                    status: PackageSearchStatus.GenericError,
+                };
+            } finally {
+                this.isPackageJsonLoading = false;
             }
         },
     },
