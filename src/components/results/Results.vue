@@ -1,10 +1,13 @@
 <template>
     <div class="results">
         <PackageDetails :package-data="packageData" />
-        <ul class="types-results">
+        <ul v-if="didLoadTypes" class="types-results">
             <li><TypesPackageResults :package-data="typesPackageData" /></li>
             <li><PackageJsonResults :package-json-data="packageJsonData" /></li>
         </ul>
+        <div v-else-if="loaderTimeoutId === null" class="types-loader">
+            loading...
+        </div>
     </div>
 </template>
 
@@ -21,6 +24,11 @@ const packageProp: PropOptions = {
     default: undefined,
 };
 
+interface Data {
+    loaderTimeoutId: number | null;
+    didLoadTypes: boolean;
+}
+
 export default Vue.extend({
     components: {
         PackageDetails,
@@ -34,6 +42,30 @@ export default Vue.extend({
             type: Object as PropType<PackageJson>,
             default: undefined,
         },
+        isTypesDataLoading: {
+            type: Boolean,
+            required: true,
+        },
+    },
+    data(): Data {
+        return {
+            loaderTimeoutId: null,
+            didLoadTypes: false,
+        };
+    },
+    watch: {
+        isTypesDataLoading(willBeLoading, wasLoading) {
+            if (wasLoading && !willBeLoading) {
+                this.didLoadTypes = true;
+            } else if (willBeLoading && !wasLoading) {
+                this.didLoadTypes = false;
+            }
+        },
+    },
+    created() {
+        this.loaderTimeoutId = setTimeout(() => {
+            this.loaderTimeoutId = null;
+        }, 200);
     },
 });
 </script>
@@ -41,6 +73,11 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .results {
     width: 500px;
+}
+
+.types-loader {
+    margin-top: 50px;
+    text-align: center;
 }
 
 .types-results {

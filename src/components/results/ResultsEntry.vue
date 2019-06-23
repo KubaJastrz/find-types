@@ -74,7 +74,10 @@ export default Vue.extend({
 }
 
 .content {
-    margin-top: 10px;
     margin-left: 24px + 8px;
+
+    &:not(:empty) {
+        margin-top: 10px;
+    }
 }
 </style>

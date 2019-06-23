@@ -8,6 +8,7 @@
                 :package-data="packageSearchResults.data"
                 :types-package-data="typesPackageResults.data"
                 :package-json-data="packageJsonResults.data"
+                :is-types-data-loading="isTypesDataLoading"
             />
             <div v-else-if="isPackageTypesPackage">
                 DefinitelyTyped package detected, enter valid package name
@@ -78,6 +79,9 @@ export default Vue.extend({
         };
     },
     computed: {
+        isTypesDataLoading(): boolean {
+            return this.isTypesPackageLoading || this.isPackageJsonLoading;
+        },
         isPackageSuccess(): boolean {
             return this.isPackageOfStatus(PackageSearchStatus.Success);
         },
