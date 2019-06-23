@@ -1,5 +1,5 @@
 <template>
-    <ResultsEntry v-if="typesOrTypings" :green="true">
+    <ResultsEntry v-if="hasTypesOrTypings" :green="true">
         <template v-slot:icon>
             <SuccessIcon />
         </template>
@@ -8,7 +8,7 @@
             Types in package.json
         </template>
 
-        <pre class="json">{{ typesOrTypings }}</pre>
+        <ParsedPackageJsonTypes :package-json="packageJsonData" />
     </ResultsEntry>
 
     <ResultsEntry v-else :gray="true">
@@ -26,6 +26,7 @@
 import Vue, { PropType } from 'vue';
 
 import ResultsEntry from './ResultsEntry.vue';
+import ParsedPackageJsonTypes from './ParsedPackageJsonTypes.vue';
 import SuccessIcon from '@/assets/icons/check-circle.svg';
 import ErrorIcon from '@/assets/icons/x.svg';
 import { PackageJson } from '@/types';
@@ -33,6 +34,7 @@ import { PackageJson } from '@/types';
 export default Vue.extend({
     components: {
         ResultsEntry,
+        ParsedPackageJsonTypes,
         SuccessIcon,
         ErrorIcon,
     },
@@ -43,24 +45,12 @@ export default Vue.extend({
         },
     },
     computed: {
-        typesOrTypings(): string | undefined {
-            if (
-                !this.packageJsonData ||
-                !('types' in this.packageJsonData || 'typings' in this.packageJsonData)
-            ) {
-                return;
-            }
-
-            const { types, typings } = this.packageJsonData;
-
-            return JSON.stringify({ types, typings }, null, 2);
+        hasTypesOrTypings(): boolean {
+            return (
+                this.packageJsonData &&
+                ('types' in this.packageJsonData || 'typings' in this.packageJsonData)
+            );
         },
     },
 });
 </script>
-
-<style lang="scss" scoped>
-.json {
-    margin: 0;
-}
-</style>

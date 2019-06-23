@@ -27,3 +27,8 @@ export function getTypesPackageName(npmPackage: string): string {
     const parsedName = npmPackage.replace('@', '').replace(/\//g, '__');
     return typesPrefix + parsedName;
 }
+
+export function getCdnFileLink(packageName: string, filename: string) {
+    const parsedFilename = filename.startsWith('./') ? filename.replace('./', '') : filename;
+    return `https://unpkg.com/${packageName}/${parsedFilename}`;
+}

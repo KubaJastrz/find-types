@@ -1,5 +1,5 @@
 <template>
-    <a target="_blank" rel="noopener noreferrer"><slot /></a>
+    <a target="_blank" rel="noopener noreferrer" class="external-link"><slot /></a>
 </template>
 
 <script lang="ts">

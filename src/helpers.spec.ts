@@ -1,4 +1,9 @@
-import { createPackageString, parsePackageString, getTypesPackageName } from './helpers';
+import {
+    createPackageString,
+    parsePackageString,
+    getTypesPackageName,
+    getCdnFileLink,
+} from './helpers';
 
 describe('createPackageString', () => {
     it('concats name and version', () => {
@@ -51,5 +56,21 @@ describe('getTypesPackageName', () => {
 
     it('handles scoped packages', () => {
         expect(getTypesPackageName('@vue/cli')).toBe('@types/vue__cli');
+    });
+});
+
+describe('getCdnFileLink', () => {
+    it('creates a link to specified file', () => {
+        expect(getCdnFileLink('vue', 'index.d.ts')).toBe('https://unpkg.com/vue/index.d.ts');
+        expect(getCdnFileLink('vue', 'types/index.d.ts')).toBe(
+            'https://unpkg.com/vue/types/index.d.ts',
+        );
+    });
+
+    it('handles relative filenames', () => {
+        expect(getCdnFileLink('vue', './index.d.ts')).toBe('https://unpkg.com/vue/index.d.ts');
+        expect(getCdnFileLink('vue', './types/index.d.ts')).toBe(
+            'https://unpkg.com/vue/types/index.d.ts',
+        );
     });
 });
