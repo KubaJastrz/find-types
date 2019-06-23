@@ -1,4 +1,4 @@
-const typings = ['@/api/ApiTypes'];
+const typings = ['@/types', '@/api/ApiTypes'];
 
 module.exports = {
     rootDir: '../',
