@@ -1,7 +1,7 @@
 <template>
     <div class="search">
         <form @submit.prevent="handleSearch">
-            <Autocomplete
+            <Autosuggest
                 :initial-value="packageString"
                 :can-be-opened="handleOpen"
                 :on-select="handleSelect"
@@ -17,7 +17,7 @@
                         <SearchIcon />
                     </button>
                 </template>
-            </Autocomplete>
+            </Autosuggest>
         </form>
     </div>
 </template>
@@ -27,7 +27,7 @@ import Vue from 'vue';
 import { debounce } from 'lodash';
 import { stringify } from 'query-string';
 
-import Autocomplete from './Autocomplete.vue';
+import Autosuggest from './Autosuggest.vue';
 import SearchIcon from '@/assets/icons/search.svg';
 import API from '@/api/Api';
 import { parsePackageString, createPackageString } from '@/helpers';
@@ -44,7 +44,7 @@ interface Data {
 
 export default Vue.extend({
     components: {
-        Autocomplete,
+        Autosuggest,
         SearchIcon,
     },
     props: {
