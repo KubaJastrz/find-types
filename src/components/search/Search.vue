@@ -1,15 +1,14 @@
 <template>
     <div class="search">
-        <form @submit.prevent="handleSearch">
+        <form @submit.prevent="handleSearch(packageName)">
             <Autosuggest
-                :initial-value="packageString"
+                :initial-value="parsedInitialQuery"
                 :can-be-opened="handleOpen"
                 :on-select="handleSelect"
                 :on-input="handleInput"
-                :on-focus="handleFocus"
                 :items-key="suggestions.forPackage"
                 :items="suggestions.list"
-                :get-value-from-item="extractNameFromSuggestion"
+                :get-value-from-item="extractPackageNameFromSuggestion"
                 placeholder="look for npm package"
             >
                 <template v-slot:button-right>
@@ -30,11 +29,11 @@ import { stringify } from 'query-string';
 import Autosuggest from './Autosuggest.vue';
 import SearchIcon from '@/assets/icons/search.svg';
 import API from '@/api/Api';
-import { parsePackageString, createPackageString } from '@/helpers';
+import { parsePackageString } from '@/helpers';
 import { Suggestion } from '@/types';
 
 interface Data {
-    packageString: string;
+    packageName: string;
     suggestions: {
         forPackage: string;
         list: Suggestion[];
@@ -59,7 +58,7 @@ export default Vue.extend({
     },
     data(): Data {
         return {
-            packageString: '',
+            packageName: '',
             suggestions: {
                 forPackage: '',
                 list: [],
@@ -67,21 +66,28 @@ export default Vue.extend({
             canSuggestionsBeShown: true,
         };
     },
+    computed: {
+        parsedInitialQuery(): string | undefined {
+            if (!this.initialQuery) {
+                return;
+            }
+            const { name } = parsePackageString(this.initialQuery);
+            return name;
+        },
+    },
     created() {
         this.debouncedFetchSuggestions = debounce(this.fetchSuggestions, 350);
-        if (this.initialQuery) {
-            const { name } = parsePackageString(this.initialQuery);
-            this.packageString = name;
-            this.handleSearch();
+        if (this.parsedInitialQuery) {
+            this.handleSearch(this.parsedInitialQuery);
         }
     },
     methods: {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        debouncedFetchSuggestions(packageString: string) {},
+        debouncedFetchSuggestions(packageName: string) {},
 
-        async fetchSuggestions(packageString: string) {
-            if (packageString) {
-                const { name } = parsePackageString(packageString);
+        async fetchSuggestions(packageName: string) {
+            if (packageName) {
+                const { name } = parsePackageString(packageName);
                 // use cache if possible
                 if (name === this.suggestions.forPackage) {
                     return;
@@ -99,48 +105,44 @@ export default Vue.extend({
             }
         },
 
-        handleSearch() {
-            if (!this.packageString) {
+        handleSearch(packageName: string) {
+            if (!packageName) {
                 return;
             }
             this.canSuggestionsBeShown = false;
-            this.onSearch(this.packageString);
-            const url = stringify({ q: this.packageString });
+            this.onSearch(packageName);
+            this.pushHistory(packageName);
+        },
+
+        pushHistory(packageName: string) {
+            const url = stringify({ q: packageName });
             window.history.pushState(null, '', `/?${url}`);
         },
 
         handleSelect(inputText: string) {
-            const { name } = parsePackageString(inputText);
-            this.packageString = name;
-            this.handleSearch();
+            this.updatePackageName(inputText);
+            this.handleSearch(this.packageName);
+            this.suggestions.forPackage = this.packageName;
         },
 
         handleInput(inputText: string) {
             this.canSuggestionsBeShown = true;
-            const { name } = parsePackageString(inputText);
-            this.packageString = name;
-            this.debouncedFetchSuggestions(name);
-        },
-
-        handleFocus(wasOpened: boolean) {
-            this.canSuggestionsBeShown = true;
-            if (!wasOpened) {
-                this.debouncedFetchSuggestions(this.packageString);
-            }
+            this.updatePackageName(inputText);
+            this.debouncedFetchSuggestions(this.packageName);
         },
 
         handleOpen(inputText: string): boolean {
             const { forPackage } = this.suggestions;
-            if (this.canSuggestionsBeShown && inputText.startsWith(forPackage)) {
-                return true;
-            } else {
-                this.debouncedFetchSuggestions(inputText);
-                return false;
-            }
+            return this.canSuggestionsBeShown && inputText.startsWith(forPackage);
         },
 
-        extractNameFromSuggestion(suggestion: Suggestion): string {
-            return suggestion ? createPackageString(suggestion.package.name) : '';
+        extractPackageNameFromSuggestion(suggestion: Suggestion): string {
+            return suggestion ? suggestion.package.name : '';
+        },
+
+        updatePackageName(inputText: string) {
+            const { name } = parsePackageString(inputText);
+            this.packageName = name;
         },
     },
 });

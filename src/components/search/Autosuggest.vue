@@ -2,6 +2,7 @@
     <div class="autocomplete" @mouseenter="ignoreBlur = true" @mouseleave="ignoreBlur = false">
         <div :class="{ '-focus': isFocused }" class="autocomplete-bar">
             <input
+                ref="input"
                 v-model="inputText"
                 :placeholder="placeholder"
                 spellcheck="false"
@@ -66,10 +67,6 @@ export default Vue.extend({
             type: Function,
             required: true,
         },
-        onFocus: {
-            type: Function,
-            required: true,
-        },
         items: {
             type: Array as PropType<Suggestion[]>,
             required: true,
@@ -118,8 +115,10 @@ export default Vue.extend({
     },
     methods: {
         maybeOpen() {
-            this.isOpen = this.canBeOpened(this.inputText);
-            return this.isOpen;
+            if (this.isOpen) {
+                return;
+            }
+            this.isOpen = this.isFocused && this.canBeOpened(this.inputText);
         },
 
         close() {
@@ -144,12 +143,12 @@ export default Vue.extend({
 
         handleFocus() {
             this.isFocused = true;
-            const wasOpened = this.maybeOpen();
-            this.onFocus(wasOpened);
+            this.maybeOpen();
         },
 
         handleBlur() {
             if (this.ignoreBlur) {
+                (this.$refs.input as HTMLInputElement).focus();
                 return;
             }
             this.isFocused = false;
@@ -198,12 +197,12 @@ export default Vue.extend({
         },
 
         handleKeydownDown(event: KeyboardEvent) {
-            event.preventDefault();
             if (!this.isOpen || this.highlightedIndex === null) {
                 this.highlightedIndex = 0;
                 this.maybeOpen();
                 return;
             }
+            event.preventDefault();
             if (this.highlightedIndex === this.items.length - 1) {
                 this.highlightedIndex = 0;
             } else {
