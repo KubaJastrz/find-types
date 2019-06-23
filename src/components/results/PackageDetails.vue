@@ -69,8 +69,12 @@ export default Vue.extend({
         },
     },
     methods: {
-        matchRepoDomain(domain: string) {
-            return this.packageData && !!this.packageData.links.repository.match(domain);
+        matchRepoDomain(domain: string): boolean {
+            return (
+                this.packageData &&
+                this.packageData.links.repository !== undefined &&
+                !!this.packageData.links.repository.match(domain)
+            );
         },
     },
 });

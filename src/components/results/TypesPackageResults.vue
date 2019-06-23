@@ -79,13 +79,13 @@ export default Vue.extend({
         },
     },
     methods: {
-        getRepositoryLink(readme?: string): string | null {
+        getRepositoryLink(readme?: string): string | undefined {
             if (!readme) {
-                return null;
+                return undefined;
             }
 
             const match = /^(?:Files were exported from )(.+)$/gm.exec(readme);
-            const repositoryLink = match && match[1];
+            const repositoryLink = (match && match[1]) || undefined;
 
             return repositoryLink;
         },

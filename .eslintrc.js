@@ -19,5 +19,6 @@ module.exports = {
         'vue/no-v-html': 'off',
 
         '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
     },
 };
