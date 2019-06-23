@@ -1,5 +1,5 @@
 <template>
-    <ResultsEntry v-if="packageData && !packageData.deprecated" :green="true">
+    <ResultsEntry v-if="parsedPackageData && !parsedPackageData.deprecated" :green="true">
         <template v-slot:icon>
             <SuccessIcon />
         </template>
@@ -8,10 +8,10 @@
             DefinitelyTyped Package
         </template>
 
-        <PackageDetails :package-data="packageData" :hide-description="true" :small="true" />
+        <PackageDetails :package-data="parsedPackageData" :hide-description="true" :small="true" />
     </ResultsEntry>
 
-    <ResultsEntry v-else-if="packageData && packageData.deprecated" :orange="true">
+    <ResultsEntry v-else-if="parsedPackageData && parsedPackageData.deprecated" :orange="true">
         <template v-slot:icon>
             <WarningIcon />
         </template>
@@ -20,7 +20,7 @@
             Deprecated DefinitelyTyped Package
         </template>
 
-        <PackageDetails :package-data="packageData" :hide-description="true" :small="true" />
+        <PackageDetails :package-data="parsedPackageData" :hide-description="true" :small="true" />
     </ResultsEntry>
 
     <ResultsEntry v-else :gray="true">
@@ -36,6 +36,7 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
+import { cloneDeep, set } from 'lodash';
 
 import ResultsEntry from './ResultsEntry.vue';
 import PackageDetails from './PackageDetails.vue';
@@ -56,6 +57,37 @@ export default Vue.extend({
         packageData: {
             type: Object as PropType<PackageData>,
             default: undefined,
+        },
+    },
+    computed: {
+        parsedPackageData(): PackageData | undefined {
+            if (!this.packageData) {
+                return;
+            }
+
+            if (this.packageData.links.repository) {
+                return this.packageData;
+            }
+
+            const clonedPackageData = cloneDeep(this.packageData);
+
+            return set(
+                clonedPackageData,
+                ['links', 'repository'],
+                this.getRepositoryLink(clonedPackageData.readme),
+            );
+        },
+    },
+    methods: {
+        getRepositoryLink(readme?: string): string | null {
+            if (!readme) {
+                return null;
+            }
+
+            const match = /^(?:Files were exported from )(.+)$/gm.exec(readme);
+            const repositoryLink = match && match[1];
+
+            return repositoryLink;
         },
     },
 });

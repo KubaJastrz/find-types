@@ -6,10 +6,11 @@ export interface PackageResponseData {
             name: string;
             version: string;
             description: string;
+            readme?: string;
             links: {
-                homepage: string;
-                npm: string;
-                repository: string;
+                homepage?: string;
+                npm?: string;
+                repository?: string;
             };
             deprecated?: string;
         };
