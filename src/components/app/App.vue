@@ -257,7 +257,6 @@ export default Vue.extend({
 
 <style>
 #app {
-    margin-top: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -268,8 +267,13 @@ export default Vue.extend({
 @import 'helpers';
 
 .title {
-    font-size: 2.33em;
+    font-size: 1.67em;
+    margin-top: 1.33em;
     margin-bottom: 1em;
+
+    @include respond-from(mobile-large) {
+        font-size: 2.33em;
+    }
 
     a {
         @extend %link-unstyled;
@@ -278,5 +282,16 @@ export default Vue.extend({
 
 .results-wrapper {
     margin-top: 50px;
+    width: 100%;
+    padding: 0 20px;
+
+    @include respond-from(mobile-large) {
+        width: 400px;
+        padding: 0;
+    }
+
+    @include respond-from(tablet) {
+        width: 520px;
+    }
 }
 </style>

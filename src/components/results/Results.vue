@@ -86,8 +86,10 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@import 'helpers';
+
 .results {
-    width: 500px;
+    margin: 0 auto;
 }
 
 .types-loader {

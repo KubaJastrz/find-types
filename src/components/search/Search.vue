@@ -154,7 +154,15 @@ export default Vue.extend({
 
 .search {
     position: relative;
-    width: 400px;
+    width: 300px;
+
+    @include respond-from(mobile-large) {
+        width: 340px;
+    }
+
+    @include respond-from(tablet) {
+        width: 420px;
+    }
 }
 
 .search-button {

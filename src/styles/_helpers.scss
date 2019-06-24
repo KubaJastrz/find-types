@@ -1,3 +1,8 @@
+$size-thresholds: (
+    mobile-large: 425px,
+    tablet: 767px,
+);
+
 $font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 
 %button-unstyled {
@@ -13,4 +18,16 @@ $font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospa
 
 @function em($value-in-px, $base-size) {
     @return 1em * ($value-in-px / $base-size);
+}
+
+@mixin respond-from($breakpoint) {
+    @if type-of($breakpoint) == string {
+        @media screen and (min-width: map-get($size-thresholds, $breakpoint)) {
+            @content;
+        }
+    } @else {
+        @media screen and (min-width: $breakpoint) {
+            @content;
+        }
+    }
 }
