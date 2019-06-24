@@ -1,9 +1,18 @@
 <template>
-    <a target="_blank" rel="noopener noreferrer" class="external-link"><slot /></a>
+    <a :target="openInNewTab && '_blank'" rel="noopener noreferrer" class="external-link">
+        <slot />
+    </a>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend();
+export default Vue.extend({
+    props: {
+        openInNewTab: {
+            type: Boolean,
+            default: false,
+        },
+    },
+});
 </script>
