@@ -9,17 +9,19 @@
                     :href="packageData.links.npm"
                     class="link -npm"
                 >
-                    <NpmIcon />
+                    <span title="Npm registry"><NpmIcon /></span>
                 </external-link>
                 <external-link
                     v-if="packageData.links.repository"
                     :href="packageData.links.repository"
                     class="link -repo"
                 >
-                    <GithubIcon v-if="isRepoGithub" />
-                    <GitlabIcon v-else-if="isRepoGitlab" />
-                    <BitbucketIcon v-else-if="isRepoBitbucket" />
-                    <GithubIcon v-else />
+                    <span title="Source code repository">
+                        <GithubIcon v-if="isRepoGithub" />
+                        <GitlabIcon v-else-if="isRepoGitlab" />
+                        <BitbucketIcon v-else-if="isRepoBitbucket" />
+                        <GithubIcon v-else />
+                    </span>
                 </external-link>
             </div>
         </div>

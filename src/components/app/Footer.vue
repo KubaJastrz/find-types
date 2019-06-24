@@ -2,7 +2,7 @@
     <footer class="footer">
         <div class="links">
             <external-link href="https://github.com/KubaJastrz/find-types">
-                <GithubIcon />
+                <span title="Source code"><GithubIcon /></span>
             </external-link>
         </div>
         <span class="powered-by">

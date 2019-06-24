@@ -12,7 +12,7 @@
                 placeholder="look for npm package"
             >
                 <template v-slot:button-right>
-                    <button aria-label="Search" type="submit" class="search-button">
+                    <button aria-label="Search" type="submit" class="search-button" title="Search">
                         <SearchIcon />
                     </button>
                 </template>
