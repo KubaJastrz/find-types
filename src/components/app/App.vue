@@ -8,6 +8,7 @@
                 :package-data="packageSearchResults.data"
                 :types-package-data="typesPackageResults.data"
                 :package-json-data="packageJsonResults.data"
+                :has-index-d-file="hasIndexDFile"
                 :is-types-data-loading="isTypesDataLoading"
             />
             <div v-else-if="isPackageTypesPackage">
@@ -52,6 +53,8 @@ interface Data {
         data?: PackageJson;
     };
     isPackageJsonLoading: boolean;
+    hasIndexDFile: boolean | null;
+    isDeclarationIndexFileLoading: boolean;
 }
 
 export default Vue.extend({
@@ -76,12 +79,19 @@ export default Vue.extend({
                 data: undefined,
             },
             isPackageJsonLoading: false,
+            hasIndexDFile: null,
+            isDeclarationIndexFileLoading: false,
         };
     },
     computed: {
         isTypesDataLoading(): boolean {
-            return this.isTypesPackageLoading || this.isPackageJsonLoading;
+            return (
+                this.isTypesPackageLoading ||
+                this.isPackageJsonLoading ||
+                this.isDeclarationIndexFileLoading
+            );
         },
+        // TODO: check if there is a better solution for enums in <template>
         isPackageSuccess(): boolean {
             return this.isPackageOfStatus(PackageSearchStatus.Success);
         },
@@ -109,6 +119,7 @@ export default Vue.extend({
             if (success) {
                 this.getTypesPackage(packageName);
                 this.getPackageJson(packageName);
+                this.getDeclarationIndexFile(packageName);
             }
         },
 
@@ -193,6 +204,11 @@ export default Vue.extend({
         async getPackageJson(packageName: string) {
             this.isPackageJsonLoading = true;
 
+            this.packageJsonResults = {
+                status: PackageSearchStatus.Init,
+                data: undefined,
+            };
+
             try {
                 const data = await API.getPackageJson(packageName);
 
@@ -210,6 +226,29 @@ export default Vue.extend({
                 };
             } finally {
                 this.isPackageJsonLoading = false;
+            }
+        },
+
+        async getDeclarationIndexFile(packageName: string) {
+            this.isDeclarationIndexFileLoading = true;
+            this.hasIndexDFile = null;
+
+            try {
+                const data = await API.getDeclarationIndex(packageName);
+
+                this.hasIndexDFile = !!data;
+            } catch (error) {
+                if (!(error instanceof HTTPError)) {
+                    return;
+                }
+
+                if (error.response.status === 404) {
+                    this.hasIndexDFile = false;
+                } else {
+                    this.hasIndexDFile = null;
+                }
+            } finally {
+                this.isDeclarationIndexFileLoading = false;
             }
         },
     },

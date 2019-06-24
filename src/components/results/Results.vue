@@ -4,6 +4,9 @@
         <ul v-if="didLoadTypes" class="types-results">
             <li><TypesPackageResults :package-data="typesPackageData" /></li>
             <li><PackageJsonResults :package-json-data="packageJsonData" /></li>
+            <li>
+                <IndexDFileResults :has-index-d-file="hasIndexDFile" :package-name="packageName" />
+            </li>
         </ul>
         <div v-else-if="loaderTimeoutId === null" class="types-loader">
             loading...
@@ -12,17 +15,13 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType, PropOptions } from 'vue';
+import Vue, { PropType } from 'vue';
 
 import PackageDetails from './PackageDetails.vue';
 import TypesPackageResults from './TypesPackageResults.vue';
 import PackageJsonResults from './PackageJsonResults.vue';
+import IndexDFileResults from './IndexDFileResults.vue';
 import { PackageData, PackageJson } from '@/types';
-
-const packageProp: PropOptions = {
-    type: Object as PropType<PackageData>,
-    default: undefined,
-};
 
 interface Data {
     loaderTimeoutId: number | null;
@@ -34,13 +33,24 @@ export default Vue.extend({
         PackageDetails,
         TypesPackageResults,
         PackageJsonResults,
+        IndexDFileResults,
     },
     props: {
-        packageData: packageProp,
-        typesPackageData: packageProp,
+        packageData: {
+            type: Object as PropType<PackageData>,
+            default: undefined,
+        },
+        typesPackageData: {
+            type: Object as PropType<PackageData>,
+            default: undefined,
+        },
         packageJsonData: {
             type: Object as PropType<PackageJson>,
             default: undefined,
+        },
+        hasIndexDFile: {
+            type: Boolean as PropType<boolean | null>,
+            default: null,
         },
         isTypesDataLoading: {
             type: Boolean,
@@ -52,6 +62,11 @@ export default Vue.extend({
             loaderTimeoutId: null,
             didLoadTypes: false,
         };
+    },
+    computed: {
+        packageName(): string | undefined {
+            return this.packageData && this.packageData.name;
+        },
     },
     watch: {
         isTypesDataLoading(willBeLoading, wasLoading) {

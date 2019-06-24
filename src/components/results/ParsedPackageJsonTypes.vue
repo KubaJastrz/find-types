@@ -57,7 +57,6 @@ export default Vue.extend({
 /deep/ .external-link {
     @extend %link-unstyled;
 
-    text-decoration: underline;
     font-weight: bold;
 }
 </style>

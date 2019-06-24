@@ -76,7 +76,7 @@ export default Vue.extend({
         },
     },
     created() {
-        this.debouncedFetchSuggestions = debounce(this.fetchSuggestions, 350);
+        this.debouncedFetchSuggestions = debounce(this.fetchSuggestions, 200);
         if (this.parsedInitialQuery) {
             this.handleSearch(this.parsedInitialQuery);
             this.packageName = this.parsedInitialQuery;
