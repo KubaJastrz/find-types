@@ -54,9 +54,7 @@ export default Vue.extend({
     margin: 0;
 }
 
-/deep/ .external-link {
-    @extend %link-unstyled;
-
-    font-weight: bold;
+.external-link {
+    @extend %link-default;
 }
 </style>

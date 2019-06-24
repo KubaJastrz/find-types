@@ -135,6 +135,7 @@ $base: 16px;
     height: 1.1em;
     margin-right: 0.9em;
     color: $icon-color;
+    transition: 100ms ease-in-out;
 
     &:last-child {
         margin-right: 0;
@@ -178,6 +179,15 @@ $base: 16px;
         width: auto;
         max-width: 28px;
     }
+}
+
+.gitlab-1,
+.gitlab-2,
+.gitlab-3,
+.bitbucket-icon-color,
+.bitbucket-icon-gradient-stop-1,
+.bitbucket-icon-gradient-stop-2 {
+    transition: 100ms ease-in-out;
 }
 
 .gitlab-1 {

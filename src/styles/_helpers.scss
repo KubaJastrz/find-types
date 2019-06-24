@@ -16,6 +16,15 @@ $font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospa
     text-decoration: none;
 }
 
+%link-default {
+    @extend %link-unstyled;
+    font-weight: bold;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 @function em($value-in-px, $base-size) {
     @return 1em * ($value-in-px / $base-size);
 }

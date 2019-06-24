@@ -65,9 +65,7 @@ export default Vue.extend({
 }
 
 .external-link {
-    @extend %link-unstyled;
-
+    @extend %link-default;
     font-family: $font-mono;
-    font-weight: bold;
 }
 </style>

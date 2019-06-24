@@ -21,6 +21,7 @@
                 Unexpected error happened, try again
             </div>
         </div>
+        <Footer />
     </div>
 </template>
 
@@ -32,6 +33,7 @@ import { parse } from 'query-string';
 import API from '@/api/Api';
 import Search from '@/components/search/Search.vue';
 import Results from '@/components/results/Results.vue';
+import Footer from './Footer.vue';
 import { getTypesPackageName } from '@/helpers';
 import { PackageData, PackageJson } from '@/types';
 import { PackageSearchStatus } from '@/types/enums';
@@ -61,6 +63,7 @@ export default Vue.extend({
     components: {
         Search,
         Results,
+        Footer,
     },
     data(): Data {
         return {
@@ -260,6 +263,7 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-grow: 1;
 }
 </style>
 
@@ -293,5 +297,10 @@ export default Vue.extend({
     @include respond-from(tablet) {
         width: 520px;
     }
+}
+
+.footer {
+    margin-top: auto;
+    margin-bottom: 12px;
 }
 </style>
