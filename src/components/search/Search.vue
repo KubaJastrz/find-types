@@ -134,7 +134,7 @@ export default Vue.extend({
 
         handleOpen(inputText: string): boolean {
             const { forPackage } = this.suggestions;
-            return this.canSuggestionsBeShown && inputText.startsWith(forPackage);
+            return this.canSuggestionsBeShown && inputText.toLowerCase().startsWith(forPackage);
         },
 
         extractPackageNameFromSuggestion(suggestion: Suggestion): string {
@@ -142,7 +142,7 @@ export default Vue.extend({
         },
 
         updatePackageName(inputText: string) {
-            const { name } = parsePackageString(inputText);
+            const { name } = parsePackageString(inputText.toLowerCase());
             this.packageName = name;
         },
     },
