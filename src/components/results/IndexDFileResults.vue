@@ -9,7 +9,7 @@
         </template>
 
         <ul class="declaration-files">
-            <li><external-link :href="indexDLink">index.d.ts</external-link></li>
+            <li><a :href="indexDLink" class="link">index.d.ts</a></li>
         </ul>
     </ResultsEntry>
 
@@ -64,7 +64,7 @@ export default Vue.extend({
     padding-left: 1.25em;
 }
 
-.external-link {
+.link {
     @extend %link-default;
     font-family: $font-mono;
 }

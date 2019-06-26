@@ -1,13 +1,13 @@
 <template>
     <footer class="footer">
         <div class="links">
-            <external-link href="https://github.com/KubaJastrz/find-types">
-                <span title="Source code"><GithubIcon /></span>
-            </external-link>
+            <a href="https://github.com/KubaJastrz/find-types" class="link" title="Source code">
+                <GithubIcon />
+            </a>
         </div>
         <span class="powered-by">
-            Powered by <external-link href="https://npms.io/">npms.io</external-link> and
-            <external-link href="https://unpkg.com/">unpkg</external-link>
+            Powered by <a href="https://npms.io/" class="link">npms.io</a> and
+            <a href="https://unpkg.com/" class="link">unpkg</a>
         </span>
     </footer>
 </template>
@@ -47,12 +47,12 @@ export default Vue.extend({
 .links {
     margin-bottom: 8px;
 
-    .external-link {
+    .link {
         @extend %link-unstyled;
     }
 }
 
-.powered-by .external-link {
+.powered-by .link {
     @extend %link-default;
 }
 </style>

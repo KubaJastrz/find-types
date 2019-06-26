@@ -33,9 +33,9 @@ export default Vue.extend({
                         return (
                             <span>
                                 {`  "${key}": `}"
-                                <external-link href={this.getFileLink(value!)}>
+                                <a href={this.getFileLink(value!)} class="link">
                                     {value}
-                                </external-link>
+                                </a>
                                 "
                             </span>
                         );
@@ -54,7 +54,7 @@ export default Vue.extend({
     margin: 0;
 }
 
-.external-link {
+.link {
     @extend %link-default;
 }
 </style>

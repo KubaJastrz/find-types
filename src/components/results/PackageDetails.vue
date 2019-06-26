@@ -4,25 +4,25 @@
             <h4 class="name">{{ packageData.name }}</h4>
             <div class="version">{{ packageData.version }}</div>
             <div class="links">
-                <external-link
+                <a
                     v-if="packageData.links.npm"
                     :href="packageData.links.npm"
                     class="link -npm"
+                    title="Npm registry"
                 >
-                    <span title="Npm registry"><NpmIcon /></span>
-                </external-link>
-                <external-link
+                    <NpmIcon />
+                </a>
+                <a
                     v-if="packageData.links.repository"
                     :href="packageData.links.repository"
                     class="link -repo"
+                    title="Source code repository"
                 >
-                    <span title="Source code repository">
-                        <GithubIcon v-if="isRepoGithub" />
-                        <GitlabIcon v-else-if="isRepoGitlab" />
-                        <BitbucketIcon v-else-if="isRepoBitbucket" />
-                        <GithubIcon v-else />
-                    </span>
-                </external-link>
+                    <GithubIcon v-if="isRepoGithub" />
+                    <GitlabIcon v-else-if="isRepoGitlab" />
+                    <BitbucketIcon v-else-if="isRepoBitbucket" />
+                    <GithubIcon v-else />
+                </a>
             </div>
         </div>
         <p v-if="!hideDescription" class="description">{{ packageData.description }}</p>
