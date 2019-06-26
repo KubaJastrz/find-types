@@ -1,6 +1,6 @@
 <template>
-    <div class="autocomplete" @mouseenter="ignoreBlur = true" @mouseleave="ignoreBlur = false">
-        <div :class="{ '-focus': isFocused }" class="autocomplete-bar">
+    <div class="autosuggest" @mouseenter="ignoreBlur = true" @mouseleave="ignoreBlur = false">
+        <div :class="{ '-focus': isFocused }" class="autosuggest-bar">
             <input
                 ref="input"
                 v-model="inputText"
@@ -237,7 +237,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import 'helpers';
 
-.autocomplete-bar {
+.autosuggest-bar {
     display: inline-flex;
     align-items: center;
     width: 100%;
