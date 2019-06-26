@@ -1,3 +1,5 @@
+const publicPath = process.env.NODE_ENV === 'production' ? 'https://find-types.netlify.com/' : '/';
+
 module.exports = {
     css: {
         loaderOptions: {
@@ -21,4 +23,5 @@ module.exports = {
                 },
             });
     },
+    publicPath,
 };
