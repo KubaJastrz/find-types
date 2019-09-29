@@ -3,8 +3,11 @@ const publicPath = process.env.NODE_ENV === 'production' ? 'https://find-types.n
 module.exports = {
     css: {
         loaderOptions: {
-            sass: {
-                includePaths: ['./src/styles'],
+            // https://github.com/vuejs/vue-cli/issues/4630
+            scss: {
+                sassOptions: {
+                    includePaths: ['./src/styles'],
+                },
             },
         },
     },
