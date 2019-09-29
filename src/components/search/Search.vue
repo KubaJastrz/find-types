@@ -9,6 +9,7 @@
                 :items-key="suggestions.forPackage"
                 :items="suggestions.list"
                 :get-value-from-item="extractPackageNameFromSuggestion"
+                :autofocus="true"
                 placeholder="look for npm package"
             >
                 <template v-slot:button-right>

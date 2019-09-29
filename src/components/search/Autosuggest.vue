@@ -5,6 +5,7 @@
                 ref="input"
                 v-model="inputText"
                 :placeholder="placeholder"
+                :autofocus="autofocus"
                 spellcheck="false"
                 autocomplete="off"
                 @input="handleInput"
@@ -82,6 +83,10 @@ export default Vue.extend({
         canBeOpened: {
             type: Function,
             required: true,
+        },
+        autofocus: {
+            type: Boolean,
+            default: false,
         },
     },
     data(): Data {
