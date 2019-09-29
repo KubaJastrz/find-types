@@ -4,9 +4,6 @@
 import Vue, { VNode } from 'vue';
 
 declare global {
-    // @ts-ignore
-    type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
-
     namespace JSX {
         interface Element extends VNode {}
         interface ElementClass extends Vue {}
