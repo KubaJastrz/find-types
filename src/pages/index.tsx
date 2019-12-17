@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import '../styles/index.css';
 
 function Index() {
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState<string>();
   useEffect(() => {
     async function getDate() {
       const res = await fetch('/api/date');
