@@ -2,7 +2,7 @@ import { NowRequest, NowResponse } from '@now/node';
 import got from 'got';
 import { PackageJson } from 'type-fest';
 
-import { PackageResponseData, NpmResponseData } from '../types/api';
+import { PackageResponseData, NpmResponseData } from '@/types/api';
 
 /**
  * Route handler

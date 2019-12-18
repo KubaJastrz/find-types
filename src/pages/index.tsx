@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import API from '../api/Api';
+import API from '@/api/Api';
 
 function Index() {
   const [response, setResponse] = useState<any>();

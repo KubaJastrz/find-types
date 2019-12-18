@@ -1,6 +1,6 @@
 import ky, { Options as FetchOptions } from 'ky';
 
-import { PackageResponseData, SuggestionsResponseData } from '../../types/api';
+import { PackageResponseData, SuggestionsResponseData } from '@/types/api';
 
 export default class API {
   public static async get<Response>(url: string, options?: FetchOptions) {
