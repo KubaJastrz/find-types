@@ -17,12 +17,11 @@ module.exports = {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Find Types`,
-        short_name: `Find Types`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#007acc`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`,
+        icon: `src/images/logo.png`,
       },
     },
   ],
