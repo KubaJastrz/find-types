@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/index.css';
 
 import API from '../api/Api';
 
@@ -14,7 +13,7 @@ function Index() {
     getResponse();
   }, []);
 
-  return <main>{response ? JSON.stringify(response.body.name, null, 2) : 'Loading...'}</main>;
+  return <pre>{response ? JSON.stringify(response, null, 2) : 'Loading...'}</pre>;
 }
 
 export default Index;

@@ -1,16 +1,33 @@
-// irrelevant fields are skipped
-// source: https://github.com/npm/registry/blob/master/docs/responses/package-metadata.md
 export interface PackageResponseData {
   name: string;
   version: string;
-  description: string;
+  description?: string;
   readme?: string;
   links: {
     homepage?: string;
     npm?: string;
     repository?: string;
   };
-  deprecated?: string;
+  types?: string;
+  deprecated?: true;
+}
+
+// uses abbreviated metadata format
+// source: https://github.com/npm/registry/blob/master/docs/responses/package-metadata.md
+interface NpmResponseData {
+  name: string;
+  modified: string;
+  'dist-tags': {
+    latest: string;
+    [tagName: string]: string;
+  };
+  versions: {
+    [version: string]: {
+      name: string;
+      version: string;
+      deprecated?: string;
+    };
+  };
 }
 
 // irrelevant fields are skipped
