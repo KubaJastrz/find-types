@@ -6,12 +6,23 @@
     "start": "now dev",
     "build": "gatsby build",
     "now-dev": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "format": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "jest",
-    "lint": "eslint . --ext .js,.ts,.tsx",
-    "prettier": "prettier --write \"./**/*.{js,ts,tsx,json,md}\""
+    "lint": "eslint . --ext .js,.ts,.tsx"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "husky": {
     "hooks": {
@@ -30,6 +41,7 @@
     "gatsby-image": "^2.2.37",
     "gatsby-plugin-alias-imports": "^1.0.5",
     "gatsby-plugin-manifest": "^2.2.33",
+    "gatsby-plugin-postcss": "^2.1.18",
     "gatsby-plugin-react-helmet": "^3.1.18",
     "gatsby-plugin-styled-components": "^3.1.16",
     "gatsby-plugin-typescript": "^2.1.23",
@@ -74,6 +86,7 @@
     "jest-watch-typeahead": "^0.4.2",
     "lint-staged": "^9.5.0",
     "now": "^16.7.0",
+    "postcss-preset-env": "^6.7.0",
     "postinstall-postinstall": "^2.0.0",
     "prettier": "1.19.1",
     "type-fest": "^0.8.1",

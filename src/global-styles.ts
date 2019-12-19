@@ -14,6 +14,12 @@ export default createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
   }
 
+  #___gatsby,
+  #gatsby-focus-wrapper {
+    display: flex;
+    flex-grow: 1;
+  }
+
   input,
   button {
     color: inherit;
