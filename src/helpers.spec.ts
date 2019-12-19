@@ -28,6 +28,11 @@ describe('parsePackageString', () => {
     expect(parsePackageString('vue')).toMatchObject({ name: 'vue', version: undefined });
   });
 
+  it('works with invalid input', () => {
+    expect(parsePackageString('')).toMatchObject({ name: undefined, version: undefined });
+    expect(parsePackageString()).toMatchObject({ name: undefined, version: undefined });
+  });
+
   it('handles scoped packages', () => {
     expect(parsePackageString('@vue/cli@3.0')).toMatchObject({
       name: '@vue/cli',

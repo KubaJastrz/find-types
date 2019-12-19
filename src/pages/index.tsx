@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { parse } from 'query-string';
 
-import API from '@/api/Api';
 import Layout from '@/components/Layout';
 import { CleanLink } from '@/components/Framework';
 import * as Styled from './index.styles';
+import TypeFinder from '@/components/TypeFinder';
 
 function Index() {
-  const [response, setResponse] = useState<any>();
+  const [initialQuery, setInitialQuery] = React.useState<string>();
 
-  useEffect(() => {
-    async function getResponse() {
-      const res = await API.getPackageDetails('react');
-      setResponse(res);
+  React.useEffect(() => {
+    const { q } = parse(window.location.search);
+    const packageName = Array.isArray(q) ? q[0] : q;
+
+    if (!packageName) {
+      return;
     }
-    getResponse();
+
+    setInitialQuery(packageName);
   }, []);
 
   return (
@@ -21,7 +25,7 @@ function Index() {
       <Styled.PageTitle>
         <CleanLink to="/">Find Types</CleanLink>
       </Styled.PageTitle>
-      <pre>{response ? JSON.stringify(response, null, 2) : 'Loading...'}</pre>
+      <TypeFinder initialQuery={initialQuery} />
     </Layout>
   );
 }
