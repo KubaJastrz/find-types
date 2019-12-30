@@ -1,7 +1,14 @@
 import React from 'react';
+import DOMPurify from 'dompurify';
 
 import * as Styled from './SuggestionBox.styles';
 import { Suggestion } from '@/types';
+
+function sanitizeSuggestion(html: string) {
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: ['em'],
+  });
+}
 
 interface Props {
   suggestions: Suggestion[];
@@ -16,7 +23,9 @@ function SuggestionBox({ suggestions, isVisible, highlightedIndex }: Props) {
         <Styled.Item key={suggestion.package.name}>
           <Styled.Button
             isHighlighted={highlightedIndex === index}
-            dangerouslySetInnerHTML={{ __html: suggestion.highlight || suggestion.package.name }}
+            dangerouslySetInnerHTML={{
+              __html: sanitizeSuggestion(suggestion.highlight || suggestion.package.name),
+            }}
           />
         </Styled.Item>
       ))}
