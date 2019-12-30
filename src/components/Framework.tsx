@@ -14,7 +14,7 @@ export const Link = styled(CleanLink)`
   }
 `;
 
-export const Button = styled.button`
+export const CleanButton = styled.button`
   padding: 0;
   border: 0;
   background-color: transparent;

@@ -52,6 +52,11 @@ describe('parsePackageString', () => {
       version: '3.0',
     });
   });
+
+  it('transforms name to lower case', () => {
+    expect(parsePackageString('VuE')).toMatchObject({ name: 'vue' });
+    expect(parsePackageString('vUe@3.0')).toMatchObject({ name: 'vue', version: '3.0' });
+  });
 });
 
 describe('getTypesPackageName', () => {

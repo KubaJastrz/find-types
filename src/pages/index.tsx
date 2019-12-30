@@ -8,8 +8,12 @@ import TypeFinder from '@/components/TypeFinder';
 
 function Index() {
   const [initialQuery, setInitialQuery] = React.useState<string>();
+  // skip first render of the application to simplify logic responsible for handling initial query
+  const [wasInitialQueryChecked, checkInitialQuery] = React.useState(false);
 
   React.useEffect(() => {
+    checkInitialQuery(true);
+
     const { q } = parse(window.location.search);
     const packageName = Array.isArray(q) ? q[0] : q;
 
@@ -25,7 +29,7 @@ function Index() {
       <Styled.PageTitle>
         <CleanLink to="/">Find Types</CleanLink>
       </Styled.PageTitle>
-      <TypeFinder initialQuery={initialQuery} />
+      {wasInitialQueryChecked && <TypeFinder initialQuery={initialQuery} />}
     </Layout>
   );
 }

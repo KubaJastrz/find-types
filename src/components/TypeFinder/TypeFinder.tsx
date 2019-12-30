@@ -1,29 +1,35 @@
-import React, { FormEvent } from 'react';
+import React from 'react';
 import useAsyncEffect from '@n1ru4l/use-async-effect';
 import { useDebouncedCallback } from 'use-debounce';
 import { stringify } from 'query-string';
 
 import API from '@/api/Api';
+import Autosuggest from '@/components/Autosuggest';
 import { PackageResponseData, SuggestionsResponseData } from '@/types/api';
-import { parsePackageString } from '@/helpers';
+import { parsePackageString, preventDefault } from '@/helpers';
 import Results from './Results';
-
-interface Props {
-  initialQuery?: string;
-}
+import * as Styled from './TypeFinder.styles';
 
 function pushHistory(packageName: string) {
   const url = stringify({ q: packageName });
   window.history.pushState(null, '', `/?${url}`);
 }
 
-function TypeFinder({ initialQuery }: Props) {
-  const [packageName, setPackageName] = React.useState('');
+function extractPackageNameFromSuggestion(suggestion: SuggestionsResponseData): string {
+  return suggestion ? suggestion.package.name : '';
+}
 
+interface Props {
+  initialQuery?: string;
+}
+
+function TypeFinder({ initialQuery }: Props) {
+  const [packageName, setPackageName] = React.useState(initialQuery ?? '');
+
+  // Suggestions
   const [suggestionsResponse, setSuggestionsResponse] = React.useState<SuggestionsResponseData[]>();
   const [fetchSuggestions] = useDebouncedCallback(async (packageName: string) => {
-    // const response = await API.getSuggestions(packageName);
-    const response = `suggestions for '${packageName}'`;
+    const response = await API.getSuggestions(packageName);
     setSuggestionsResponse(response);
   }, 200);
 
@@ -38,6 +44,7 @@ function TypeFinder({ initialQuery }: Props) {
     [packageName],
   );
 
+  // Package details
   const [packageResponse, setPackageResponse] = React.useState<PackageResponseData>();
   const fetchPackageDetails = React.useCallback(async (packageName: string) => {
     // const response = await API.getPackageDetails(packageName);
@@ -46,41 +53,47 @@ function TypeFinder({ initialQuery }: Props) {
   }, []);
 
   const handleSearch = React.useCallback(
-    (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      const { name } = parsePackageString(packageName.toLowerCase());
+    (packageName?: string, isInitialQuery = false) => {
+      const { name } = parsePackageString(packageName);
       if (!name) {
         return;
       }
-      pushHistory(name);
+      if (!isInitialQuery) {
+        pushHistory(name);
+      }
       setPackageName(name);
       fetchPackageDetails(name);
     },
-    [fetchPackageDetails, packageName],
+    [fetchPackageDetails],
   );
 
-  // `initialQuery` doesn't come on first render, so it can't live in React.useState(...)
+  const handleSelect = React.useCallback(
+    (inputText: string) => {
+      handleSearch(inputText);
+    },
+    [handleSearch],
+  );
+
+  // Initial Query
   React.useEffect(() => {
     if (initialQuery) {
-      const { name } = parsePackageString(initialQuery.toLowerCase());
-      if (!name) {
-        return;
-      }
-      setPackageName(name);
-      fetchPackageDetails(name);
+      handleSearch(initialQuery, true);
     }
-  }, [fetchPackageDetails, initialQuery]);
+  }, [fetchPackageDetails, handleSearch, initialQuery]);
 
   return (
     <>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={packageName}
-          onChange={({ target }) => setPackageName(target.value)}
+      <Styled.SearchForm onSubmit={preventDefault(handleSearch)}>
+        <Autosuggest
+          initialValue={packageName}
+          onChange={setPackageName}
+          onSelect={handleSelect}
+          autoFocus={true}
+          placeholder="look for npm package"
+          items={suggestionsResponse || []}
+          getValueFromItem={extractPackageNameFromSuggestion}
         />
-      </form>
-      <Results response={suggestionsResponse} />
+      </Styled.SearchForm>
       <Results response={packageResponse} />
     </>
   );

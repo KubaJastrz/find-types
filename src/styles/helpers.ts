@@ -1,3 +1,7 @@
+import React from 'react';
+import styled from 'styled-components';
+import { omit } from 'lodash';
+
 export const MEDIA_SIZES = {
   xs: 360,
   sm: 576,
@@ -28,3 +32,6 @@ export const MEDIA: Media = (Object.keys(MEDIA_SIZES) as Array<MediaSizes>).redu
 }, {} as any) as any;
 
 MEDIA.minWidth = minWidth;
+
+export const styledWithOmitProps = (Component: React.ComponentType, propsToOmit: string[] = []) =>
+  styled(props => React.createElement(Component, omit(props, propsToOmit)));
