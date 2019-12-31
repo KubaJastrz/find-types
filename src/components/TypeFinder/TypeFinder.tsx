@@ -10,19 +10,6 @@ import Results from './Results';
 import * as Styled from './TypeFinder.styles';
 import useSuggestions from './useSuggestions';
 
-function pushHistory(packageName: string) {
-  const url = stringify({ q: packageName });
-  window.history.pushState(null, '', `/?${url}`);
-}
-
-function getOptionLabel(suggestion?: Suggestion): string {
-  return suggestion ? suggestion.highlight || suggestion.package.name : '';
-}
-
-function getOptionValue(suggestion?: Suggestion): string {
-  return suggestion ? suggestion.package.name : '';
-}
-
 interface Props {
   initialQuery?: string;
 }
@@ -42,7 +29,7 @@ function TypeFinder({ initialQuery = '' }: Props) {
   }, []);
 
   const handleSearch = React.useCallback(
-    (packageName?: string, isInitialQuery = false) => {
+    (packageName: string, isInitialQuery = false) => {
       const { name } = parsePackageString(packageName);
       if (!name) {
         return;
@@ -88,6 +75,19 @@ function TypeFinder({ initialQuery = '' }: Props) {
       <Results response={packageResponse} />
     </>
   );
+}
+
+function pushHistory(packageName: string) {
+  const url = stringify({ q: packageName });
+  window.history.pushState(null, '', `/?${url}`);
+}
+
+function getOptionLabel(suggestion?: Suggestion): string {
+  return suggestion ? suggestion.highlight || suggestion.package.name : '';
+}
+
+function getOptionValue(suggestion?: Suggestion): string {
+  return suggestion ? suggestion.package.name : '';
 }
 
 export default TypeFinder;

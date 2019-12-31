@@ -64,7 +64,9 @@ function Autocomplete({
           autoFocus={autoFocus}
           placeholder={placeholder}
           spellCheck={false}
+          autoCapitalize="off"
           autoComplete="off"
+          autoCorrect="off"
         />
         <Styled.SearchButton type="submit" aria-label="Search" title="Search">
           <SearchIcon width={20} height={20} />
