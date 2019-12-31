@@ -2,6 +2,7 @@ import React from 'react';
 import { useCombobox } from 'downshift';
 import DOMPurify from 'dompurify';
 
+import { ReactComponent as SearchIcon } from '@/assets/icons/search.svg';
 import { Suggestion } from '@/types';
 import * as Styled from './Autocomplete.styles';
 
@@ -65,6 +66,9 @@ function Autocomplete({
           spellCheck={false}
           autoComplete="off"
         />
+        <Styled.SearchButton type="submit" aria-label="Search" title="Search">
+          <SearchIcon width={20} height={20} />
+        </Styled.SearchButton>
       </Styled.SuggestionBar>
       <Styled.List {...getMenuProps()} isOpen={isOpen}>
         {items.map((item, index) => (

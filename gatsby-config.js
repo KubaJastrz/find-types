@@ -22,6 +22,7 @@ module.exports = {
         },
       },
     },
+    'gatsby-plugin-svgr',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     'gatsby-plugin-lodash',

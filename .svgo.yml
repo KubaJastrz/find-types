@@ -1,0 +1,5 @@
+# https://github.com/svg/svgo/blob/master/.svgo.yml
+# TODO: check why gatsby-plugins-svgr has issues: https://github.com/zabute/gatsby-plugin-svgr/issues/38
+
+plugins:
+  - removeViewBox: false

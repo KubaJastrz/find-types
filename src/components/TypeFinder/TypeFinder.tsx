@@ -73,7 +73,7 @@ function TypeFinder({ initialQuery = '' }: Props) {
 
   return (
     <>
-      <Styled.SearchForm onSubmit={preventDefault(handleSearch)}>
+      <Styled.SearchForm onSubmit={preventDefault(() => handleSearch(packageName))}>
         <Autocomplete
           initialValue={packageName}
           onInput={setPackageName}
