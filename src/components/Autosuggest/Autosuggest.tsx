@@ -19,6 +19,8 @@ interface State {
   isOpen: boolean;
   isFocused: boolean;
   highlightedIndex?: number;
+  itemsKey: string;
+  canSuggestionsBeShown: boolean;
 }
 
 class Autosuggest extends React.Component<Props, State> {
@@ -27,17 +29,26 @@ class Autosuggest extends React.Component<Props, State> {
     isOpen: false,
     isFocused: false,
     highlightedIndex: undefined,
+    itemsKey: '',
+    canSuggestionsBeShown: true,
   };
 
   private inputRef = React.createRef<HTMLInputElement>();
 
   private ignoreBlur = false;
 
+  canBeOpened = () => {
+    const { inputText, itemsKey, canSuggestionsBeShown } = this.state;
+
+    return canSuggestionsBeShown && inputText.toLowerCase().startsWith(itemsKey);
+  };
+
   maybeOpen = () => {
     if (this.state.isOpen) {
       return;
     }
-    this.setState({ isOpen: this.state.isFocused });
+
+    this.setState(state => ({ isOpen: state.isFocused && this.canBeOpened() }));
   };
 
   close = () => {
@@ -51,12 +62,19 @@ class Autosuggest extends React.Component<Props, State> {
     const value = this.props.getValueFromItem(item);
     this.props.onSelect(value);
     this.close();
-    this.setState({ inputText: value });
+    this.setState({
+      inputText: value,
+      itemsKey: value,
+      canSuggestionsBeShown: false,
+    });
   }
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    this.setState({ inputText: value });
+    this.setState({
+      inputText: value,
+      canSuggestionsBeShown: true,
+    });
     this.props.onChange(value);
     this.maybeOpen();
     if (value.length === 0) {
@@ -151,6 +169,19 @@ class Autosuggest extends React.Component<Props, State> {
   getItemByIndex = (index: number) => {
     return this.props.items[index];
   };
+
+  componentDidUpdate(prevProps: Props, prevState: State) {
+    const { itemsKey } = this.state;
+    const { items } = this.props;
+
+    if (items !== prevProps.items) {
+      this.setState(state => ({ itemsKey: state.inputText }));
+    }
+
+    if (itemsKey !== prevState.itemsKey) {
+      this.maybeOpen();
+    }
+  }
 
   render = () => {
     const { inputText, isFocused, isOpen, highlightedIndex } = this.state;
