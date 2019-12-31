@@ -39,6 +39,7 @@
     "@hot-loader/react-dom": "^16.11.0",
     "@n1ru4l/use-async-effect": "1.1.8",
     "dompurify": "^2.0.7",
+    "downshift": "^4.0.1",
     "gatsby": "^2.18.15",
     "gatsby-image": "^2.2.37",
     "gatsby-plugin-alias-imports": "^1.0.5",

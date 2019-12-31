@@ -2,7 +2,7 @@ import React from 'react';
 import { stringify } from 'query-string';
 
 import API from '@/api/Api';
-import Autosuggest from '@/components/Autosuggest';
+import Autocomplete from '@/components/Autocomplete';
 import { PackageResponseData } from '@/types/api';
 import { Suggestion } from '@/types';
 import { parsePackageString, preventDefault } from '@/helpers';
@@ -15,7 +15,11 @@ function pushHistory(packageName: string) {
   window.history.pushState(null, '', `/?${url}`);
 }
 
-function extractPackageNameFromSuggestion(suggestion: Suggestion): string {
+function getOptionLabel(suggestion?: Suggestion): string {
+  return suggestion ? suggestion.highlight || suggestion.package.name : '';
+}
+
+function getOptionValue(suggestion?: Suggestion): string {
   return suggestion ? suggestion.package.name : '';
 }
 
@@ -23,8 +27,8 @@ interface Props {
   initialQuery?: string;
 }
 
-function TypeFinder({ initialQuery }: Props) {
-  const [packageName, setPackageName] = React.useState(initialQuery ?? '');
+function TypeFinder({ initialQuery = '' }: Props) {
+  const [packageName, setPackageName] = React.useState(initialQuery);
 
   // Suggestions
   const suggestions = useSuggestions(packageName);
@@ -52,6 +56,14 @@ function TypeFinder({ initialQuery }: Props) {
     [fetchPackageDetails],
   );
 
+  const handleSelect = React.useCallback(
+    (suggestion?: Suggestion) => {
+      const packageName = getOptionValue(suggestion);
+      handleSearch(packageName);
+    },
+    [handleSearch],
+  );
+
   // Initial Query
   React.useEffect(() => {
     if (initialQuery) {
@@ -62,14 +74,15 @@ function TypeFinder({ initialQuery }: Props) {
   return (
     <>
       <Styled.SearchForm onSubmit={preventDefault(handleSearch)}>
-        <Autosuggest
+        <Autocomplete
           initialValue={packageName}
-          onChange={setPackageName}
-          onSelect={handleSearch}
+          onInput={setPackageName}
+          onSelect={handleSelect}
           autoFocus={true}
           placeholder="look for npm package"
           items={suggestions ?? []}
-          getValueFromItem={extractPackageNameFromSuggestion}
+          getOptionLabel={getOptionLabel}
+          getOptionValue={getOptionValue}
         />
       </Styled.SearchForm>
       <Results response={packageResponse} />
