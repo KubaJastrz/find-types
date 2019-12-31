@@ -1,10 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
 import { parse } from 'query-string';
 
 import Layout from '@/components/Layout';
 import { CleanLink } from '@/components/Framework';
-import * as Styled from './index.styles';
 import TypeFinder from '@/components/TypeFinder';
+import { MEDIA } from '@/styles/helpers';
 
 function Index() {
   const [initialQuery, setInitialQuery] = React.useState<string>();
@@ -26,12 +27,22 @@ function Index() {
 
   return (
     <Layout>
-      <Styled.PageTitle>
+      <PageTitle>
         <CleanLink to="/">Find Types</CleanLink>
-      </Styled.PageTitle>
+      </PageTitle>
       {wasInitialQueryChecked && <TypeFinder initialQuery={initialQuery} />}
     </Layout>
   );
 }
+
+export const PageTitle = styled.h1`
+  font-size: 1.67em;
+  margin-top: 1.33em;
+  margin-bottom: 1em;
+
+  ${MEDIA.xs} {
+    font-size: 2.33em;
+  }
+`;
 
 export default Index;
