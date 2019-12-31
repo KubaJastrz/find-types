@@ -1,21 +1,21 @@
 import React from 'react';
-import useAsyncEffect from '@n1ru4l/use-async-effect';
-import { useDebouncedCallback } from 'use-debounce';
 import { stringify } from 'query-string';
 
 import API from '@/api/Api';
 import Autosuggest from '@/components/Autosuggest';
-import { PackageResponseData, SuggestionsResponseData } from '@/types/api';
+import { PackageResponseData } from '@/types/api';
+import { Suggestion } from '@/types';
 import { parsePackageString, preventDefault } from '@/helpers';
 import Results from './Results';
 import * as Styled from './TypeFinder.styles';
+import useSuggestions from './useSuggestions';
 
 function pushHistory(packageName: string) {
   const url = stringify({ q: packageName });
   window.history.pushState(null, '', `/?${url}`);
 }
 
-function extractPackageNameFromSuggestion(suggestion: SuggestionsResponseData): string {
+function extractPackageNameFromSuggestion(suggestion: Suggestion): string {
   return suggestion ? suggestion.package.name : '';
 }
 
@@ -27,22 +27,7 @@ function TypeFinder({ initialQuery }: Props) {
   const [packageName, setPackageName] = React.useState(initialQuery ?? '');
 
   // Suggestions
-  const [suggestionsResponse, setSuggestionsResponse] = React.useState<SuggestionsResponseData[]>();
-  const [fetchSuggestions] = useDebouncedCallback(async (packageName: string) => {
-    const response = await API.getSuggestions(packageName);
-    setSuggestionsResponse(response);
-  }, 200);
-
-  useAsyncEffect(
-    function*() {
-      const { name } = parsePackageString(packageName);
-      if (!name) {
-        return;
-      }
-      yield fetchSuggestions(name);
-    },
-    [packageName],
-  );
+  const suggestions = useSuggestions(packageName);
 
   // Package details
   const [packageResponse, setPackageResponse] = React.useState<PackageResponseData>();
@@ -79,7 +64,7 @@ function TypeFinder({ initialQuery }: Props) {
     if (initialQuery) {
       handleSearch(initialQuery, true);
     }
-  }, [fetchPackageDetails, handleSearch, initialQuery]);
+  }, [handleSearch, initialQuery]);
 
   return (
     <>
@@ -90,7 +75,7 @@ function TypeFinder({ initialQuery }: Props) {
           onSelect={handleSelect}
           autoFocus={true}
           placeholder="look for npm package"
-          items={suggestionsResponse || []}
+          items={suggestions ?? []}
           getValueFromItem={extractPackageNameFromSuggestion}
         />
       </Styled.SearchForm>
