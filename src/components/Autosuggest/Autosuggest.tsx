@@ -216,6 +216,8 @@ class Autosuggest extends React.Component<Props, State> {
           suggestions={items}
           isVisible={isVisible}
           highlightedIndex={highlightedIndex}
+          onItemClick={this.selectItemFromMouse}
+          onItemMouseEnter={this.highlightItemFromMouse}
         />
       </div>
     );

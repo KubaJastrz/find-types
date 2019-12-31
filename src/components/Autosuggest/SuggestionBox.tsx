@@ -14,9 +14,17 @@ interface Props {
   suggestions: Suggestion[];
   isVisible: boolean;
   highlightedIndex?: number;
+  onItemClick: (index: number) => void;
+  onItemMouseEnter: (index: number) => void;
 }
 
-function SuggestionBox({ suggestions, isVisible, highlightedIndex }: Props) {
+function SuggestionBox({
+  suggestions,
+  isVisible,
+  highlightedIndex,
+  onItemClick,
+  onItemMouseEnter,
+}: Props) {
   return (
     <Styled.List isVisible={isVisible}>
       {suggestions.map((suggestion, index) => (
@@ -26,6 +34,8 @@ function SuggestionBox({ suggestions, isVisible, highlightedIndex }: Props) {
             dangerouslySetInnerHTML={{
               __html: sanitizeSuggestion(suggestion.highlight || suggestion.package.name),
             }}
+            onClick={() => onItemClick(index)}
+            onMouseEnter={() => onItemMouseEnter(index)}
           />
         </Styled.Item>
       ))}
