@@ -52,13 +52,6 @@ function TypeFinder({ initialQuery }: Props) {
     [fetchPackageDetails],
   );
 
-  const handleSelect = React.useCallback(
-    (inputText: string) => {
-      handleSearch(inputText);
-    },
-    [handleSearch],
-  );
-
   // Initial Query
   React.useEffect(() => {
     if (initialQuery) {
@@ -72,7 +65,7 @@ function TypeFinder({ initialQuery }: Props) {
         <Autosuggest
           initialValue={packageName}
           onChange={setPackageName}
-          onSelect={handleSelect}
+          onSelect={handleSearch}
           autoFocus={true}
           placeholder="look for npm package"
           items={suggestions ?? []}
