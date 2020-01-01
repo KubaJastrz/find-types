@@ -23,8 +23,7 @@ function TypeFinder({ initialQuery = '' }: Props) {
   // Package details
   const [packageResponse, setPackageResponse] = React.useState<PackageResponseData>();
   const fetchPackageDetails = React.useCallback(async (packageName: string) => {
-    // const response = await API.getPackageDetails(packageName);
-    const response = `result for '${packageName}'`;
+    const response = await API.getPackageDetails(packageName);
     setPackageResponse(response);
   }, []);
 
@@ -35,7 +34,7 @@ function TypeFinder({ initialQuery = '' }: Props) {
         return;
       }
       if (!isInitialQuery) {
-        pushHistory(name);
+        pushSearchToHistory(name);
       }
       setPackageName(name);
       fetchPackageDetails(name);
@@ -72,12 +71,14 @@ function TypeFinder({ initialQuery = '' }: Props) {
           getOptionValue={getOptionValue}
         />
       </Styled.SearchForm>
-      <Results response={packageResponse} />
+      <Styled.SearchResults>
+        <Results response={packageResponse} />
+      </Styled.SearchResults>
     </>
   );
 }
 
-function pushHistory(packageName: string) {
+function pushSearchToHistory(packageName: string) {
   const url = stringify({ q: packageName });
   window.history.pushState(null, '', `/?${url}`);
 }

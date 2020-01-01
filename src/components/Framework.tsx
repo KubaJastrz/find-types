@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link as GatsbyLink } from 'gatsby';
 
 export const CleanLink = styled(GatsbyLink)`
@@ -18,4 +18,8 @@ export const CleanButton = styled.button`
   padding: 0;
   border: 0;
   background-color: transparent;
+`;
+
+export const fontMono = css`
+  font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 `;
