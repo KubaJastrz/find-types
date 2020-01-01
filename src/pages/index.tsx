@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { parse } from 'query-string';
+import { PageRendererProps } from 'gatsby';
 
 import Layout from '@/components/Layout';
 import { CleanLink } from '@/components/Framework';
 import TypeFinder from '@/components/TypeFinder';
 import { MEDIA } from '@/styles/helpers';
 
-function Index() {
+function Index({ location }: PageRendererProps) {
   const [initialQuery, setInitialQuery] = React.useState<string>();
   // skip first render of the application to simplify logic responsible for handling initial query
   const [wasInitialQueryChecked, checkInitialQuery] = React.useState(false);
@@ -15,7 +16,7 @@ function Index() {
   React.useEffect(() => {
     checkInitialQuery(true);
 
-    const { q } = parse(window.location.search);
+    const { q } = parse(location.search);
     const packageName = Array.isArray(q) ? q[0] : q;
 
     if (!packageName) {
@@ -23,7 +24,7 @@ function Index() {
     }
 
     setInitialQuery(packageName);
-  }, []);
+  }, [location.search]);
 
   return (
     <Layout>
