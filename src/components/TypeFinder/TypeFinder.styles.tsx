@@ -28,3 +28,7 @@ export const SearchResults = styled.div`
     width: 520px;
   }
 `;
+
+export const Center = styled.div`
+  text-align: center;
+`;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { stringify } from 'query-string';
+import { useAsync, DeferFn, IfPending, IfFulfilled, IfRejected } from 'react-async';
 
 import API from '@/api/Api';
 import Autocomplete from '@/components/Autocomplete';
@@ -10,6 +11,9 @@ import Results from './Results';
 import * as Styled from './TypeFinder.styles';
 import useSuggestions from './useSuggestions';
 
+const getPackageDetails: DeferFn<PackageResponseData> = ([packageName]) =>
+  API.getPackageDetails(packageName);
+
 interface Props {
   initialQuery?: string;
 }
@@ -17,15 +21,12 @@ interface Props {
 function TypeFinder({ initialQuery = '' }: Props) {
   const [packageName, setPackageName] = React.useState(initialQuery);
 
-  // Suggestions
   const suggestions = useSuggestions(packageName);
 
-  // Package details
-  const [packageResponse, setPackageResponse] = React.useState<PackageResponseData>();
-  const fetchPackageDetails = React.useCallback(async (packageName: string) => {
-    const response = await API.getPackageDetails(packageName);
-    setPackageResponse(response);
-  }, []);
+  const packageDataState = useAsync({
+    deferFn: getPackageDetails,
+  });
+  const { run: fetchPackageDetails } = packageDataState;
 
   const handleSearch = React.useCallback(
     (packageName: string, isInitialQuery = false) => {
@@ -72,7 +73,13 @@ function TypeFinder({ initialQuery = '' }: Props) {
         />
       </Styled.SearchForm>
       <Styled.SearchResults>
-        <Results response={packageResponse} />
+        <IfPending state={packageDataState}>
+          <Styled.Center>Loading...</Styled.Center>
+        </IfPending>
+        <IfFulfilled state={packageDataState}>{data => <Results response={data} />}</IfFulfilled>
+        <IfRejected state={packageDataState}>
+          {error => <Styled.Center>{error.message}</Styled.Center>}
+        </IfRejected>
       </Styled.SearchResults>
     </>
   );
