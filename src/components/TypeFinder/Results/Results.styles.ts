@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
-import { em } from 'polished';
+import { em, darken, lighten } from 'polished';
 
 import { fontMono } from '@/components/Framework';
+import * as BitbucketParts from '@/components/Icons/BitBucket';
+import * as GitLabParts from '@/components/Icons/GitLab';
 
 export const Results = styled.div`
   margin: 0 auto;
@@ -27,7 +29,7 @@ export const ResultStatus = styled.div<ResultStatusProps>`
   align-items: center;
 
   ${({ type }) => type === ResultType.success && 'color: green'};
-  ${({ type }) => type === ResultType.warning && 'color: golderrod'};
+  ${({ type }) => type === ResultType.warning && 'color: goldenrod'};
   ${({ type }) => type === ResultType.neutral && 'color: #505050'};
 `;
 
@@ -100,4 +102,95 @@ export const PackageDetails = styled.div<PackageDetailsProps>`
 export const PackageMeta = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const PackageMetaLinks = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 1.6em;
+`;
+
+const ICON_COLOR = '#7b93ad';
+
+export const PackageMetaLink = styled.a`
+  height: 1.1em;
+  margin-right: 0.9em;
+  color: ${ICON_COLOR};
+  transition: 100ms ease-in-out;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:focus,
+  &:hover {
+    &.-npm {
+      color: #cb3837;
+    }
+
+    ${GitLabParts.Part1} {
+      fill: #fc6d26;
+    }
+
+    ${GitLabParts.Part2} {
+      fill: #e24329;
+    }
+
+    ${GitLabParts.Part3} {
+      fill: #fca326;
+    }
+
+    ${BitbucketParts.Part1} {
+      fill: #2684ff;
+    }
+
+    ${BitbucketParts.Part2} {
+      stop-color: #0052cc;
+    }
+
+    ${BitbucketParts.Part3} {
+      stop-color: #2684ff;
+    }
+
+    color: ${darken(0.4, ICON_COLOR)};
+  }
+
+  svg {
+    height: 100%;
+    width: auto;
+    max-width: 28px;
+  }
+
+  ${GitLabParts.Part1},
+  ${GitLabParts.Part2},
+  ${GitLabParts.Part3},
+  ${BitbucketParts.Part1},
+  ${BitbucketParts.Part2},
+  ${BitbucketParts.Part3} {
+    transition: 100ms ease-in-out;
+  }
+
+  ${GitLabParts.Part1} {
+    fill: ${lighten(0.05, '#768ea8')};
+  }
+
+  ${GitLabParts.Part2} {
+    fill: ${lighten(0.07, '#647c96')};
+  }
+
+  ${GitLabParts.Part3} {
+    fill: ${lighten(0.1, '#8199b3')};
+  }
+
+  ${BitbucketParts.Part1} {
+    fill: ${lighten(0.1, '#637b95')};
+  }
+
+  ${BitbucketParts.Part2} {
+    stop-color: ${lighten(0.1, '#364e68')};
+  }
+
+  ${BitbucketParts.Part3} {
+    stop-color: ${lighten(0.1, '#637b95')};
+  }
 `;
