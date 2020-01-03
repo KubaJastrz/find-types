@@ -1,5 +1,6 @@
 import { NowRequest, NowResponse } from '@now/node';
 import got from 'got';
+import gitUrlParse from 'git-url-parse';
 import { PackageJson } from 'type-fest';
 
 import { PackageResponseData, NpmResponseData } from '@/types/api';
@@ -33,6 +34,7 @@ export default async (req: NowRequest, res: NowResponse) => {
 
     res.json(body);
   } catch (error) {
+    console.error(error);
     // TODO: add 404 if package name is not found
     res.status(500).send(error);
   }
@@ -54,9 +56,16 @@ async function getPackageJson(packageName: string) {
 }
 
 function getRepositoryUrl(repository: PackageJson['repository']) {
-  if (typeof repository === 'string' || !repository) {
-    return repository;
+  if (!repository) {
+    return undefined;
   }
 
-  return repository.url;
+  const urlToParse = typeof repository === 'string' ? repository : repository.url;
+
+  const urlObject = gitUrlParse(urlToParse);
+  const parsedUrl = urlObject.git_suffix
+    ? urlObject.toString('https').replace(/\.git$/, '')
+    : urlObject.toString('https');
+
+  return parsedUrl;
 }
