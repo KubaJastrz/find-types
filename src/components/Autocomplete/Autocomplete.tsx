@@ -60,6 +60,14 @@ function Autocomplete({
             onFocus: () => setIsFocused(true),
             onBlur: () => setIsFocused(false),
             onInput: ({ target }: React.ChangeEvent<HTMLInputElement>) => onInput(target.value),
+            onKeyDown: event => {
+              // downshift blocks submit event on Enter keydown
+              if (event.key === 'Enter' && (!isOpen || highlightedIndex === -1)) {
+                (event as any).preventDownshiftDefault = true;
+              } else {
+                (event as any).preventDownshiftDefault = false;
+              }
+            },
           })}
           autoFocus={autoFocus}
           placeholder={placeholder}

@@ -51,6 +51,13 @@ function TypeFinder({ initialQuery = '' }: Props) {
     [handleSearch],
   );
 
+  const handleSubmit = React.useCallback(
+    preventDefault(() => {
+      handleSearch(packageName);
+    }),
+    [packageName],
+  );
+
   // Initial Query
   React.useEffect(() => {
     if (initialQuery) {
@@ -60,7 +67,7 @@ function TypeFinder({ initialQuery = '' }: Props) {
 
   return (
     <>
-      <Styled.SearchForm onSubmit={preventDefault(() => handleSearch(packageName))}>
+      <Styled.SearchForm onSubmit={handleSubmit}>
         <Autocomplete
           initialValue={packageName}
           onInput={setPackageName}
