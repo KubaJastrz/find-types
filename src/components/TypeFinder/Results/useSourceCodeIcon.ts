@@ -1,6 +1,6 @@
 import { ReactComponent as GithubIcon } from '@/assets/icons/github.svg';
 import GitlabIcon from '@/components/Icons/GitLab';
-import BitbucketIcon from '@/components/Icons/BitBucket';
+import BitbucketIcon from '@/components/Icons/Bitbucket';
 import { ReactComponent as GitIcon } from '@/assets/icons/git.svg';
 
 const repositoryMap = {

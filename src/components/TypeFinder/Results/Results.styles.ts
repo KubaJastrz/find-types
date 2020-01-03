@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { em, darken, lighten } from 'polished';
 
 import { fontMono } from '@/components/Framework';
-import * as BitbucketParts from '@/components/Icons/BitBucket';
+import * as BitbucketParts from '@/components/Icons/Bitbucket';
 import * as GitLabParts from '@/components/Icons/GitLab';
 
 export const Results = styled.div`
