@@ -1,4 +1,5 @@
 import React from 'react';
+import { navigate } from '@reach/router';
 import { stringify } from 'query-string';
 import { useAsync, DeferFn, IfPending, IfFulfilled, IfRejected } from 'react-async';
 
@@ -69,7 +70,7 @@ function TypeFinder({ initialQuery = '' }: Props) {
     <>
       <Styled.SearchForm onSubmit={handleSubmit}>
         <Autocomplete
-          initialValue={packageName}
+          inputValue={packageName}
           onInput={setPackageName}
           onSelect={handleSelect}
           autoFocus={true}
@@ -94,7 +95,7 @@ function TypeFinder({ initialQuery = '' }: Props) {
 
 function pushSearchToHistory(packageName: string) {
   const url = stringify({ q: packageName });
-  window.history.pushState(null, '', `/?${url}`);
+  navigate(`/?${url}`);
 }
 
 function getOptionLabel(suggestion?: Suggestion): string {

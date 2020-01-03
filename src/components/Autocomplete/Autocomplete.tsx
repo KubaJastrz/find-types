@@ -13,7 +13,7 @@ function sanitizeSuggestion(html: string) {
 }
 
 export interface Props {
-  initialValue?: string;
+  inputValue: string;
   onInput: (inputText: string) => void;
   onSelect: (option?: Suggestion) => void;
   autoFocus?: boolean;
@@ -24,7 +24,7 @@ export interface Props {
 }
 
 function Autocomplete({
-  initialValue = '',
+  inputValue,
   onInput,
   onSelect,
   autoFocus,
@@ -46,7 +46,7 @@ function Autocomplete({
   } = useCombobox<Suggestion>({
     items,
     itemToString: getOptionValue,
-    initialInputValue: initialValue,
+    inputValue,
     onSelectedItemChange: ({ selectedItem }) => {
       onSelect(selectedItem);
     },
