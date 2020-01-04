@@ -34,6 +34,7 @@ function Autocomplete({
   getOptionValue,
 }: Props) {
   const [isFocused, setIsFocused] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const {
     getComboboxProps,
@@ -42,13 +43,19 @@ function Autocomplete({
     getMenuProps,
     getItemProps,
     highlightedIndex,
-    isOpen,
   } = useCombobox<Suggestion>({
     items,
     itemToString: getOptionValue,
     inputValue,
     onSelectedItemChange: ({ selectedItem }) => {
       onSelect(selectedItem);
+    },
+    stateReducer: (state, action) => {
+      if (isOpen !== action.changes.isOpen) {
+        setIsOpen(action.changes.isOpen);
+      }
+
+      return action.changes;
     },
   });
 
@@ -64,6 +71,7 @@ function Autocomplete({
               // downshift blocks submit event on Enter keydown
               if (event.key === 'Enter' && (!isOpen || highlightedIndex === -1)) {
                 (event as any).preventDownshiftDefault = true;
+                setIsOpen(false);
               } else {
                 (event as any).preventDownshiftDefault = false;
               }
