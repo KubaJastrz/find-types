@@ -27,13 +27,13 @@ function Autocomplete({
   inputValue,
   onInput,
   onSelect,
-  autoFocus,
+  autoFocus = false,
   placeholder,
   items,
   getOptionLabel,
   getOptionValue,
 }: Props) {
-  const [isFocused, setIsFocused] = React.useState(false);
+  const [isFocused, setIsFocused] = React.useState(autoFocus);
   const [isOpen, setIsOpen] = React.useState(false);
 
   const {
