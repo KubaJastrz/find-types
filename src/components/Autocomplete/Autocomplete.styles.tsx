@@ -1,6 +1,6 @@
 import styled, { css, StyledComponent } from 'styled-components';
 
-import { CleanButton } from '@/components/Framework';
+import { CleanButton, Center } from '@/components/Framework';
 import { styledWithOmitProps } from '@/styles/helpers';
 
 interface SuggestionBarProps {
@@ -78,4 +78,11 @@ export const SearchButton = styled(CleanButton)`
   justify-content: center;
   width: 24px;
   height: 24px;
+`;
+
+export const Loading = styled(Center)`
+  padding: 1.2em;
+  font-size: 0.9em;
+  color: #444;
+  letter-spacing: 0.1px;
 `;

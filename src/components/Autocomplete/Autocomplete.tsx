@@ -55,6 +55,13 @@ function Autocomplete({
         setIsOpen(action.changes.isOpen);
       }
 
+      if (
+        action.type === useCombobox.stateChangeTypes.InputChange &&
+        action.changes.inputValue === ''
+      ) {
+        setIsOpen(false);
+      }
+
       return action.changes;
     },
   });
@@ -89,16 +96,20 @@ function Autocomplete({
         </Styled.SearchButton>
       </Styled.SuggestionBar>
       <Styled.List {...getMenuProps()} isOpen={isOpen}>
-        {items.map((item, index) => (
-          <Styled.Item key={item.package.name} {...getItemProps({ item, index })}>
-            <Styled.Button
-              isHighlighted={highlightedIndex === index}
-              dangerouslySetInnerHTML={{
-                __html: sanitizeSuggestion(getOptionLabel(item)),
-              }}
-            />
-          </Styled.Item>
-        ))}
+        {items.length > 0 ? (
+          items.map((item, index) => (
+            <Styled.Item key={item.package.name} {...getItemProps({ item, index })}>
+              <Styled.Button
+                isHighlighted={highlightedIndex === index}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeSuggestion(getOptionLabel(item)),
+                }}
+              />
+            </Styled.Item>
+          ))
+        ) : (
+          <Styled.Loading>Loading...</Styled.Loading>
+        )}
       </Styled.List>
     </label>
   );

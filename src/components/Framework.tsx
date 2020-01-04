@@ -23,3 +23,9 @@ export const CleanButton = styled.button`
 export const fontMono = css`
   font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 `;
+
+export const Center = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

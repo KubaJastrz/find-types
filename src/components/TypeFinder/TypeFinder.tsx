@@ -5,6 +5,7 @@ import { useAsync, DeferFn, IfPending, IfFulfilled, IfRejected } from 'react-asy
 
 import API from '@/api/Api';
 import Autocomplete from '@/components/Autocomplete';
+import { Center } from '@/components/Framework';
 import { PackageResponseData } from '@/types/api';
 import { Suggestion } from '@/types';
 import { parsePackageString, preventDefault } from '@/helpers';
@@ -82,11 +83,11 @@ function TypeFinder({ initialQuery = '' }: Props) {
       </Styled.SearchForm>
       <Styled.SearchResults>
         <IfPending state={packageDataState}>
-          <Styled.Center>Loading...</Styled.Center>
+          <Center>Loading...</Center>
         </IfPending>
         <IfFulfilled state={packageDataState}>{data => <Results response={data} />}</IfFulfilled>
         <IfRejected state={packageDataState}>
-          {error => <Styled.Center>{error.message}</Styled.Center>}
+          {error => <Center>{error.message}</Center>}
         </IfRejected>
       </Styled.SearchResults>
     </>
