@@ -65,7 +65,7 @@ function TypeFinder({ initialQuery = '' }: Props) {
     if (initialQuery) {
       handleSearch(initialQuery, true);
     }
-  }, [handleSearch, initialQuery]);
+  }, [initialQuery, handleSearch]);
 
   return (
     <>

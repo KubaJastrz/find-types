@@ -10,12 +10,8 @@ import { MEDIA } from '@/styles/helpers';
 
 function Index({ location }: PageRendererProps) {
   const [initialQuery, setInitialQuery] = React.useState<string>();
-  // skip first render of the application to simplify logic responsible for handling initial query
-  const [wasInitialQueryChecked, checkInitialQuery] = React.useState(false);
 
   React.useEffect(() => {
-    checkInitialQuery(true);
-
     const { q } = parse(location.search);
     const packageName = Array.isArray(q) ? q[0] : q;
 
@@ -31,7 +27,7 @@ function Index({ location }: PageRendererProps) {
       <PageTitle>
         <CleanLink to="/">Find Types</CleanLink>
       </PageTitle>
-      {wasInitialQueryChecked && <TypeFinder initialQuery={initialQuery} />}
+      <TypeFinder initialQuery={initialQuery} />
     </Layout>
   );
 }
