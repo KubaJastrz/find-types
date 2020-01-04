@@ -20,6 +20,10 @@ export default createGlobalStyle`
     flex-grow: 1;
   }
 
+  .js-focus-visible :focus:not(.focus-visible) {
+    outline: none;
+  }
+
   input,
   button {
     color: inherit;

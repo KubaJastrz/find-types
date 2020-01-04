@@ -5,6 +5,7 @@ import SEO from './SEO';
 import GlobalStyles from '../global-styles';
 
 import 'modern-normalize';
+import 'focus-visible';
 
 interface Props {
   children: React.ReactNode;
