@@ -91,7 +91,12 @@ function Autocomplete({
           autoComplete="off"
           autoCorrect="off"
         />
-        <Styled.SearchButton type="submit" aria-label="Search" title="Search">
+        <Styled.SearchButton
+          type="submit"
+          aria-label="Search"
+          title="Search"
+          disabled={!inputValue}
+        >
           <SearchIcon width={20} height={20} />
         </Styled.SearchButton>
       </Styled.SuggestionBar>
