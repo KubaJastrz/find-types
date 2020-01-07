@@ -9,8 +9,14 @@ import { PackageResponseData, NpmResponseData } from '@/types/api';
  * Route handler
  */
 export default async (req: NowRequest, res: NowResponse) => {
+  const packageName = req.query.name;
+
+  if (!packageName || Array.isArray(packageName)) {
+    res.status(400).send({ message: 'Package `name` must be a valid string' });
+    return;
+  }
+
   try {
-    const packageName = req.query.name as string;
     const npmResponse = await getNpmPackageData(packageName);
     const packageJson = await getPackageJson(packageName);
 
@@ -34,8 +40,13 @@ export default async (req: NowRequest, res: NowResponse) => {
 
     res.json(body);
   } catch (error) {
+    if (error instanceof got.HTTPError && error.response?.statusCode === 404) {
+      res.status(404).send({ message: 'Package not found' });
+      return;
+    }
+
     console.error(error);
-    // TODO: add 404 if package name is not found
+
     res.status(500).send(error);
   }
 };
