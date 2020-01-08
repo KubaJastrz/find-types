@@ -1222,10 +1222,10 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@now/node@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@now/node/-/node-1.3.3.tgz#5407cb6a730d4dd9b6b6b0bc4a316f29086c9feb"
-  integrity sha512-s1qajtQttWhhSs1k6FX0/6eTFYFUplzultrQeKfOPMoYzzz6OxDq5qrQ3elpsGlZlDVmO+x+JOJ7yad+3yBgpg==
+"@now/node@^1.3.4":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@now/node/-/node-1.3.4.tgz#620ffe410f211b75b30758a6cf52f8d8c8f41c9e"
+  integrity sha512-4lK79UaZQPJTllcMkwOXo0I8UJ+cYAkm8AgWsm/iAx8gZrP6zqvAHUL1dV9fKz1dIWBTDFyyb/9HMh0LaTe4dg==
   dependencies:
     "@types/node" "*"
 
@@ -4416,10 +4416,10 @@ dotenv@^8.2.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
   integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
 
-downshift@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/downshift/-/downshift-4.0.2.tgz#bb3f3edef75f5593090114a3968f409ec66019a1"
-  integrity sha512-T6OZFBFssteZymuvcf/B3uF0hMZHuTpPXRVQRFJeEprKtC9Aue2gn5tixoOehv7dMrNWzKHo188wnEB4QmkqAw==
+downshift@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/downshift/-/downshift-4.0.3.tgz#de5abd4e4c4bdf66ce1c5442e2e877a5e1ed090f"
+  integrity sha512-cazJuIpQvHPE7pgyU2UoZShROGSnUBgPYJvxw69W29T2G7l1FwMKPMiQKfVAI108bNzxxQCmursOZLz8yYTocA==
   dependencies:
     "@babel/runtime" "^7.4.5"
     compute-scroll-into-view "^1.0.9"
@@ -6616,10 +6616,10 @@ human-signals@^1.1.1:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
-husky@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-4.0.0.tgz#654a72ecd7d59565de5360365a7d78a7bbb05286"
-  integrity sha512-h9kcWWpZgpGLrhlaBBtbMtA9Tsqu0yrfKSCU9ax6vulTvMSvVWEmFOsBehiLD38vJZVeFyrif5AcpcoiM0LJmw==
+husky@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-4.0.1.tgz#b0d9e16e660ec352392b3c2164ba709694d86b4d"
+  integrity sha512-x2wzNz3mra5rSYBPb9w59Bg3d5HnJZ+DBAALbMl/1K15Yv8zhcAxhrS792nMyjkxLsoPZtNpmnX+RqLtIKxpDQ==
   dependencies:
     chalk "^3.0.0"
     ci-info "^2.0.0"
@@ -9002,10 +9002,10 @@ normalize-url@^4.1.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
   integrity sha512-2s47yzUxdexf1OhyRi4Em83iQk0aPvwTddtFz4hnSSw9dCEsLEGf6SwIO8ss/19S9iBb5sJaOuTvTGDeZI00BQ==
 
-now@^16.7.1:
-  version "16.7.1"
-  resolved "https://registry.yarnpkg.com/now/-/now-16.7.1.tgz#b936ee398588849d0374bb76196e43b8cbe14738"
-  integrity sha512-iAf6eUaVXc2phDUcM2kYCevhSmk10DRWEraRAUstwUChx14DJRB1Kb65M65Bk13qBXkHIjdfTAH2dR4s1y64+w==
+now@^16.7.2:
+  version "16.7.2"
+  resolved "https://registry.yarnpkg.com/now/-/now-16.7.2.tgz#ca6a0208b5a1b8d62b3c1466044d051aeacc0f09"
+  integrity sha512-YNieAvW2vsUDQl+vAXikxrElB4rqcB2TeTU5S6ah5MB6TkYtzo2qkbdjl5mp6j7KuzGWfQHGVywi01rZQYqkog==
 
 npm-run-path@^2.0.0:
   version "2.0.2"

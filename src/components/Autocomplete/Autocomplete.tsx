@@ -68,7 +68,7 @@ function Autocomplete({
 
   return (
     <label {...getLabelProps()}>
-      <Styled.SuggestionBar {...getComboboxProps({})} isFocused={isFocused}>
+      <Styled.SuggestionBar {...getComboboxProps()} isFocused={isFocused}>
         <Styled.TextInput
           {...getInputProps({
             onFocus: () => setIsFocused(true),
