@@ -73,7 +73,7 @@ function Autocomplete({
           {...getInputProps({
             onFocus: () => setIsFocused(true),
             onBlur: () => setIsFocused(false),
-            onInput: ({ target }: React.ChangeEvent<HTMLInputElement>) => onInput(target.value),
+            onInput: ({ currentTarget }) => onInput(currentTarget.value),
             onKeyDown: event => {
               // downshift blocks submit event on Enter keydown
               if (event.key === 'Enter' && (!isOpen || highlightedIndex === -1)) {
