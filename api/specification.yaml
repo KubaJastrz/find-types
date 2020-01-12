@@ -1,0 +1,119 @@
+openapi: 3.0.0
+
+info:
+  version: '1.0.0'
+  title: 'Find Types API'
+  license:
+    name: 'MIT'
+
+servers:
+  - url: 'https://find-types.now.sh/api'
+    description: 'Production server'
+  - url: 'https://localhost:3000/api'
+    description: 'Local development server'
+
+paths:
+  /package:
+    get:
+      summary: 'Add a new pet to the store'
+      description: ''
+      parameters:
+        - in: 'query'
+          name: 'name'
+          description: 'npm package name'
+          required: true
+          schema:
+            type: 'string'
+      responses:
+        200:
+          $ref: '#/components/responses/PackageData'
+        400:
+          description: 'Bad Request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: 'Package not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: 'Fetching package data failed'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Package:
+      type: 'object'
+      required:
+        - 'name'
+        - 'version'
+        - 'description'
+        - 'readme'
+        - 'links'
+      properties:
+        name:
+          type: 'string'
+          example: 'react'
+        version:
+          type: 'string'
+          example: '16.12.0'
+        description:
+          type: 'string'
+          description: 'Taken from package.json'
+          example: 'React is a JavaScript library for building user interfaces.'
+        readme:
+          type: 'string'
+          description: 'Not implemented yet'
+          example: ''
+        links:
+          type: 'object'
+          properties:
+            homepage:
+              type: 'string'
+              example: 'https://reactjs.org/'
+            npm:
+              type: 'string'
+              example: 'https://www.npmjs.com/package/react'
+            repository:
+              type: 'string'
+              example: 'https://github.com/facebook/react'
+        types:
+          type: 'string'
+          description: 'Relative path to declaration files parsed from "types" or "typings" fields in package.json'
+          example: 'index.d.ts'
+        deprecated:
+          type: 'boolean'
+          example: true
+    Error:
+      type: 'object'
+      properties:
+        statusCode:
+          type: 'number'
+          example: 404
+        message:
+          type: 'string'
+          example: 'Package "react" not found'
+
+  responses:
+    PackageData:
+      description: |
+        Package metadata parsed from npm registry api and package.json.
+          * `package` - results for package with given `name`
+          * `typesPackage` - results for DefinitelyTyped package
+      content:
+        application/json:
+          schema:
+            type: 'object'
+            properties:
+              package:
+                $ref: '#/components/schemas/Package'
+              typesPackage:
+                oneOf:
+                  - $ref: '#/components/schemas/Package'
+                  - $ref: '#/components/schemas/Error'
