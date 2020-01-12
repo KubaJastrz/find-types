@@ -1,4 +1,9 @@
-export interface PackageResponseData {
+export interface ErrorResponseData {
+  statusCode: number;
+  message: string;
+}
+
+export interface PackageData {
   name: string;
   version: string;
   description?: string;
@@ -12,9 +17,14 @@ export interface PackageResponseData {
   deprecated?: true;
 }
 
+export interface PackageResponseData {
+  package: PackageData;
+  typesPackage: PackageData | ErrorResponseData;
+}
+
 // uses abbreviated metadata format
 // source: https://github.com/npm/registry/blob/master/docs/responses/package-metadata.md
-interface NpmResponseData {
+export interface NpmResponseData {
   name: string;
   modified: string;
   'dist-tags': {

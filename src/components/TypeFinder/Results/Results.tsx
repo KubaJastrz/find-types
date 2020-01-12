@@ -1,21 +1,23 @@
 import React from 'react';
 
-import { PackageResponseData } from '@/types/api';
+import { PackageData, ErrorResponseData } from '@/types/api';
 import PackageDetails from './PackageDetails';
 import * as Styled from './Results.styles';
 
 interface Props {
-  response?: PackageResponseData;
+  packageData?: PackageData;
+  typesPackageData?: PackageData | ErrorResponseData;
 }
 
-function Results({ response }: Props) {
-  if (!response) {
+function Results({ packageData, typesPackageData }: Props) {
+  if (!packageData) {
     return <pre>Loading...</pre>;
   }
 
   return (
     <Styled.Results>
-      <PackageDetails packageData={response} />
+      <PackageDetails packageData={packageData} />
+      <pre>{JSON.stringify(typesPackageData, null, 2)}</pre>
     </Styled.Results>
   );
 }

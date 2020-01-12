@@ -3,7 +3,7 @@ import got from 'got';
 import gitUrlParse from 'git-url-parse';
 import { PackageJson } from 'type-fest';
 
-import { PackageResponseData, NpmResponseData } from '@/types/api';
+import { PackageData, NpmResponseData, PackageResponseData, ErrorResponseData } from '@/types/api';
 
 /**
  * Route handler
@@ -12,48 +12,105 @@ export default async (req: NowRequest, res: NowResponse) => {
   const packageName = req.query.name;
 
   if (!packageName || Array.isArray(packageName)) {
-    res.status(400).send({ message: 'Package `name` must be a valid string' });
-    return;
+    const errorData = FetchError.createResponse(400, 'Package `name` must be a valid string');
+    return res.status(errorData.statusCode).send(errorData);
   }
 
+  let packageData: PackageResponseData['package'];
+  let typesPackageData: PackageResponseData['typesPackage'];
+
   try {
-    const npmResponse = await getNpmPackageData(packageName);
-    const packageJson = await getPackageJson(packageName);
-
-    const latestVersion = npmResponse['dist-tags'].latest;
-    const latestMetadata = npmResponse.versions[latestVersion];
-
-    const body: PackageResponseData = {
-      name: npmResponse.name,
-      version: latestVersion,
-      description: packageJson.description,
-      // FIXME: get from unpkg, not available in abbreviated metadata
-      readme: '',
-      links: {
-        homepage: packageJson.homepage,
-        npm: `https://www.npmjs.com/package/${packageName}`,
-        repository: getRepositoryUrl(packageJson.repository),
-      },
-      types: packageJson.types || packageJson.typings || undefined,
-      deprecated: !!latestMetadata.deprecated || undefined,
-    };
-
-    res.json(body);
+    packageData = await getPackageData(packageName);
   } catch (error) {
-    if (error instanceof got.HTTPError && error.response?.statusCode === 404) {
-      res.status(404).send({ message: 'Package not found' });
-      return;
+    if (FetchError.isFetchError(error)) {
+      return res.status(error.response.statusCode).send(error.response);
     }
 
     console.error(error);
-
-    res.status(500).send(error);
+    const errorData = FetchError.createResponse(500, 'Internal Server Error');
+    return res.status(errorData.statusCode).send(errorData);
   }
+
+  try {
+    const typesPackageName = getTypesPackageName(packageName);
+    typesPackageData = await getPackageData(typesPackageName);
+  } catch (error) {
+    if (FetchError.isFetchError(error)) {
+      typesPackageData = error.response;
+    } else {
+      console.error(error);
+      const errorData = FetchError.createResponse(500, 'Internal Server Error');
+      return res.status(errorData.statusCode).send(errorData);
+    }
+  }
+
+  return res.json({
+    package: packageData,
+    typesPackage: typesPackageData,
+  });
 };
 
 // Helpers
 
-async function getNpmPackageData(packageName: string) {
+async function getPackageData(packageName: string): Promise<PackageData> {
+  let npmMetadata: NpmResponseData | undefined;
+  let packageJson: PackageJson | undefined;
+
+  try {
+    npmMetadata = await getNpmPackageMetadata(packageName);
+    packageJson = await getPackageJson(packageName);
+  } catch (error) {
+    if (error instanceof got.HTTPError && error.response?.statusCode === 404) {
+      throw new FetchError(404, `Package "${packageName}" not found`);
+    }
+
+    console.log(error);
+  }
+
+  if (!npmMetadata || !packageJson) {
+    throw new FetchError(500, `Fetching "${packageName}" package data failed`);
+  }
+
+  const latestVersion = npmMetadata['dist-tags'].latest;
+  const latestMetadata = npmMetadata.versions[latestVersion];
+
+  return {
+    name: npmMetadata.name,
+    version: latestVersion,
+    description: packageJson.description,
+    // FIXME: get from unpkg, not available in abbreviated metadata
+    readme: '',
+    links: {
+      homepage: packageJson.homepage,
+      npm: `https://www.npmjs.com/package/${packageName}`,
+      repository: getRepositoryUrl(packageJson.repository),
+    },
+    types: packageJson.types || packageJson.typings || undefined,
+    deprecated: !!latestMetadata.deprecated || undefined,
+  };
+}
+
+class FetchError extends Error {
+  constructor(statusCode: number, message: string) {
+    super(message);
+    Error.captureStackTrace(this, this.constructor);
+    this.name = 'FetchError';
+    this.response = FetchError.createResponse(statusCode, message);
+  }
+
+  response: ErrorResponseData;
+
+  static createResponse = (statusCode: number, message: string): ErrorResponseData => ({
+    statusCode,
+    message,
+  });
+
+  static isFetchError = (error: any): error is FetchError => {
+    return error.name === 'FetchError';
+  };
+}
+
+async function getNpmPackageMetadata(packageName: string) {
   return await got(`https://registry.npmjs.org/${packageName}`, {
     headers: {
       // use abbreviated metadata format
@@ -66,6 +123,7 @@ async function getPackageJson(packageName: string) {
   return await got(`https://unpkg.com/${packageName}/package.json`).json<PackageJson>();
 }
 
+// FIXME: short format like: 'github:user/repo' - https://docs.npmjs.com/files/package.json#repository
 function getRepositoryUrl(repository: PackageJson['repository']) {
   if (!repository) {
     return undefined;
@@ -79,4 +137,12 @@ function getRepositoryUrl(repository: PackageJson['repository']) {
     : urlObject.toString('https');
 
   return parsedUrl;
+}
+
+// scoped packages should be parsed like this: @foo/bar -> foo__bar
+// https://github.com/DefinitelyTyped/DefinitelyTyped#what-about-scoped-packages
+const typesPrefix = '@types/';
+export function getTypesPackageName(npmPackage: string): string {
+  const parsedName = npmPackage.replace('@', '').replace(/\//g, '__');
+  return typesPrefix + parsedName;
 }

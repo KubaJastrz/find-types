@@ -1,4 +1,4 @@
-import { PackageResponseData, SuggestionsResponseData } from './api';
+import { PackageData, SuggestionsResponseData } from './api';
 
-export type NpmPackage = PackageResponseData;
+export type NpmPackage = PackageData;
 export type Suggestion = SuggestionsResponseData;
