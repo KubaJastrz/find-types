@@ -3,7 +3,7 @@ import React from 'react';
 import * as Styled from './Results.styles';
 
 interface Props {
-  children: React.ReactChild;
+  children?: React.ReactChild;
   icon: React.ReactChild;
   title: React.ReactChild;
   type: Styled.ResultType;
@@ -16,7 +16,7 @@ function ResultEntry({ children, icon, title, type }: Props) {
         <Styled.StatusIcon>{icon}</Styled.StatusIcon>
         <Styled.StatusText>{title}</Styled.StatusText>
       </Styled.ResultStatus>
-      <Styled.StatusContent>{children}</Styled.StatusContent>
+      {children && <Styled.StatusContent>{children}</Styled.StatusContent>}
     </Styled.ResultEntry>
   );
 }

@@ -5,20 +5,20 @@ import { fontMono } from '@/components/Framework';
 import * as BitbucketParts from '@/components/Icons/Bitbucket';
 import * as GitLabParts from '@/components/Icons/GitLab';
 
-export const Results = styled.div`
-  margin: 0 auto;
-`;
-
 export const ResultEntry = styled.div`
   display: flex;
   flex-flow: column nowrap;
 `;
 
-export enum ResultType {
-  success = 'success',
-  warning = 'warning',
-  neutral = 'neutral',
-}
+export const Results = styled.div`
+  margin: 0 auto;
+
+  ${ResultEntry} {
+    margin-top: 25px;
+  }
+`;
+
+export type ResultType = 'success' | 'warning' | 'neutral';
 
 interface ResultStatusProps {
   type: ResultType;
@@ -28,9 +28,9 @@ export const ResultStatus = styled.div<ResultStatusProps>`
   display: flex;
   align-items: center;
 
-  ${({ type }) => type === ResultType.success && 'color: green'};
-  ${({ type }) => type === ResultType.warning && 'color: goldenrod'};
-  ${({ type }) => type === ResultType.neutral && 'color: #505050'};
+  ${({ type }) => type === 'success' && 'color: green'};
+  ${({ type }) => type === 'warning' && 'color: goldenrod'};
+  ${({ type }) => type === 'neutral' && 'color: #505050'};
 `;
 
 export const StatusIcon = styled.div`

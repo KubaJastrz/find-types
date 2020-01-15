@@ -1,4 +1,5 @@
 import React from 'react';
+import { ErrorResponseData } from '@/types/api';
 
 export function createPackageString(name: string, version?: string): string {
   return name + (version ? `@${version}` : '');
@@ -47,4 +48,8 @@ export function preventDefault(callback: () => void) {
     event.preventDefault();
     callback();
   };
+}
+
+export function isErrorResponse(value: any): value is ErrorResponseData {
+  return 'statusCode' in value && 'message' in value;
 }
