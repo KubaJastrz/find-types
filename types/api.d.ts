@@ -7,7 +7,6 @@ export interface PackageData {
   name: string;
   version: string;
   description?: string;
-  readme?: string;
   links: {
     homepage?: string;
     npm?: string;

@@ -78,8 +78,6 @@ async function getPackageData(packageName: string): Promise<PackageData> {
     name: npmMetadata.name,
     version: latestVersion,
     description: packageJson.description,
-    // FIXME: get from unpkg, not available in abbreviated metadata
-    readme: '',
     links: {
       homepage: packageJson.homepage,
       npm: `https://www.npmjs.com/package/${packageName}`,
