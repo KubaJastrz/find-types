@@ -16,6 +16,7 @@ export interface Props {
   inputValue: string;
   onInput: (inputText: string) => void;
   onSelect: (option?: Suggestion) => void;
+  onKeyDownEnter: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   autoFocus?: boolean;
   placeholder?: string;
   items: Suggestion[];
@@ -27,6 +28,7 @@ function Autocomplete({
   inputValue,
   onInput,
   onSelect,
+  onKeyDownEnter,
   autoFocus = false,
   placeholder,
   items,
@@ -34,7 +36,6 @@ function Autocomplete({
   getOptionValue,
 }: Props) {
   const [isFocused, setIsFocused] = React.useState(autoFocus);
-  const [isOpen, setIsOpen] = React.useState(false);
 
   const {
     getComboboxProps,
@@ -43,6 +44,7 @@ function Autocomplete({
     getMenuProps,
     getItemProps,
     highlightedIndex,
+    isOpen,
   } = useCombobox<Suggestion>({
     items,
     itemToString: getOptionValue,
@@ -51,15 +53,21 @@ function Autocomplete({
       onSelect(selectedItem);
     },
     stateReducer: (state, action) => {
-      if (isOpen !== action.changes.isOpen) {
-        setIsOpen(action.changes.isOpen);
-      }
-
       if (
         action.type === useCombobox.stateChangeTypes.InputChange &&
         action.changes.inputValue === ''
       ) {
-        setIsOpen(false);
+        return {
+          ...action.changes,
+          isOpen: false,
+        };
+      }
+
+      if (action.type === useCombobox.stateChangeTypes.InputKeyDownEnter) {
+        return {
+          ...action.changes,
+          isOpen: false,
+        };
       }
 
       return action.changes;
@@ -75,12 +83,8 @@ function Autocomplete({
             onBlur: () => setIsFocused(false),
             onInput: ({ currentTarget }) => onInput(currentTarget.value),
             onKeyDown: event => {
-              // downshift blocks submit event on Enter keydown
               if (event.key === 'Enter' && (!isOpen || highlightedIndex === -1)) {
-                (event as any).preventDownshiftDefault = true;
-                setIsOpen(false);
-              } else {
-                (event as any).preventDownshiftDefault = false;
+                onKeyDownEnter(event);
               }
             },
           })}

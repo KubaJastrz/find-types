@@ -69,11 +69,12 @@ function TypeFinder({ initialQuery = '' }: Props) {
 
   return (
     <>
-      <Styled.SearchForm onSubmit={handleSubmit}>
+      <Styled.SearchForm>
         <Autocomplete
           inputValue={packageName}
           onInput={setPackageName}
           onSelect={handleSelect}
+          onKeyDownEnter={handleSubmit}
           autoFocus={true}
           placeholder="look for npm package"
           items={suggestions ?? []}

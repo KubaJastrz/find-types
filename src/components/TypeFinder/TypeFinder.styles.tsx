@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { MEDIA } from '@/styles/helpers';
 
-export const SearchForm = styled.form`
+export const SearchForm = styled.div`
   position: relative;
   width: 300px;
 
