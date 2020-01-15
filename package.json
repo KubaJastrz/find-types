@@ -10,7 +10,7 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "jest",
-    "lint": "eslint . --ext .js,.ts,.tsx"
+    "lint": "tsc && eslint . --ext .js,.ts,.tsx"
   },
   "browserslist": {
     "production": [
