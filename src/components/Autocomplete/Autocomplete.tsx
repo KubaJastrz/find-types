@@ -3,7 +3,6 @@ import { useCombobox } from 'downshift';
 import DOMPurify from 'dompurify';
 
 import { ReactComponent as SearchIcon } from '@/assets/icons/search.svg';
-import { Suggestion } from '@/types';
 import * as Styled from './Autocomplete.styles';
 
 function sanitizeSuggestion(html: string) {
@@ -12,19 +11,19 @@ function sanitizeSuggestion(html: string) {
   });
 }
 
-export interface Props {
+export interface Props<TItem> {
   inputValue: string;
   onInput: (inputText: string) => void;
-  onSelect: (option?: Suggestion) => void;
+  onSelect: (option?: TItem) => void;
   onKeyDownEnter: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   autoFocus?: boolean;
   placeholder?: string;
-  items: Suggestion[];
-  getOptionLabel: (option?: Suggestion) => string;
-  getOptionValue: (option?: Suggestion) => string;
+  items: TItem[];
+  getOptionLabel: (option?: TItem) => string;
+  getOptionValue: (option?: TItem) => string;
 }
 
-function Autocomplete({
+function Autocomplete<TItem>({
   inputValue,
   onInput,
   onSelect,
@@ -34,7 +33,7 @@ function Autocomplete({
   items,
   getOptionLabel,
   getOptionValue,
-}: Props) {
+}: Props<TItem>) {
   const [isFocused, setIsFocused] = React.useState(autoFocus);
 
   const {
@@ -45,7 +44,7 @@ function Autocomplete({
     getItemProps,
     highlightedIndex,
     isOpen,
-  } = useCombobox<Suggestion>({
+  } = useCombobox<TItem>({
     items,
     itemToString: getOptionValue,
     inputValue,
@@ -107,7 +106,7 @@ function Autocomplete({
       <Styled.List {...getMenuProps()} isOpen={isOpen}>
         {items.length > 0 ? (
           items.map((item, index) => (
-            <Styled.Item key={item.package.name} {...getItemProps({ item, index })}>
+            <Styled.Item key={getOptionValue(item)} {...getItemProps({ item, index })}>
               <Styled.Button
                 isHighlighted={highlightedIndex === index}
                 dangerouslySetInnerHTML={{
