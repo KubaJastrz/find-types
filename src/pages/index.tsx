@@ -25,7 +25,7 @@ function Index({ location }: PageRendererProps) {
   return (
     <Layout>
       <PageTitle>
-        <CleanLink to="/">Find Types</CleanLink>
+        <CleanLink href="/">Find Types</CleanLink>
       </PageTitle>
       <TypeFinder initialQuery={initialQuery} />
     </Layout>

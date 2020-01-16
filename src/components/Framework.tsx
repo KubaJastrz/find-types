@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
-import { Link as GatsbyLink } from 'gatsby';
 
-export const CleanLink = styled(GatsbyLink)`
+export const CleanLink = styled.a`
   color: inherit;
   text-decoration: none;
 `;

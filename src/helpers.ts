@@ -38,9 +38,13 @@ export function getTypesPackageName(npmPackage: string): string {
   return typesPrefix + parsedName;
 }
 
-export function getCdnFileLink(packageName: string, filename: string) {
-  const parsedFilename = filename.startsWith('./') ? filename.replace('./', '') : filename;
-  return `https://unpkg.com/${packageName}/${parsedFilename}`;
+export function parseRelativePath(pathToFile: string) {
+  return pathToFile.startsWith('./') ? pathToFile.replace('./', '') : pathToFile;
+}
+
+export function getCdnFileLink(packageName: string, pathToFile: string) {
+  const parsedPath = parseRelativePath(pathToFile);
+  return `https://unpkg.com/${packageName}/${parsedPath}`;
 }
 
 export function preventDefault(callback: () => void) {

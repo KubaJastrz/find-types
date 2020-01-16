@@ -2,6 +2,7 @@ import {
   createPackageString,
   parsePackageString,
   getTypesPackageName,
+  parseRelativePath,
   getCdnFileLink,
 } from './helpers';
 
@@ -69,6 +70,18 @@ describe('getTypesPackageName', () => {
   });
 });
 
+describe('parseRelativePath', () => {
+  it('does not change already clean paths', () => {
+    expect(parseRelativePath('index.d.ts')).toBe('index.d.ts');
+    expect(parseRelativePath('types/index.d.ts')).toBe('types/index.d.ts');
+  });
+
+  it('cleans paths starting from current directory', () => {
+    expect(parseRelativePath('./index.d.ts')).toBe('index.d.ts');
+    expect(parseRelativePath('./types/index.d.ts')).toBe('types/index.d.ts');
+  });
+});
+
 describe('getCdnFileLink', () => {
   it('creates a link to specified file', () => {
     expect(getCdnFileLink('vue', 'index.d.ts')).toBe('https://unpkg.com/vue/index.d.ts');
@@ -77,7 +90,7 @@ describe('getCdnFileLink', () => {
     );
   });
 
-  it('handles relative filenames', () => {
+  it('handles relative paths', () => {
     expect(getCdnFileLink('vue', './index.d.ts')).toBe('https://unpkg.com/vue/index.d.ts');
     expect(getCdnFileLink('vue', './types/index.d.ts')).toBe(
       'https://unpkg.com/vue/types/index.d.ts',

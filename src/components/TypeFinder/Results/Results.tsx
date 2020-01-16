@@ -3,6 +3,7 @@ import React from 'react';
 import { PackageData, ErrorResponseData } from '@/types/api';
 import PackageDetails from './PackageDetails';
 import TypesPackageDetails from './TypesPackageDetails';
+import DeclarationFiles from './DeclarationFiles';
 import * as Styled from './Results.styles';
 
 interface Props {
@@ -18,7 +19,10 @@ function Results({ packageData, typesPackageData }: Props) {
   return (
     <Styled.Results>
       <PackageDetails packageData={packageData} />
-      <TypesPackageDetails packageData={typesPackageData} />
+      <Styled.TypesResults>
+        <TypesPackageDetails packageData={typesPackageData} />
+        <DeclarationFiles packageName={packageData.name} packageJsonTypes={packageData.types} />
+      </Styled.TypesResults>
     </Styled.Results>
   );
 }

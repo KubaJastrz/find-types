@@ -4,10 +4,7 @@ import ResultEntry from './ResultEntry';
 import PackageDetails from './PackageDetails';
 import { PackageData, ErrorResponseData } from '@/types/api';
 import { isErrorResponse } from '@/helpers';
-
-import { ReactComponent as SuccessIcon } from '@/assets/icons/check-circle.svg';
-import { ReactComponent as WarningIcon } from '@/assets/icons/alert-triangle.svg';
-import { ReactComponent as ErrorIcon } from '@/assets/icons/x.svg';
+import { SuccessIcon, WarningIcon, ErrorIcon } from './statusIcons';
 
 interface Props {
   packageData: PackageData | ErrorResponseData;

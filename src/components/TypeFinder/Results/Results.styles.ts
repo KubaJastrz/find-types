@@ -5,13 +5,17 @@ import { fontMono } from '@/components/Framework';
 import * as BitbucketParts from '@/components/Icons/Bitbucket';
 import * as GitLabParts from '@/components/Icons/GitLab';
 
-export const ResultEntry = styled.div`
+export const Results = styled.div`
+  margin: 0 auto;
+`;
+
+export const ResultEntry = styled.li`
   display: flex;
   flex-flow: column nowrap;
 `;
 
-export const Results = styled.div`
-  margin: 0 auto;
+export const TypesResults = styled.ul`
+  margin-top: 30px;
 
   ${ResultEntry} {
     margin-top: 25px;
@@ -29,7 +33,7 @@ export const ResultStatus = styled.div<ResultStatusProps>`
   align-items: center;
 
   ${({ type }) => type === 'success' && 'color: green'};
-  ${({ type }) => type === 'warning' && 'color: goldenrod'};
+  ${({ type }) => type === 'warning' && 'color: #d97918'};
   ${({ type }) => type === 'neutral' && 'color: #505050'};
 `;
 
@@ -193,4 +197,10 @@ export const PackageMetaLink = styled.a`
   ${BitbucketParts.Part3} {
     stop-color: ${lighten(0.1, '#637b95')};
   }
+`;
+
+export const FileList = styled.ul`
+  list-style-type: disc;
+  padding-left: 20px;
+  font-size: 0.95em;
 `;
