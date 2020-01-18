@@ -4,6 +4,7 @@ import { em, darken, lighten } from 'polished';
 import { fontMono } from '@/components/Framework';
 import * as BitbucketParts from '@/components/Icons/Bitbucket';
 import * as GitLabParts from '@/components/Icons/GitLab';
+import { COLORS } from '@/styles/colors';
 
 export const Results = styled.div`
   margin: 0 auto;
@@ -32,9 +33,9 @@ export const ResultStatus = styled.div<ResultStatusProps>`
   display: flex;
   align-items: center;
 
-  ${({ type }) => type === 'success' && 'color: green'};
-  ${({ type }) => type === 'warning' && 'color: #d97918'};
-  ${({ type }) => type === 'neutral' && 'color: #505050'};
+  ${({ type }) => type === 'success' && `color: ${COLORS.green}`};
+  ${({ type }) => type === 'warning' && `color: ${COLORS.orange}`};
+  ${({ type }) => type === 'neutral' && `color: ${COLORS.gray500}`};
 `;
 
 export const StatusIcon = styled.div`
@@ -74,8 +75,8 @@ export const PackageVersion = styled.div`
   padding: 1px 6px;
   font-size: 12px;
   font-weight: bold;
-  background: #778798;
-  color: #fff;
+  background: ${COLORS.grayBlue200};
+  color: ${COLORS.white};
   border-radius: 2px;
   margin-left: 1.6em;
 `;
@@ -114,7 +115,7 @@ export const PackageMetaLinks = styled.div`
   margin-left: 1.6em;
 `;
 
-const ICON_COLOR = '#7b93ad';
+const ICON_COLOR = COLORS.grayBlue400;
 
 export const PackageMetaLink = styled.a`
   height: 1.1em;

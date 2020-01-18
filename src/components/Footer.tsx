@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link, CleanLink } from '@/components/Framework';
 import { ReactComponent as GithubIcon } from '@/assets/icons/github.svg';
 import { MEDIA } from '@/styles/helpers';
+import { COLORS } from '@/styles/colors';
 
 interface Props {
   className?: string;
@@ -30,7 +31,7 @@ const StyledFooter = styled.footer`
   flex-direction: column;
   align-items: center;
   font-size: 0.85em;
-  color: #666;
+  color: ${COLORS.gray550};
   padding: 8px;
   transition: 100ms ease-in-out;
 
@@ -39,7 +40,7 @@ const StyledFooter = styled.footer`
   }
 
   &:hover {
-    color: #333;
+    color: ${COLORS.gray400};
   }
 `;
 

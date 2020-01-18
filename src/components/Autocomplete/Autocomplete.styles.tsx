@@ -2,6 +2,7 @@ import styled, { css, StyledComponent } from 'styled-components';
 
 import { CleanButton, Center } from '@/components/Framework';
 import { styledWithOmitProps } from '@/styles/helpers';
+import { COLORS } from '@/styles/colors';
 
 interface SuggestionBarProps {
   isFocused?: boolean;
@@ -14,13 +15,13 @@ export const SuggestionBar = styled.div<SuggestionBarProps>`
   padding-right: 0.4em;
   padding-left: 0.8em;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid ${COLORS.gray800};
 
   ${({ isFocused }) =>
     isFocused &&
     css`
-      border-color: #377acc;
-      box-shadow: 0 0 0 1px #377acc;
+      border-color: ${COLORS.blueTypescript};
+      box-shadow: 0 0 0 1px ${COLORS.blueTypescript};
     `}
 `;
 
@@ -32,7 +33,7 @@ export const TextInput = styled.input.attrs(() => ({
   background: transparent;
   flex: 1;
   outline: 0;
-  caret-color: #377acc;
+  caret-color: ${COLORS.blueTypescript};
 `;
 
 interface ListProps {
@@ -47,7 +48,7 @@ export const List = styled.ul<ListProps>`
   margin-top: 8px;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
-  background: #fff;
+  background: ${COLORS.white};
 
   ${({ isOpen }) => isOpen && `display: block`};
 `;
@@ -64,7 +65,7 @@ export const Button = styledWithOmitProps(CleanButton, ['isHighlighted'])`
   flex: 1;
   padding: 0.4em 0.8em;
 
-  ${({ isHighlighted }) => isHighlighted && `background: #eee`};
+  ${({ isHighlighted }) => isHighlighted && `background: ${COLORS.gray900}`};
 
   em {
     font-style: normal;
@@ -83,6 +84,6 @@ export const SearchButton = styled(CleanButton)`
 export const Loading = styled(Center)`
   padding: 1.2em;
   font-size: 0.9em;
-  color: #444;
+  color: ${COLORS.gray450};
   letter-spacing: 0.1px;
 `;

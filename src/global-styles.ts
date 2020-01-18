@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { COLORS } from './styles/colors';
 
 export default createGlobalStyle`
   html {
@@ -9,7 +10,8 @@ export default createGlobalStyle`
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    color: #333;
+    color: ${COLORS.gray400};
+    background-color: ${COLORS.white}
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
