@@ -10,7 +10,7 @@ Current list of supported features:
 - brief package details with links to npm registry and source code repository
 - direct link to DefinitelyTyped repository for `@types`
 - deprecated `@types` package warning
-- URL query (`/?q`) for custom in-browser search engines
+- URL query (`/?q=<package>`) for custom in-browser search engines
 
 Is there anything missing you'd like to see? [File an issue](https://github.com/KubaJastrz/find-types/issues/new).
 
@@ -36,8 +36,8 @@ Pull Requests are always welcome :smiley:
 
 ### Setup
 
-Install node dependencies with your package manager (preferably `yarn`) and start up the development
-server.
+Fork the repository, install node dependencies with your package manager (preferably `yarn`)
+and start up the development server.
 
 > NOTE: you may need to use `npm start` on Windows due to `now dev` bug, see [more](https://github.com/zeit/now/issues/3407).
 
