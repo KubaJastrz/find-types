@@ -5,6 +5,7 @@
   "scripts": {
     "start": "now dev",
     "now-dev": "gatsby develop",
+    "deploy": "now",
     "build": "gatsby build",
     "clean": "gatsby clean",
     "format": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
