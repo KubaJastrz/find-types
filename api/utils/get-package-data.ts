@@ -1,6 +1,5 @@
 import got from 'got';
 import { PackageJson } from 'type-fest';
-import gitUrlParse from 'git-url-parse';
 
 import { PackageData, NpmResponseData } from '@/types/api';
 import { FetchError } from './errors';
@@ -37,7 +36,7 @@ export async function getPackageData(packageName: string): Promise<PackageData> 
     links: {
       homepage: packageJson.homepage,
       npm: `https://www.npmjs.com/package/${packageName}`,
-      repository: getRepositoryUrl(packageJson.repository),
+      repository: packageJson.repository,
     },
     types: packageJson.types || packageJson.typings || undefined,
     deprecated: !!latestMetadata.deprecated || undefined,
@@ -55,17 +54,4 @@ async function getNpmPackageMetadata(packageName: string) {
 
 async function getPackageJson(packageName: string) {
   return await got(`https://unpkg.com/${packageName}/package.json`).json<PackageJson>();
-}
-
-function getRepositoryUrl(repository?: { type: string; url: string }) {
-  if (!repository) {
-    return undefined;
-  }
-
-  const urlObject = gitUrlParse(repository.url);
-  const parsedUrl = urlObject.git_suffix
-    ? urlObject.toString('https').replace(/\.git$/, '')
-    : urlObject.toString('https');
-
-  return parsedUrl;
 }

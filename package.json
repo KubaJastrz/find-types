@@ -4,11 +4,11 @@
   "version": "0.1.0",
   "scripts": {
     "start": "now dev",
-    "build": "gatsby build",
     "now-dev": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
-    "serve": "gatsby serve",
+    "build": "gatsby build",
     "clean": "gatsby clean",
+    "format": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
+    "validate": "yarn lint && yarn test",
     "test": "jest",
     "lint": "tsc && eslint . --ext .js,.ts,.tsx"
   },

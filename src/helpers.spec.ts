@@ -1,7 +1,6 @@
 import {
   createPackageString,
   parsePackageString,
-  getTypesPackageName,
   parseRelativePath,
   getCdnFileLink,
 } from './helpers';
@@ -57,16 +56,6 @@ describe('parsePackageString', () => {
   it('transforms name to lower case', () => {
     expect(parsePackageString('VuE')).toMatchObject({ name: 'vue' });
     expect(parsePackageString('vUe@3.0')).toMatchObject({ name: 'vue', version: '3.0' });
-  });
-});
-
-describe('getTypesPackageName', () => {
-  it('parses given package name and prepends types prefix', () => {
-    expect(getTypesPackageName('vue')).toBe('@types/vue');
-  });
-
-  it('handles scoped packages', () => {
-    expect(getTypesPackageName('@vue/cli')).toBe('@types/vue__cli');
   });
 });
 

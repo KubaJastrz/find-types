@@ -30,14 +30,6 @@ export function parsePackageString(packageString?: string) {
   };
 }
 
-// scoped packages should be parsed like this: @foo/bar -> foo__bar
-// https://github.com/DefinitelyTyped/DefinitelyTyped#what-about-scoped-packages
-const typesPrefix = '@types/';
-export function getTypesPackageName(npmPackage: string): string {
-  const parsedName = npmPackage.replace('@', '').replace(/\//g, '__');
-  return typesPrefix + parsedName;
-}
-
 export function parseRelativePath(pathToFile: string) {
   return pathToFile.startsWith('./') ? pathToFile.replace('./', '') : pathToFile;
 }
