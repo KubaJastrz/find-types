@@ -27,13 +27,6 @@ module.exports = {
     'gatsby-plugin-styled-components',
     'gatsby-plugin-lodash',
     {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'images',
-        path: path.resolve(__dirname, 'src/images'),
-      },
-    },
-    {
       resolve: 'gatsby-plugin-manifest',
       options: {
         name: 'Find Types',
@@ -41,7 +34,7 @@ module.exports = {
         background_color: '#ffffff',
         theme_color: '#007acc',
         display: 'minimal-ui',
-        icon: 'src/images/logo.png',
+        icon: 'src/assets/images/logo.png',
       },
     },
   ],
