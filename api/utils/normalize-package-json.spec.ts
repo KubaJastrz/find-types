@@ -1,6 +1,6 @@
 import { PackageJson } from 'type-fest';
 
-import { normalizePackageJson } from './normalize-package-json';
+import { normalizePackageJson, RepositoryObject } from './normalize-package-json';
 
 const packageJson: PackageJson = {
   name: 'test',
@@ -8,7 +8,7 @@ const packageJson: PackageJson = {
 };
 
 describe('normalizePackageJson', () => {
-  const testNormalizer = (input: PackageJson['repository'], output: string) => {
+  const testNormalizer = (input: RepositoryObject | string, output: string) => {
     expect(normalizePackageJson({ ...packageJson, repository: input })).toMatchObject({
       ...packageJson,
       repository: output,
@@ -17,31 +17,30 @@ describe('normalizePackageJson', () => {
 
   it('normalizes repository url from object', () => {
     testNormalizer(
-      { type: 'git', url: 'git@github.com:KubaJastrz/find-types.git' },
-      'https://github.com/KubaJastrz/find-types',
+      { type: 'git', url: 'git@github.com:facebook/jest.git' },
+      'https://github.com/facebook/jest',
+    );
+    testNormalizer(
+      { type: 'git', url: 'git@github.com:facebook/jest.git', directory: 'packages/jest-cli' },
+      'https://github.com/facebook/jest/tree/master/packages/jest-cli',
+    );
+    testNormalizer(
+      { type: 'svn', url: 'https://v8.googlecode.com/svn/trunk/' },
+      'https://v8.googlecode.com/svn/trunk/',
     );
   });
 
   it('normalizes repository url from string', () => {
-    testNormalizer(
-      { type: 'git', url: 'github:KubaJastrz/find-types' },
-      'https://github.com/KubaJastrz/find-types',
-    );
+    testNormalizer('facebook/jest', 'https://github.com/facebook/jest');
 
-    testNormalizer(
-      { type: 'git', url: 'gitlab:KubaJastrz/find-types' },
-      'https://gitlab.com/KubaJastrz/find-types',
-    );
+    // short version
+    testNormalizer('github:facebook/jest', 'https://github.com/facebook/jest');
+    testNormalizer('gitlab:facebook/jest', 'https://gitlab.com/facebook/jest');
+    testNormalizer('bitbucket:facebook/jest', 'https://bitbucket.org/facebook/jest');
+    testNormalizer('gist:user/123456890', 'https://gist.github.com/123456890');
 
-    testNormalizer(
-      { type: 'git', url: 'bitbucket:KubaJastrz/find-types' },
-      'https://bitbucket.org/KubaJastrz/find-types',
-    );
-
-    // defaults to github
-    testNormalizer(
-      { type: 'git', url: 'KubaJastrz/find-types' },
-      'https://github.com/KubaJastrz/find-types',
-    );
+    // full url
+    testNormalizer('https://github.com/facebook/jest', 'https://github.com/facebook/jest');
+    testNormalizer('https://v8.googlecode.com/svn/trunk/', 'https://v8.googlecode.com/svn/trunk/');
   });
 });

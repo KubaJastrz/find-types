@@ -1,31 +1,42 @@
-import normalizePackage from 'normalize-package-data';
+import hostedGitInfo from 'hosted-git-info';
 import { PackageJson } from 'type-fest';
-import gitUrlParse from 'git-url-parse';
-import _ from 'lodash';
+import is from '@sindresorhus/is';
 
-// few other fields (look at normalizePackage.Package) are different but were skipped as irrelevant
+export interface RepositoryObject {
+  type: string;
+  url: string;
+  directory?: string;
+}
+
 export interface NormalizedPackageJson extends PackageJson {
   repository?: string;
 }
 
 export function normalizePackageJson(packageJson: PackageJson): NormalizedPackageJson {
-  const clonedPackage = _.cloneDeep(packageJson) as any;
-  normalizePackage(clonedPackage);
+  if (!packageJson.repository) {
+    return packageJson;
+  }
+
+  const repository: RepositoryObject = is.string(packageJson.repository)
+    ? {
+        type: 'git',
+        url: packageJson.repository,
+      }
+    : packageJson.repository;
+
   return {
-    ...clonedPackage,
-    repository: getRepositoryUrl(clonedPackage.repository),
+    ...packageJson,
+    repository: getRepositoryUrl(repository),
   };
 }
 
-function getRepositoryUrl(repository?: { type: string; url: string }) {
-  if (!repository) {
-    return undefined;
+function getRepositoryUrl(repository: RepositoryObject) {
+  const info = hostedGitInfo.fromUrl(repository.url);
+
+  // unknown git host or non-git repository
+  if (!info) {
+    return repository.url;
   }
 
-  const urlObject = gitUrlParse(repository.url);
-  const parsedUrl = urlObject.git_suffix
-    ? urlObject.toString('https').replace(/\.git$/, '')
-    : urlObject.toString('https');
-
-  return parsedUrl;
+  return info.browse(repository.directory as any);
 }
