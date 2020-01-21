@@ -4,6 +4,7 @@ module.exports = {
   siteMetadata: {
     title: 'Find Types',
     description: 'Search engine for TypeScript definitions',
+    hostname: 'https://find-types.now.sh',
   },
   plugins: [
     'gatsby-plugin-typescript',
@@ -35,6 +36,13 @@ module.exports = {
         theme_color: '#007acc',
         display: 'minimal-ui',
         icon: 'src/assets/images/logo.png',
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: path.resolve(__dirname, 'src/assets/images'),
       },
     },
   ],

@@ -8,7 +8,7 @@ interface Props {
 }
 
 function SEO({ description, meta = [] }: Props) {
-  const { site } = useStaticQuery(
+  const { site, shareImage } = useStaticQuery(
     graphql`
       query {
         site {
@@ -17,11 +17,14 @@ function SEO({ description, meta = [] }: Props) {
             description
           }
         }
+        shareImage: file(relativePath: { eq: "share-image.png" }) {
+          publicURL
+        }
       }
     `,
   );
 
-  const title = site.siteMetadata.title;
+  const { title, hostname } = site.siteMetadata;
   const metaDescription = description || site.siteMetadata.description;
 
   return (
@@ -33,32 +36,40 @@ function SEO({ description, meta = [] }: Props) {
       titleTemplate={`%s | ${title}`}
       meta={[
         {
-          name: `description`,
+          name: 'description',
           content: metaDescription,
         },
         {
-          property: `og:title`,
+          property: 'og:title',
           content: title,
         },
         {
-          property: `og:description`,
+          property: 'og:description',
           content: metaDescription,
         },
         {
-          property: `og:type`,
-          content: `website`,
+          property: 'og:type',
+          content: 'website',
         },
         {
-          name: `twitter:card`,
-          content: `summary`,
+          property: 'og:image',
+          content: `${hostname}${shareImage.publicURL}`,
         },
         {
-          name: `twitter:title`,
+          name: 'twitter:card',
+          content: 'summary',
+        },
+        {
+          name: 'twitter:title',
           content: title,
         },
         {
-          name: `twitter:description`,
+          name: 'twitter:description',
           content: metaDescription,
+        },
+        {
+          name: 'twitter:image',
+          content: `${hostname}${shareImage.publicURL}`,
         },
         // @ts-ignore
       ].concat(meta)}
