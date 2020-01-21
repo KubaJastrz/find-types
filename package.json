@@ -1,7 +1,7 @@
 {
   "name": "find-types",
   "private": true,
-  "version": "0.1.0",
+  "version": "2.0.0",
   "scripts": {
     "start": "now dev",
     "now-dev": "gatsby develop",
