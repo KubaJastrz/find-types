@@ -15,6 +15,7 @@ function SEO({ description, meta = [] }: Props) {
           siteMetadata {
             title
             description
+            hostname
           }
         }
         shareImage: file(relativePath: { eq: "share-image.png" }) {
