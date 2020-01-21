@@ -45,5 +45,18 @@ module.exports = {
         path: path.resolve(__dirname, 'src/assets/images'),
       },
     },
+    {
+      resolve: 'gatsby-plugin-google-gtag',
+      options: {
+        trackingIds: ['UA-156661928-1'],
+        gtagConfig: {
+          anonymize: true,
+        },
+        pluginConfig: {
+          head: true,
+          respectDNT: true,
+        },
+      },
+    },
   ],
 };

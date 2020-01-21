@@ -5922,6 +5922,14 @@ gatsby-plugin-alias-imports@^1.0.5:
   dependencies:
     "@babel/runtime" "^7.2.0"
 
+gatsby-plugin-google-gtag@^1.1.21:
+  version "1.1.21"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-google-gtag/-/gatsby-plugin-google-gtag-1.1.21.tgz#e6873f2c655d483a219bbcda7331d774e45823d4"
+  integrity sha512-Jv7Q0OpdWxGwH+9DgBsc5C+UexTmOJZtNGyptY8Mibb0WfmD/+0oxG6Af+rVhXAEum+o2PN1U9eJhya1T4fKlA==
+  dependencies:
+    "@babel/runtime" "^7.7.6"
+    minimatch "^3.0.4"
+
 gatsby-plugin-lodash@^3.1.19:
   version "3.1.19"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-lodash/-/gatsby-plugin-lodash-3.1.19.tgz#43b9aabbbcbc8ed98d23d7d3b961f8e198fea595"
