@@ -1,99 +1,101 @@
 openapi: 3.0.0
-
 info:
-  version: '1.0.0'
-  title: 'Find Types API'
+  version: 1.0.0
+  title: Find Types API
   license:
-    name: 'MIT'
-
+    name: MIT
+    url: 'https://github.com/KubaJastrz/find-types/blob/master/LICENSE'
 servers:
   - url: 'https://find-types.now.sh/api'
-    description: 'Production server'
+    description: Production server
   - url: 'https://localhost:3000/api'
-    description: 'Local development server'
-
+    description: Local development server
 paths:
   /package:
     get:
-      description: 'Get metadata for npm package'
+      summary: Add a new pet to the store
+      description: ''
       parameters:
-        - in: 'query'
-          name: 'name'
-          description: 'npm package name'
+        - in: query
+          name: name
+          description: npm package name
           required: true
           schema:
-            type: 'string'
+            type: string
       responses:
         200:
           $ref: '#/components/responses/PackageData'
         400:
-          description: 'Bad Request'
+          description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+              examples: {}
         404:
-          description: 'Package not found'
+          description: Package not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         500:
-          description: 'Fetching package data failed'
+          description: Fetching package data failed
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
 components:
   schemas:
     Package:
-      type: 'object'
+      type: object
       required:
-        - 'name'
-        - 'version'
-        - 'description'
-        - 'links'
+        - name
+        - version
+        - description
+        - readme
+        - links
       properties:
         name:
-          type: 'string'
-          example: 'react'
+          type: string
+          example: react
         version:
-          type: 'string'
-          example: '16.12.0'
+          type: string
+          example: 16.12.0
         description:
-          type: 'string'
-          description: 'Taken from package.json'
-          example: 'React is a JavaScript library for building user interfaces.'
+          type: string
+          description: Taken from package.json
+          example: React is a JavaScript library for building user interfaces.
         links:
-          type: 'object'
+          type: object
+          description: Package links
+          required:
+            - npm
           properties:
             homepage:
-              type: 'string'
-              example: 'https://reactjs.org/'
+              type: string
+              example: https://reactjs.org/
             npm:
-              type: 'string'
-              example: 'https://www.npmjs.com/package/react'
+              type: string
+              example: https://www.npmjs.com/package/react
             repository:
-              type: 'string'
-              example: 'https://github.com/facebook/react'
+              type: string
+              example: https://github.com/facebook/react
         types:
-          type: 'string'
-          description: 'Relative path to declaration files parsed from "types" or "typings" fields in package.json'
-          example: 'index.d.ts'
+          type: string
+          description: Relative path to declaration files parsed from "types" or "typings" fields in package.json
+          example: index.d.ts
         deprecated:
-          type: 'boolean'
+          type: boolean
           example: true
     Error:
-      type: 'object'
+      type: object
       properties:
         statusCode:
-          type: 'number'
+          type: number
           example: 404
         message:
-          type: 'string'
-          example: 'Package "react" not found'
-
+          type: string
+          example: Package "react" not found
   responses:
     PackageData:
       description: |
@@ -103,7 +105,7 @@ components:
       content:
         application/json:
           schema:
-            type: 'object'
+            type: object
             properties:
               package:
                 $ref: '#/components/schemas/Package'

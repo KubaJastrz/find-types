@@ -8,7 +8,7 @@ Current list of supported features:
 
 - npm package search with convenient autosuggestions
 - brief package details with links to npm registry and source code repository
-- direct link to DefinitelyTyped repository for `@types`
+- direct link to package living in a monorepo (such as DefinitelyTyped)
 - deprecated `@types` package warning
 - URL query (`/?q=<package>`) for custom in-browser search engines
 
