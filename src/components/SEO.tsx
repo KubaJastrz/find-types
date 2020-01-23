@@ -8,7 +8,7 @@ interface Props {
 }
 
 function SEO({ description, meta = [] }: Props) {
-  const { site, shareImage } = useStaticQuery(
+  const { site, shareImage, logo } = useStaticQuery(
     graphql`
       query {
         site {
@@ -19,6 +19,9 @@ function SEO({ description, meta = [] }: Props) {
           }
         }
         shareImage: file(relativePath: { eq: "share-image.png" }) {
+          publicURL
+        }
+        logo: file(relativePath: { eq: "logo.png" }) {
           publicURL
         }
       }
@@ -57,20 +60,20 @@ function SEO({ description, meta = [] }: Props) {
           content: `${hostname}${shareImage.publicURL}`,
         },
         {
+          property: 'og:image:width',
+          content: '640',
+        },
+        {
+          property: 'og:image:height',
+          content: '320',
+        },
+        {
           name: 'twitter:card',
           content: 'summary',
         },
         {
-          name: 'twitter:title',
-          content: title,
-        },
-        {
-          name: 'twitter:description',
-          content: metaDescription,
-        },
-        {
           name: 'twitter:image',
-          content: `${hostname}${shareImage.publicURL}`,
+          content: `${hostname}${logo.publicURL}`,
         },
         // @ts-ignore
       ].concat(meta)}
