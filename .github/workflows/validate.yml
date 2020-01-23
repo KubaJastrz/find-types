@@ -4,16 +4,12 @@ on: [push]
 
 jobs:
 
-  Lint:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: bahmutov/npm-install@v1
-      - run: yarn lint
-
-  Test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: bahmutov/npm-install@v1
-      - run: yarn test
+      - name: Lint
+        run: yarn lint
+      - name: Test
+        run: yarn test
