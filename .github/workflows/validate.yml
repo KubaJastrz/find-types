@@ -1,25 +1,19 @@
 name: Validate
 
-on:
-  - pull_request
-  - push
+on: [push]
 
 jobs:
 
-  lint:
+  Lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-      - run: npm install -g yarn
-      - run: yarn install --frozen-lockfile
+      - uses: bahmutov/npm-install@v1
       - run: yarn lint
 
-  test:
+  Test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-      - run: npm install -g yarn
-      - run: yarn install --frozen-lockfile
+      - uses: bahmutov/npm-install@v1
       - run: yarn test
