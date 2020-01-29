@@ -10,7 +10,7 @@ Current list of supported features:
 - brief package details with links to npm registry and source code repository
 - direct link to package living in a monorepo (such as DefinitelyTyped)
 - deprecated `@types` package warning
-- URL query (`/?q=<package>`) for custom in-browser search engines
+- URL query ([`/?q=<package>`](https://find-types.now.sh/?q=%s)) for custom in-browser search engines
 
 Is there anything missing you'd like to see? [File an issue](https://github.com/KubaJastrz/find-types/issues/new).
 
@@ -36,14 +36,11 @@ Pull Requests are always welcome :smiley:
 
 ### Setup
 
-Fork the repository, install node dependencies with your package manager (preferably `yarn`)
-and start up the development server.
-
-> NOTE: you may need to use `npm start` on Windows due to `now dev` bug, see [more](https://github.com/zeit/now/issues/3407).
+Fork the repository, install node dependencies with `npm` and start up the development server.
 
 ```bash
-yarn install
-yarn start
+npm install
+npm start
 ```
 
 ## License
