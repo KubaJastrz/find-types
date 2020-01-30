@@ -15,7 +15,7 @@ export interface Props<TItem> {
   inputValue: string;
   onInput: (inputText: string) => void;
   onSelect: (option?: TItem) => void;
-  onKeyDownEnter: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onSearch: (event: React.SyntheticEvent) => void;
   autoFocus?: boolean;
   placeholder?: string;
   items: TItem[];
@@ -27,7 +27,7 @@ function Autocomplete<TItem>({
   inputValue,
   onInput,
   onSelect,
-  onKeyDownEnter,
+  onSearch,
   autoFocus = false,
   placeholder,
   items,
@@ -83,7 +83,7 @@ function Autocomplete<TItem>({
             onInput: ({ currentTarget }) => onInput(currentTarget.value),
             onKeyDown: event => {
               if (event.key === 'Enter' && (!isOpen || highlightedIndex === -1)) {
-                onKeyDownEnter(event);
+                onSearch(event);
               }
             },
           })}
@@ -95,7 +95,7 @@ function Autocomplete<TItem>({
           autoCorrect="off"
         />
         <Styled.SearchButton
-          type="submit"
+          onClick={onSearch}
           aria-label="Search"
           title="Search"
           disabled={!inputValue}
