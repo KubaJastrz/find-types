@@ -1,4 +1,5 @@
 import styled, { css, StyledComponent } from 'styled-components';
+import { transparentize } from 'polished';
 
 import { CleanButton } from '@/components/Framework';
 import { styledWithOmitProps } from '@/styles/helpers';
@@ -33,6 +34,10 @@ export const TextInput = styled.input.attrs(() => ({
   line-height: 2.2em;
   background: transparent;
   flex: 1;
+
+  &::placeholder {
+    color: ${({ theme }) => transparentize(0.2, theme.textColor)};
+  }
 
   /* override default outline */
   &&& {
