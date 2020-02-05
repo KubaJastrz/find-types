@@ -28,3 +28,9 @@ export const Center = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const outline = css`
+  outline-width: 5px;
+  outline-style: auto;
+  outline-color: ${({ theme }) => theme.activeColor};
+`;

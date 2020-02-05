@@ -1,6 +1,6 @@
 import styled, { css, StyledComponent } from 'styled-components';
 
-import { CleanButton, Center } from '@/components/Framework';
+import { CleanButton } from '@/components/Framework';
 import { styledWithOmitProps } from '@/styles/helpers';
 import { COLORS } from '@/styles/colors';
 
@@ -15,13 +15,14 @@ export const SuggestionBar = styled.div<SuggestionBarProps>`
   padding-right: 0.4em;
   padding-left: 0.8em;
   border-radius: 4px;
-  border: 1px solid ${COLORS.gray800};
+  border: 1px solid ${COLORS.grayBlue800};
+  background-color: ${COLORS.grayBlue200};
 
   ${({ isFocused }) =>
     isFocused &&
     css`
-      border-color: ${COLORS.blueTypescript};
-      box-shadow: 0 0 0 1px ${COLORS.blueTypescript};
+      border-color: ${({ theme }) => theme.activeColor};
+      box-shadow: 0 0 0 1px ${({ theme }) => theme.activeColor};
     `}
 `;
 
@@ -32,8 +33,11 @@ export const TextInput = styled.input.attrs(() => ({
   line-height: 2.2em;
   background: transparent;
   flex: 1;
-  outline: 0;
-  caret-color: ${COLORS.blueTypescript};
+
+  /* override default outline */
+  &&& {
+    outline: 0;
+  }
 `;
 
 interface ListProps {
@@ -41,16 +45,15 @@ interface ListProps {
 }
 
 export const List = styled.ul<ListProps>`
-  display: none;
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: absolute;
   left: 0;
   right: 0;
   margin-top: 8px;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
-  background: ${COLORS.white};
-
-  ${({ isOpen }) => isOpen && `display: block`};
+  background-color: ${COLORS.grayBlue200};
+  overflow: hidden;
 `;
 
 export const Item = styled.li`
@@ -65,7 +68,7 @@ export const Button = styledWithOmitProps(CleanButton, ['isHighlighted'])`
   flex: 1;
   padding: 0.4em 0.8em;
 
-  ${({ isHighlighted }) => isHighlighted && `background: ${COLORS.gray900}`};
+  ${({ isHighlighted }) => isHighlighted && `background: ${COLORS.grayBlue300}`};
 
   em {
     font-style: normal;
@@ -79,11 +82,4 @@ export const SearchButton = styled(CleanButton)`
   justify-content: center;
   width: 24px;
   height: 24px;
-`;
-
-export const Loading = styled(Center)`
-  padding: 1.2em;
-  font-size: 0.9em;
-  color: ${COLORS.gray450};
-  letter-spacing: 0.1px;
 `;

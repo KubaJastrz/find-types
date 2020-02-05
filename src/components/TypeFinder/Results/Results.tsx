@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Loading from '@/components/Loading';
 import { PackageData, ErrorResponseData } from '@/types/api';
 import PackageDetails from './PackageDetails';
 import TypesPackageDetails from './TypesPackageDetails';
@@ -13,7 +14,7 @@ interface Props {
 
 function Results({ packageData, typesPackageData }: Props) {
   if (!packageData) {
-    return <pre>Loading...</pre>;
+    return <Loading />;
   }
 
   return (

@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { em, darken, lighten } from 'polished';
+import styled from 'styled-components';
+import { em, lighten } from 'polished';
 
 import { fontMono } from '@/components/Framework';
 import * as BitbucketParts from '@/components/Icons/Bitbucket';
@@ -34,8 +34,8 @@ export const ResultStatus = styled.div<ResultStatusProps>`
   align-items: center;
 
   ${({ type }) => type === 'success' && `color: ${COLORS.green}`};
-  ${({ type }) => type === 'warning' && `color: ${COLORS.orange}`};
-  ${({ type }) => type === 'neutral' && `color: ${COLORS.gray500}`};
+  ${({ type }) => type === 'warning' && `color: ${COLORS.yellow}`};
+  ${({ type }) => type === 'neutral' && `color: ${COLORS.grayBlue700}`};
 `;
 
 export const StatusIcon = styled.div`
@@ -73,10 +73,11 @@ export const PackageName = styled.h4`
 export const PackageVersion = styled.div`
   display: inline-block;
   padding: 1px 6px;
-  font-size: 12px;
+  font-size: 0.82em;
   font-weight: bold;
-  background: ${COLORS.grayBlue200};
+  background: ${COLORS.grayBlue400};
   color: ${COLORS.white};
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.7);
   border-radius: 2px;
   margin-left: 1.6em;
 `;
@@ -93,15 +94,7 @@ interface PackageDetailsProps {
 export const PackageDetails = styled.div<PackageDetailsProps>`
   font-size: ${BASE_FONT_SIZE}px;
 
-  ${({ small }) =>
-    small &&
-    css`
-      font-size: 13.5px;
-
-      ${PackageVersion} {
-        font-size: 11px;
-      }
-    `};
+  ${({ small }) => small && `font-size: 13.5px`};
 `;
 
 export const PackageMeta = styled.div`
@@ -115,10 +108,10 @@ export const PackageMetaLinks = styled.div`
   margin-left: 1.6em;
 `;
 
-const ICON_COLOR = COLORS.grayBlue400;
+const ICON_COLOR = COLORS.grayBlue600;
 
 export const PackageMetaLink = styled.a`
-  height: 1.1em;
+  height: 1.2em;
   margin-right: 0.9em;
   color: ${ICON_COLOR};
   transition: 100ms ease-in-out;
@@ -157,7 +150,7 @@ export const PackageMetaLink = styled.a`
       stop-color: #2684ff;
     }
 
-    color: ${darken(0.4, ICON_COLOR)};
+    color: ${lighten(0.4, ICON_COLOR)};
   }
 
   svg {
