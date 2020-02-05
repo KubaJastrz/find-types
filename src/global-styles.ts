@@ -1,7 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
-import { COLORS } from './styles/colors';
 
-export default createGlobalStyle`
+import { Theme } from '@/components/Theme';
+import { outline } from '@/components/Framework';
+
+export default createGlobalStyle<{ theme: Theme }>`
   html {
     height: 100%;
   }
@@ -10,8 +12,8 @@ export default createGlobalStyle`
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    color: ${COLORS.gray400};
-    background-color: ${COLORS.white}
+    color: ${({ theme }) => theme.textColor};
+    background-color: ${({ theme }) => theme.backgroundColor};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -24,6 +26,10 @@ export default createGlobalStyle`
 
   .js-focus-visible :focus:not(.focus-visible) {
     outline: none;
+  }
+
+  .js-focus-visible .focus-visible {
+    ${outline};
   }
 
   input,
@@ -45,6 +51,8 @@ export default createGlobalStyle`
   h5,
   h6 {
     margin: 0;
+    color: ${({ theme }) => theme.headingColor};
+    font-weight: normal;
   }
 
   p {

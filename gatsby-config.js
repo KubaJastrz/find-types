@@ -32,9 +32,9 @@ module.exports = {
       options: {
         name: 'Find Types',
         start_url: '/',
-        background_color: '#ffffff',
-        theme_color: '#007acc',
-        display: 'minimal-ui',
+        background_color: 'hsl(204, 30%, 12%)',
+        theme_color: '#006bb3',
+        display: 'standalone',
         icon: 'src/assets/images/logo.png',
       },
     },

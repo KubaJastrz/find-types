@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import SEO from './SEO';
+import Theme from './Theme';
 import GlobalStyles from '../global-styles';
 
 import 'modern-normalize';
@@ -14,12 +15,14 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <Root>
-      <SEO />
-      <GlobalStyles />
-      {children}
-      <AppFooter />
-    </Root>
+    <Theme>
+      <Root>
+        <SEO />
+        <GlobalStyles />
+        {children}
+        <AppFooter />
+      </Root>
+    </Theme>
   );
 };
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { transparentize } from 'polished';
 
 import { Link, CleanLink } from '@/components/Framework';
 import { ReactComponent as GithubIcon } from '@/assets/icons/github.svg';
 import { MEDIA } from '@/styles/helpers';
-import { COLORS } from '@/styles/colors';
 
 interface Props {
   className?: string;
@@ -31,16 +31,17 @@ const StyledFooter = styled.footer`
   flex-direction: column;
   align-items: center;
   font-size: 0.85em;
-  color: ${COLORS.gray550};
   padding: 8px;
-  transition: 100ms ease-in-out;
+  transition: color 80ms ease-in-out;
+  color: ${({ theme }) => transparentize(0.5, theme.textColor)};
 
   ${MEDIA.sm} {
     font-size: 0.9em;
   }
 
-  &:hover {
-    color: ${COLORS.gray400};
+  &:hover,
+  &:focus-within {
+    color: ${({ theme }) => transparentize(0.15, theme.textColor)};
   }
 `;
 

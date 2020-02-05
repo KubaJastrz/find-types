@@ -2,6 +2,7 @@ import React from 'react';
 import { useCombobox } from 'downshift';
 import DOMPurify from 'dompurify';
 
+import Loading from '@/components/Loading';
 import { ReactComponent as SearchIcon } from '@/assets/icons/search.svg';
 import * as Styled from './Autocomplete.styles';
 
@@ -116,7 +117,7 @@ function Autocomplete<TItem>({
             </Styled.Item>
           ))
         ) : (
-          <Styled.Loading>Loading...</Styled.Loading>
+          <Loading />
         )}
       </Styled.List>
     </label>
