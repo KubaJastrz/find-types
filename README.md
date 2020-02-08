@@ -30,12 +30,14 @@ I've often struggled with following questions:
 - Is this `@types` package up-to-date with the source code?
 
 Official [TypeSearch](https://microsoft.github.io/TypeSearch/) website only lists `@types` packages
-from [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) repository.
+from [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) repository and doesn't have a lot of quality of live features.
 
 ### Other solutions
 
+- [TypeSearch](https://microsoft.github.io/TypeSearch/) - official search engine for DefinitelyTyped packages
 - [TypeSync](https://github.com/jeffijoe/typesync) - scan your `package.json` and install missing `@types`
 - [Types auto installer](https://marketplace.visualstudio.com/items?itemName=jvitor83.types-autoinstaller) - VSCode extension for installing/uninstalling `@types`
+- [@yarnpkg/plugin-typescript](https://github.com/yarnpkg/berry/tree/master/packages/plugin-typescript) - automatically install `@types` when adding a new dependency with `yarn@berry`
 
 ## Contributing
 
