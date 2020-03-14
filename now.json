@@ -4,7 +4,7 @@
     "silent": true
   },
   "builds": [
-    { "src": "public/**/*", "use": "@now/static" },
+    { "src": "package.json", "use": "@now/static-build" },
     { "src": "src/api/package.ts", "use": "@now/node" }
   ]
 }
