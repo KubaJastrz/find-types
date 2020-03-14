@@ -3,9 +3,10 @@
   "github": {
     "silent": true
   },
+  "cleanUrls": true,
   "builds": [
     { "src": "package.json", "use": "@now/static-build" },
     { "src": "src/api/package.ts", "use": "@now/node" }
   ],
-  "routes": [{ "src": "/api/package", "dest": "/src/api/package.ts" }]
+  "routes": [{ "src": "/api/(.*)", "dest": "/src/api/$1" }]
 }
