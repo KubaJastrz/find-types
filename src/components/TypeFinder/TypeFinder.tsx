@@ -3,7 +3,7 @@ import { navigate } from '@reach/router';
 import { stringify } from 'query-string';
 import { useAsync, DeferFn, IfPending, IfFulfilled, IfRejected } from 'react-async';
 
-import API from '@/api/Api';
+import API from '@/api-client';
 import Autocomplete from '@/components/Autocomplete';
 import { Center } from '@/components/Framework';
 import { PackageResponseData } from '@/types/api';
