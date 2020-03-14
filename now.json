@@ -3,5 +3,8 @@
   "github": {
     "silent": true
   },
-  "builds": [{ "src": "src/api/package.ts", "use": "@now/node" }]
+  "builds": [
+    { "src": "public/**/*", "use": "@now/static" },
+    { "src": "src/api/package.ts", "use": "@now/node" }
+  ]
 }
