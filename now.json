@@ -7,5 +7,6 @@
     { "src": "package.json", "use": "@now/static-build" },
     { "src": "src/api/package.ts", "use": "@now/node" }
   ],
-  "routes": [{ "src": "/api/package", "dest": "/src/api/package.ts" }]
+  "cleanUrls": true,
+  "rewrites": [{ "source": "/api/(.*)", "destination": "/src/api/$1" }]
 }
