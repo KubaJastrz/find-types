@@ -2,5 +2,6 @@
   "version": 2,
   "github": {
     "silent": true
-  }
+  },
+  "builds": [{ "src": "src/api/package.ts", "use": "@now/node" }]
 }

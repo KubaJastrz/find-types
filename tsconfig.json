@@ -15,10 +15,8 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@/types": ["types"],
-      "@/types/*": ["types/*"]
+      "@/*": ["src/*"]
     }
   },
-  "include": ["src", "api", "types"]
+  "include": ["src"]
 }

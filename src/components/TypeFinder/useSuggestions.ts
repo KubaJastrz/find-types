@@ -2,7 +2,7 @@ import React from 'react';
 import useAsyncEffect from '@n1ru4l/use-async-effect';
 import { useDebouncedCallback } from 'use-debounce';
 
-import API from '@/api/Api';
+import API from '@/api-client';
 import { SuggestionsResponseData } from '@/types/api';
 import { parsePackageString } from '@/helpers';
 
