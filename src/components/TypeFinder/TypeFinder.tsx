@@ -87,10 +87,10 @@ function TypeFinder({ initialQuery = '' }: Props) {
           <Center>Loading...</Center>
         </IfPending>
         <IfFulfilled state={packageDataState}>
-          {data => <Results packageData={data.package} typesPackageData={data.typesPackage} />}
+          {(data) => <Results packageData={data.package} typesPackageData={data.typesPackage} />}
         </IfFulfilled>
         <IfRejected state={packageDataState}>
-          {error => <Center>{error.message}</Center>}
+          {(error) => <Center>{error.message}</Center>}
         </IfRejected>
       </Styled.SearchResults>
     </>

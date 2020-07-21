@@ -15,7 +15,7 @@ function useSuggestions(packageName: string) {
   }, 200);
 
   useAsyncEffect(
-    function*() {
+    function* () {
       if (packageName.length > 0) {
         const { name } = parsePackageString(packageName);
         if (!name) {

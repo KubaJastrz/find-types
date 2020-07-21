@@ -82,7 +82,7 @@ function Autocomplete<TItem>({
             onFocus: () => setIsFocused(true),
             onBlur: () => setIsFocused(false),
             onInput: ({ currentTarget }) => onInput(currentTarget.value),
-            onKeyDown: event => {
+            onKeyDown: (event) => {
               if (event.key === 'Enter' && (!isOpen || highlightedIndex === -1)) {
                 onSearch(event);
               }

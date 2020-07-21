@@ -12,4 +12,4 @@ export const MEDIA = {
 } as const;
 
 export const styledWithOmitProps = (Component: React.ComponentType, propsToOmit: string[] = []) =>
-  styled(props => React.createElement(Component, omit(props, propsToOmit)));
+  styled((props) => React.createElement(Component, omit(props, propsToOmit)));
