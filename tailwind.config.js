@@ -101,9 +101,6 @@ module.exports = {
           900: 'hsl(204, 30%, 12%)',
         },
       },
-      boxShadow: (theme) => ({
-        'outline-primary': `0 0 0 1px ${theme('colors.primary')}`,
-      }),
       animation: {
         flow: 'flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s infinite both',
       },
