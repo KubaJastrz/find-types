@@ -1,127 +1,70 @@
-import React from 'react';
-import { useCombobox } from 'downshift';
-import DOMPurify from 'dompurify';
+import React from 'react'
+import {useCombobox} from 'downshift'
+import useEventListener from '@use-it/event-listener'
 
-import Loading from '@/components/Loading';
-import { ReactComponent as SearchIcon } from '@/assets/icons/search.svg';
-import * as Styled from './Autocomplete.styles';
+import {Search} from '/@/components/Icons'
 
-function sanitizeSuggestion(html: string) {
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ['em'],
-  });
+interface Props {
+  label: string
+  inputValue: string
+  onInput: (inputText: string) => void
+  autoFocus?: boolean
+  placeholder?: string
 }
 
-export interface Props<TItem> {
-  inputValue: string;
-  onInput: (inputText: string) => void;
-  onSelect: (option?: TItem) => void;
-  onSearch: (event: React.SyntheticEvent) => void;
-  autoFocus?: boolean;
-  placeholder?: string;
-  items: TItem[];
-  getOptionLabel: (option?: TItem) => string;
-  getOptionValue: (option?: TItem) => string;
-}
-
-function Autocomplete<TItem>({
+export const Autocomplete: React.FC<Props> = ({
+  label,
   inputValue,
   onInput,
-  onSelect,
-  onSearch,
   autoFocus = false,
   placeholder,
-  items,
-  getOptionLabel,
-  getOptionValue,
-}: Props<TItem>) {
-  const [isFocused, setIsFocused] = React.useState(autoFocus);
+}) => {
+  const inputRef = React.useRef<HTMLInputElement>(null)
 
-  const {
-    getComboboxProps,
-    getLabelProps,
-    getInputProps,
-    getMenuProps,
-    getItemProps,
-    highlightedIndex,
-    isOpen,
-  } = useCombobox<TItem>({
-    items,
-    itemToString: getOptionValue,
+  useEventListener<'keydown'>(
+    'keydown',
+    (event) => {
+      if (event.key === '/' && event.target !== inputRef.current) {
+        // prevent slash `/` from being typed into search box
+        event.preventDefault()
+        inputRef.current?.focus()
+      }
+    },
+    window,
+  )
+
+  const {getLabelProps, getInputProps, getComboboxProps, getMenuProps} = useCombobox({
     inputValue,
-    onSelectedItemChange: ({ selectedItem }) => {
-      onSelect(selectedItem);
-    },
-    stateReducer: (state, action) => {
-      if (
-        action.type === useCombobox.stateChangeTypes.InputChange &&
-        action.changes.inputValue === ''
-      ) {
-        return {
-          ...action.changes,
-          isOpen: false,
-        };
-      }
-
-      if (action.type === useCombobox.stateChangeTypes.InputKeyDownEnter) {
-        return {
-          ...action.changes,
-          isOpen: false,
-        };
-      }
-
-      return action.changes;
-    },
-  });
+    items: [],
+  })
 
   return (
-    <label {...getLabelProps()}>
-      <Styled.SuggestionBar {...getComboboxProps()} isFocused={isFocused}>
-        <Styled.TextInput
+    <div className="w-full">
+      <label {...getLabelProps()} className="block mb-1">
+        {label}
+      </label>
+      <div {...getComboboxProps()} className="relative">
+        <input
           {...getInputProps({
-            onFocus: () => setIsFocused(true),
-            onBlur: () => setIsFocused(false),
-            onInput: ({ currentTarget }) => onInput(currentTarget.value),
-            onKeyDown: (event) => {
-              if (event.key === 'Enter' && (!isOpen || highlightedIndex === -1)) {
-                onSearch(event);
-              }
-            },
+            ref: inputRef,
+            onInput: ({currentTarget}) => onInput(currentTarget.value),
+            autoFocus,
+            placeholder,
+            spellCheck: false,
+            autoCapitalize: 'off',
+            autoComplete: 'off',
+            autoCorrect: 'off',
           })}
-          autoFocus={autoFocus}
-          placeholder={placeholder}
-          spellCheck={false}
-          autoCapitalize="off"
-          autoComplete="off"
-          autoCorrect="off"
+          className="pl-3 pr-10 leading-9 rounded outline-none bg-gray-blue-800 focus:bg-gray-blue-750 w-full shadow placeholder-gray-400 transition duration-100"
         />
-        <Styled.SearchButton
-          onClick={onSearch}
-          aria-label="Search"
-          title="Search"
-          disabled={!inputValue}
-        >
-          <SearchIcon width={20} height={20} />
-        </Styled.SearchButton>
-      </Styled.SuggestionBar>
-      <Styled.List {...getMenuProps()} isOpen={isOpen}>
-        {items.length > 0 ? (
-          items.map((item, index) => (
-            <Styled.Item key={getOptionValue(item)} {...getItemProps({ item, index })}>
-              <Styled.Button
-                isHighlighted={highlightedIndex === index}
-                dangerouslySetInnerHTML={{
-                  __html: sanitizeSuggestion(getOptionLabel(item)),
-                }}
-              />
-            </Styled.Item>
-          ))
-        ) : (
-          <Loading />
-        )}
-      </Styled.List>
-    </label>
-  );
+        <div className="absolute right-0 top-0 h-full flex items-center pr-2">
+          <button type="submit" title="Search" className="w-6 h-6 flex items-center justify-center">
+            <span className="sr-only">Search</span>
+            <Search className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+      <ul {...getMenuProps()}></ul>
+    </div>
+  )
 }
-
-export default Autocomplete;

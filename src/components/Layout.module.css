@@ -1,0 +1,13 @@
+.page-title {
+  font-size: 1.67em;
+  margin-top: 1em;
+  margin-bottom: 0.67em;
+}
+
+@screen md {
+  .page-title {
+    font-size: 2.33em;
+    margin-top: 1.33em;
+    margin-bottom: 1em;
+  }
+}

@@ -1,25 +1,20 @@
-import { ReactComponent as GithubIcon } from '@/assets/icons/github.svg';
-import GitlabIcon from '@/components/Icons/GitLab';
-import BitbucketIcon from '@/components/Icons/Bitbucket';
-import { ReactComponent as GitIcon } from '@/assets/icons/git.svg';
+import {GitLab, Bitbucket, GitHub, Git} from '/@/components/Icons'
 
 const repositoryMap = {
-  'github.com': GithubIcon,
-  'gitlab.com': GitlabIcon,
-  'bitbucket.org': BitbucketIcon,
-};
+  'github.com': GitHub,
+  'gitlab.com': GitLab,
+  'bitbucket.org': Bitbucket,
+}
 
-function useSourceCodeIcon(repositoryUrl?: string) {
+export function useSourceCodeIcon(repositoryUrl?: string) {
   if (!repositoryUrl) {
-    return undefined;
+    return undefined
   }
 
   const [, FoundIcon] =
     Object.entries(repositoryMap).find(([domain]) => {
-      return repositoryUrl.match(domain);
-    }) || [];
+      return repositoryUrl.match(domain)
+    }) || []
 
-  return FoundIcon ?? GitIcon;
+  return FoundIcon ?? Git
 }
-
-export default useSourceCodeIcon;
