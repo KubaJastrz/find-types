@@ -1,1 +1,1 @@
-export { default } from './TypeFinder';
+export * from './TypeFinder'

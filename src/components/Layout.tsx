@@ -1,41 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
 
-import SEO from './SEO';
-import Theme from './Theme';
-import GlobalStyles from '../global-styles';
+import styles from './Layout.module.css'
+import {Footer} from './Footer'
 
-import 'modern-normalize';
-import 'focus-visible';
-import Footer from './Footer';
-
-interface Props {
-  children: React.ReactNode;
+export const Layout: React.FC = ({children}) => {
+  return (
+    <div className="flex flex-col flex-grow items-center">
+      {children}
+      <Footer className="mt-auto mb-3" />
+    </div>
+  )
 }
 
-const Layout = ({ children }: Props) => {
-  return (
-    <Theme>
-      <Root>
-        <SEO />
-        <GlobalStyles />
-        {children}
-        <AppFooter />
-      </Root>
-    </Theme>
-  );
-};
-
-const Root = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-grow: 1;
-`;
-
-const AppFooter = styled(Footer)`
-  margin-top: auto;
-  margin-bottom: 12px;
-`;
-
-export default Layout;
+export const PageTitle: React.FC = ({children}) => {
+  return <h1 className={styles['page-title']}>{children}</h1>
+}

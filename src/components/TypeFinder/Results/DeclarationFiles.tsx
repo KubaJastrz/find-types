@@ -1,30 +1,34 @@
-import React from 'react';
+import React from 'react'
 
-import ResultEntry from './ResultEntry';
-import { SuccessIcon, ErrorIcon } from './statusIcons';
-import { parseRelativePath, getCdnFileLink } from '@/helpers';
-import { Link } from '@/components/Framework';
-import * as Styled from './Results.styles';
+import {ResultEntry, ResultType, SuccessIcon, ErrorIcon} from './ResultEntry'
+import {InlineLink} from '/@/components/InlineLink'
+import {getCdnFileLink, parseRelativePath} from '/@/utils/common'
 
 interface Props {
-  packageName: string;
-  packageJsonTypes?: string;
+  packageName: string
+  packageJsonTypes?: string
 }
 
-function DeclarationFiles({ packageName, packageJsonTypes }: Props) {
+export const DeclarationFiles: React.FC<Props> = ({packageName, packageJsonTypes}) => {
   return packageJsonTypes ? (
-    <ResultEntry type="success" icon={<SuccessIcon />} title="Built-in declaration files">
-      <Styled.FileList>
+    <ResultEntry
+      type={ResultType.success}
+      icon={<SuccessIcon />}
+      title="Built-in declaration files"
+    >
+      <ul className="pl-5 text-sm list-disc">
         <li>
-          <Link href={getCdnFileLink(packageName, packageJsonTypes)}>
+          <InlineLink href={getCdnFileLink(packageName, packageJsonTypes)}>
             {parseRelativePath(packageJsonTypes)}
-          </Link>
+          </InlineLink>
         </li>
-      </Styled.FileList>
+      </ul>
     </ResultEntry>
   ) : (
-    <ResultEntry type="neutral" icon={<ErrorIcon />} title="No built-in declaration files" />
-  );
+    <ResultEntry
+      type={ResultType.neutral}
+      icon={<ErrorIcon />}
+      title="No built-in declaration files"
+    />
+  )
 }
-
-export default DeclarationFiles;

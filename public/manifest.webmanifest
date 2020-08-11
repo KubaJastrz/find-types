@@ -1,0 +1,19 @@
+{
+  "name": "Find Types",
+  "start_url": "/",
+  "background_color": "hsl(204, 30%, 12%)",
+  "theme_color": "#006bb3",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,49 +1,40 @@
-import React from 'react';
+import clsx from 'clsx'
+import React from 'react'
 
-import { ReactComponent as NpmIcon } from '@/assets/icons/npm.svg';
-import { NpmPackage } from '@/types';
-import useSourceCodeIcon from './useSourceCodeIcon';
-import * as Styled from './Results.styles';
+import type {PackageData} from '/@/types/api'
+import {InlineLink} from '/@/components/InlineLink'
+import {useSourceCodeIcon} from './useSourceCodeIcon'
 
 interface Props {
-  packageData: NpmPackage;
-  hideDescription?: boolean;
-  small?: boolean;
+  packageData: PackageData
+  small?: boolean
 }
 
-function PackageDetails({ packageData, hideDescription = false, small = false }: Props) {
-  const SourceCodeIcon = useSourceCodeIcon(packageData.links.repository);
-
+export const PackageDetails: React.FC<Props> = ({packageData, small}) => {
+  const {name, version, description, links} = packageData
+  const RepositoryIcon = useSourceCodeIcon(links.repository)
   return (
-    <Styled.PackageDetails small={small}>
-      <Styled.PackageMeta>
-        <Styled.PackageName>{packageData.name}</Styled.PackageName>
-        <Styled.PackageVersion>{packageData.version}</Styled.PackageVersion>
-        <Styled.PackageMetaLinks>
-          {packageData.links.npm && (
-            <Styled.PackageMetaLink
-              href={packageData.links.npm}
-              title="Npm registry"
-              className="-npm"
-            >
-              <NpmIcon />
-            </Styled.PackageMetaLink>
-          )}
-          {SourceCodeIcon && (
-            <Styled.PackageMetaLink
-              href={packageData.links.repository}
-              title="Source code repository"
-            >
-              <SourceCodeIcon />
-            </Styled.PackageMetaLink>
-          )}
-        </Styled.PackageMetaLinks>
-      </Styled.PackageMeta>
-      {!hideDescription && (
-        <Styled.PackageDescription>{packageData.description}</Styled.PackageDescription>
-      )}
-    </Styled.PackageDetails>
-  );
+    <div className="space-y-1">
+      <div className="flex items-center space-x-4">
+        <InlineLink
+          href={links.npm}
+          className={clsx('font-mono font-bold', small ? 'text-base' : 'text-lg md:text-xl')}
+        >
+          {name}
+        </InlineLink>
+        <span className="inline-block p-1 py-0.5 leading-4 text-xs font-bold rounded-sm bg-gray-blue-700 text-shadow-px">
+          <span className="sr-only">version</span>
+          {version}
+        </span>
+        <span className="inline-block text-gray-200">
+          {RepositoryIcon ? (
+            <a href={links.repository} title="Source code repository">
+              <RepositoryIcon className="w-5 h-5" />
+            </a>
+          ) : null}
+        </span>
+      </div>
+      {description && <p className="text-sm">{description}</p>}
+    </div>
+  )
 }
-
-export default PackageDetails;

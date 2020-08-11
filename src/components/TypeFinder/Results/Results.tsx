@@ -1,31 +1,23 @@
-import React from 'react';
+import React from 'react'
+import {PackageDetails} from './PackageDetails'
+import {TypesPackageDetails} from './TypesPackageData'
+import {DeclarationFiles} from './DeclarationFiles'
 
-import Loading from '@/components/Loading';
-import { PackageData, ErrorResponseData } from '@/types/api';
-import PackageDetails from './PackageDetails';
-import TypesPackageDetails from './TypesPackageDetails';
-import DeclarationFiles from './DeclarationFiles';
-import * as Styled from './Results.styles';
+import type {PackageData, ErrorResponseData} from '/@/types/api'
 
 interface Props {
-  packageData: PackageData;
-  typesPackageData: PackageData | ErrorResponseData;
+  packageData: PackageData
+  typesPackageData: PackageData | ErrorResponseData
 }
 
-function Results({ packageData, typesPackageData }: Props) {
-  if (!packageData) {
-    return <Loading />;
-  }
-
+export const Results: React.FC<Props> = ({packageData, typesPackageData}) => {
   return (
-    <Styled.Results>
+    <div className="space-y-6">
       <PackageDetails packageData={packageData} />
-      <Styled.TypesResults>
+      <div className="space-y-5">
         <TypesPackageDetails packageData={typesPackageData} />
         <DeclarationFiles packageName={packageData.name} packageJsonTypes={packageData.types} />
-      </Styled.TypesResults>
-    </Styled.Results>
-  );
+      </div>
+    </div>
+  )
 }
-
-export default Results;

@@ -1,52 +1,41 @@
-import React from 'react';
-import styled from 'styled-components';
-import { transparentize } from 'polished';
+import React from 'react'
+import clsx from 'clsx'
 
-import { Link, CleanLink } from '@/components/Framework';
-import { ReactComponent as GithubIcon } from '@/assets/icons/github.svg';
-import { MEDIA } from '@/styles/helpers';
+import {GitHub} from './Icons'
+import {InlineLink} from './InlineLink'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
-function Footer({ className }: Props) {
+export const Footer: React.FC<Props> = ({className}) => {
   return (
-    <StyledFooter className={className}>
-      <Links>
-        <CleanLink href="https://github.com/KubaJastrz/find-types" title="Source code">
-          <GithubIcon />
-        </CleanLink>
-      </Links>
+    <footer
+      className={clsx(
+        className,
+        'p-2 pt-4 text-xs sm:text-sm text-gray-blue-400 hover:text-gray-blue-100 focus-within:text-gray-blue-100',
+      )}
+    >
+      <div className="mb-1 text-center">
+        <a
+          href="https://github.com/KubaJastrz/find-types"
+          title="Source code"
+          className="inline-block"
+        >
+          <span className="sr-only">Source code</span>
+          <GitHub className="w-6 h-6 sm:w-8 sm:h-8" />
+        </a>
+      </div>
       <p>
-        Powered by <Link href="https://www.npmjs.com/">npm</Link> and{' '}
-        <Link href="https://unpkg.com/">unpkg</Link>
+        Powered by{' '}
+        <InlineLink href="https://www.npmjs.com/" title="Node Package Registry">
+          npm
+        </InlineLink>{' '}
+        and{' '}
+        <InlineLink href="https://unpkg.com/" title="Content Delivery Network">
+          unpkg
+        </InlineLink>
       </p>
-    </StyledFooter>
-  );
+    </footer>
+  )
 }
-
-const StyledFooter = styled.footer`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 0.85em;
-  padding: 8px;
-  transition: color 80ms ease-in-out;
-  color: ${({ theme }) => transparentize(0.5, theme.textColor)};
-
-  ${MEDIA.sm} {
-    font-size: 0.9em;
-  }
-
-  &:hover,
-  &:focus-within {
-    color: ${({ theme }) => transparentize(0.15, theme.textColor)};
-  }
-`;
-
-const Links = styled.div`
-  margin-bottom: 8px;
-`;
-
-export default Footer;

@@ -1,24 +1,36 @@
-import React from 'react';
+import React from 'react'
+import clsx from 'clsx'
 
-import * as Styled from './Results.styles';
+export enum ResultType {
+  success,
+  warning,
+  neutral,
+}
 
 interface Props {
-  children?: React.ReactChild;
-  icon: React.ReactChild;
-  title: React.ReactChild;
-  type: Styled.ResultType;
+  icon: React.ReactChild
+  title: React.ReactChild
+  type: ResultType
 }
 
-function ResultEntry({ children, icon, title, type }: Props) {
+export const ResultEntry: React.FC<Props> = ({children, icon, title, type}) => {
+  const cellClasses = clsx('font-bold text-sm leading-5 flex items-center', {
+    'text-success': type === ResultType.success,
+    'text-warning': type === ResultType.warning,
+    'text-neutral': type === ResultType.neutral,
+  })
+
   return (
-    <Styled.ResultEntry>
-      <Styled.ResultStatus type={type}>
-        <Styled.StatusIcon>{icon}</Styled.StatusIcon>
-        <Styled.StatusText>{title}</Styled.StatusText>
-      </Styled.ResultStatus>
-      {children && <Styled.StatusContent>{children}</Styled.StatusContent>}
-    </Styled.ResultEntry>
-  );
+    <div className="grid grid-cols-status gap-2">
+      <div className={cellClasses}>{icon}</div>
+      <div className={cellClasses}>{title}</div>
+      {children && <div className="col-start-2">{children}</div>}
+    </div>
+  )
 }
 
-export default ResultEntry;
+export {
+  AlertTriangle as WarningIcon,
+  CheckCircle as SuccessIcon,
+  X as ErrorIcon,
+} from '/@/components/Icons'

@@ -82,7 +82,9 @@ components:
               example: https://github.com/facebook/react
         types:
           type: string
-          description: Relative path to declaration files parsed from "types" or "typings" fields in package.json
+          description:
+            Relative path to declaration files parsed from "types" or "typings" fields in
+            package.json
           example: index.d.ts
         deprecated:
           type: boolean
