@@ -11,6 +11,7 @@ const config: UserConfig = {
   alias: {
     '/@/': path.resolve(__dirname, 'src'),
   },
+  sourcemap: true,
 }
 
 export default config
