@@ -3,7 +3,7 @@ import {PackageDetails} from './PackageDetails'
 import {TypesPackageDetails} from './TypesPackageData'
 import {DeclarationFiles} from './DeclarationFiles'
 
-import {PackageData, ErrorResponseData} from '/@/types/api'
+import type {PackageData, ErrorResponseData} from '/@/types/api'
 
 interface Props {
   packageData: PackageData

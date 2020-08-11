@@ -1,9 +1,9 @@
 import {NowRequest, NowResponse} from '@now/node'
 
-import {PackageResponseData} from '/@/types/api'
+import type {PackageResponseData} from '/@/types/api'
 import {FetchError} from './utils/errors'
 import {getPackageData} from './utils/get-package-data'
-import {getTypesPackageName} from '/@/utils/common'
+import {getTypesPackageName} from '../utils/common'
 
 /**
  * Route handler

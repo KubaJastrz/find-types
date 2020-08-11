@@ -1,6 +1,6 @@
 import ky, {Options as FetchOptions} from 'ky'
 
-import {PackageResponseData, SuggestionsResponseData} from '/@/types/api'
+import type {PackageResponseData, SuggestionsResponseData} from '/@/types/api'
 
 const Client = {
   get: async <Response>(url: string, options?: FetchOptions) => {

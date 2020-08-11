@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
 
-import {PackageData} from '/@/types/api'
+import type {PackageData} from '/@/types/api'
 import {InlineLink} from '/@/components/InlineLink'
 import {useSourceCodeIcon} from './useSourceCodeIcon'
 

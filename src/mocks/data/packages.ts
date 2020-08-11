@@ -1,4 +1,4 @@
-import {PackageResponseData} from '/@/types/api'
+import type {PackageResponseData} from '/@/types/api'
 
 const packages: Record<string, PackageResponseData> = {
   ky: {
