@@ -3,7 +3,7 @@
 const plugin = require('tailwindcss/plugin')
 
 module.exports = {
-  purge: ['./src/**/*.tsx', './src/**/*.ts', './src/**/*.css'],
+  purge: ['./index.html', './src/**/*.tsx', './src/**/*.ts', './src/**/*.css'],
   theme: {
     screens: {
       xs: {min: '360px'},
