@@ -1,7 +1,8 @@
-# vite
+# build tools
 dist/
 node_modules/
 coverage/
+.vercel/
 
 # editors
 .idea/
