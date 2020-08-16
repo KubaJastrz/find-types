@@ -71,6 +71,9 @@ const spacing = {
 
 module.exports = {
   purge: ['./index.html', './src/**/*.tsx', './src/**/*.ts', './src/**/*.css'],
+  variants: {
+    textColor: ['responsive', 'hover', 'focus', 'focus-within'],
+  },
   theme: {
     spacing,
     screens: {
