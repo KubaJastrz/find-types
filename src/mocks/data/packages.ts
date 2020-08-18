@@ -113,4 +113,8 @@ async function read(name: string) {
   return packages[name]
 }
 
-export const packageDB = {read}
+async function readAll() {
+  return packages
+}
+
+export const packageDB = {read, readAll}

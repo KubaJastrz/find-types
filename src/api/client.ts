@@ -3,8 +3,15 @@ import ky, {Options as FetchOptions} from 'ky'
 import type {PackageResponseData, SuggestionsResponseData} from '/@/types/api'
 
 const Client = {
-  get: async <Response>(url: string, options?: FetchOptions) => {
-    return await ky.get(url, options).json<Response>()
+  get: <Response>(url: string, options?: FetchOptions) => {
+    const controller = new AbortController()
+    const {signal} = controller
+
+    const promise = ky.get(url, {...options, signal}).json<Response>()
+
+    // https://react-query.tanstack.com/docs/guides/query-cancellation
+    ;(promise as any).cancel = controller.abort
+    return promise
   },
 }
 

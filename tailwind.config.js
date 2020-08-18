@@ -71,6 +71,9 @@ const spacing = {
 
 module.exports = {
   purge: ['./index.html', './src/**/*.tsx', './src/**/*.ts', './src/**/*.css'],
+  future: {
+    removeDeprecatedGapUtilities: true,
+  },
   variants: {
     textColor: ['responsive', 'hover', 'focus', 'focus-within'],
   },

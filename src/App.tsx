@@ -21,7 +21,7 @@ export const App: React.FC = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-      <RQD.ReactQueryDevtools initialIsOpen={false} />
+      <RQD.ReactQueryDevtools initialIsOpen={true} />
     </ReactQueryConfigProvider>
   )
 }
