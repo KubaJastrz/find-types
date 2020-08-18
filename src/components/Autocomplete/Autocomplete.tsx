@@ -54,7 +54,6 @@ export function Autocomplete<Item>({
     getItemProps,
     highlightedIndex,
     isOpen,
-    closeMenu,
   } = useCombobox({
     inputValue,
     items,
@@ -69,6 +68,10 @@ export function Autocomplete<Item>({
         return {...changes, isOpen: false}
       }
 
+      if (type === useCombobox.stateChangeTypes.InputKeyDownEnter) {
+        return {...changes, isOpen: false}
+      }
+
       return changes
     },
   })
@@ -78,16 +81,7 @@ export function Autocomplete<Item>({
       <label {...getLabelProps()} className="block mb-1">
         {label}
       </label>
-      <div
-        {...getComboboxProps({
-          onKeyDown: (event) => {
-            if (event.key === 'Enter' && (!isOpen || highlightedIndex === -1)) {
-              closeMenu()
-            }
-          },
-        })}
-        className="relative"
-      >
+      <div {...getComboboxProps()} className="relative">
         <input
           {...getInputProps({
             ref: inputRef,
