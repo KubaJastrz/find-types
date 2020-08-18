@@ -47,18 +47,6 @@ export interface SuggestionsResponseData {
     version: string
   }
   /**
-   * scores are numbers between 0 and 1 (inclusive?)
-   */
-  score: {
-    final: number
-    detail: {
-      quality: number
-      popularity: number
-      maintenance: number
-    }
-  }
-  searchScore: number
-  /**
    * a string containing highlighted matched text
    */
   highlight: string
