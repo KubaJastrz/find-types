@@ -1,24 +1,37 @@
 import React from 'react'
 import {useCombobox} from 'downshift'
 import useEventListener from '@use-it/event-listener'
+import clsx from 'clsx'
 
 import {Search} from '/@/components/Icons'
+import {Flow} from '/@/components/Loading'
+import {Suggestion} from './Suggestion'
 
-interface Props {
+interface Props<Item> {
   label: string
   inputValue: string
   onInput: (inputText: string) => void
+  onSelect: (option?: Item | null) => void
   autoFocus?: boolean
   placeholder?: string
+  items: Item[]
+  isLoading: boolean
+  getOptionLabel: (option?: Item | null) => string
+  getOptionValue: (option?: Item | null) => string
 }
 
-export const Autocomplete: React.FC<Props> = ({
+export function Autocomplete<Item>({
   label,
   inputValue,
   onInput,
+  onSelect,
   autoFocus = false,
   placeholder,
-}) => {
+  items,
+  isLoading,
+  getOptionLabel,
+  getOptionValue,
+}: Props<Item>) {
   const inputRef = React.useRef<HTMLInputElement>(null)
 
   useEventListener<'keydown'>(
@@ -33,17 +46,48 @@ export const Autocomplete: React.FC<Props> = ({
     window,
   )
 
-  const {getLabelProps, getInputProps, getComboboxProps, getMenuProps} = useCombobox({
+  const {
+    getLabelProps,
+    getInputProps,
+    getComboboxProps,
+    getMenuProps,
+    getItemProps,
+    highlightedIndex,
+    isOpen,
+    closeMenu,
+  } = useCombobox({
     inputValue,
-    items: [],
+    items,
+    itemToString: getOptionValue,
+    onSelectedItemChange: ({selectedItem}) => {
+      onSelect(selectedItem)
+    },
+    stateReducer: (state, actionAndChanges) => {
+      const {type, changes} = actionAndChanges
+
+      if (type === useCombobox.stateChangeTypes.InputChange && changes.inputValue === '') {
+        return {...changes, isOpen: false}
+      }
+
+      return changes
+    },
   })
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       <label {...getLabelProps()} className="block mb-1">
         {label}
       </label>
-      <div {...getComboboxProps()} className="relative">
+      <div
+        {...getComboboxProps({
+          onKeyDown: (event) => {
+            if (event.key === 'Enter' && (!isOpen || highlightedIndex === -1)) {
+              closeMenu()
+            }
+          },
+        })}
+        className="relative"
+      >
         <input
           {...getInputProps({
             ref: inputRef,
@@ -64,7 +108,32 @@ export const Autocomplete: React.FC<Props> = ({
           </button>
         </div>
       </div>
-      <ul {...getMenuProps()}></ul>
+      <ul
+        {...getMenuProps()}
+        className={clsx(
+          'absolute inset-x-0 bg-gray-blue-700 mt-2 rounded shadow-md overflow-hidden py-1 z-10',
+          {
+            hidden: !isOpen,
+          },
+        )}
+      >
+        {isLoading || items.length === 0 ? (
+          <div className="text-center pt-1 pb-2">
+            <Flow />
+          </div>
+        ) : (
+          items.map((item, index) => {
+            return (
+              <Suggestion
+                key={getOptionValue(item)}
+                label={getOptionLabel(item)}
+                isHighlighted={index === highlightedIndex}
+                {...getItemProps({item, index})}
+              />
+            )
+          })
+        )}
+      </ul>
     </div>
   )
 }

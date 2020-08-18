@@ -1,11 +1,12 @@
 import React from 'react'
-import {useQuery} from 'react-query'
 
-import {API} from '/@/api/client'
 import {Autocomplete} from '/@/components/Autocomplete'
 import {parsePackageString} from '/@/utils/common'
 import {Flow} from '/@/components/Loading/Flow'
 import {Results} from './Results'
+import {useSuggestions} from './useSuggestions'
+import {usePackageDetails} from './usePackageDetails'
+import {SuggestionsResponseData} from '/@/types/api'
 
 interface Props {
   initialQuery?: string
@@ -15,14 +16,12 @@ interface Props {
 export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
   const [packageString, setPackageString] = React.useState('')
 
+  const {data: suggestions, isLoading: isSuggestionsLoading} = useSuggestions(
+    parsePackageString(packageString).name ?? '',
+  )
+
   const [packageKey, setPackageKey] = React.useState('')
-  const {refetch, isLoading, failureCount, data, error} = useQuery({
-    queryKey: ['details', packageKey],
-    queryFn: () => API.getPackageDetails(packageKey),
-    config: {
-      enabled: !!packageKey,
-    },
-  })
+  const {refetch, isLoading, failureCount, data, error} = usePackageDetails(packageKey)
 
   // fetch package details based on its unique key
   React.useEffect(() => {
@@ -53,6 +52,11 @@ export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
     }
   }, [initialQuery])
 
+  const handleSelect = (suggestion?: SuggestionsResponseData | null) => {
+    const packageName = getOptionValue(suggestion)
+    handleSearch(packageName)
+  }
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     handleSearch(packageString)
@@ -66,7 +70,12 @@ export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
           placeholder={'eg. query-string (Press "/" to focus)'}
           inputValue={packageString}
           onInput={setPackageString}
+          onSelect={handleSelect}
           autoFocus
+          items={suggestions || []}
+          isLoading={isSuggestionsLoading}
+          getOptionLabel={getOptionLabel}
+          getOptionValue={getOptionValue}
         />
       </form>
       <div className="mt-6 md:mt-12">
@@ -83,4 +92,12 @@ export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
       </div>
     </div>
   )
+}
+
+function getOptionLabel(suggestion?: SuggestionsResponseData | null): string {
+  return suggestion ? suggestion.highlight || suggestion.package.name : ''
+}
+
+function getOptionValue(suggestion?: SuggestionsResponseData | null): string {
+  return suggestion ? suggestion.package.name : ''
 }
