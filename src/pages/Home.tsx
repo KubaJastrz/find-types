@@ -11,10 +11,11 @@ export const Home: React.FC = () => {
   const handleQueryChange = React.useCallback(
     (packageName?: string) => {
       if (packageName) {
-        setSearchParams({q: packageName})
+        searchParams.set('q', packageName)
       } else {
-        setSearchParams({})
+        searchParams.delete('q')
       }
+      setSearchParams(searchParams)
     },
     [setSearchParams],
   )
