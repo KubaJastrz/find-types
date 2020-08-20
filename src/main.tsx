@@ -1,5 +1,6 @@
 import './main.css'
 import 'focus-visible'
+import '@reach/tooltip/styles.css'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
