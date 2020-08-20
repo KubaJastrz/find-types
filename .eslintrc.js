@@ -14,12 +14,14 @@ module.exports = {
     },
   },
   extends: [
+    'prettier',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
-    'prettier',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
   ],
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier', 'jsx-a11y', 'react', 'react-hooks'],
   rules: {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',

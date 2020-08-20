@@ -17,7 +17,7 @@ export const Home: React.FC = () => {
       }
       setSearchParams(searchParams)
     },
-    [setSearchParams],
+    [searchParams, setSearchParams],
   )
 
   React.useEffect(() => {
