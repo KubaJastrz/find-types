@@ -1,5 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
+import Tooltip from '@reach/tooltip'
 
 import {GitHub} from './Icons'
 import {InlineLink} from './InlineLink'
@@ -17,24 +18,22 @@ export const Footer: React.FC<Props> = ({className}) => {
       )}
     >
       <div className="mb-1 text-center">
-        <a
-          href="https://github.com/KubaJastrz/find-types"
-          title="Source code"
-          className="inline-block"
-        >
-          <span className="sr-only">Source code</span>
-          <GitHub className="w-6 h-6 sm:w-8 sm:h-8" />
-        </a>
+        <Tooltip label="Source code">
+          <a href="https://github.com/KubaJastrz/find-types" className="inline-block">
+            <span className="sr-only">Source code</span>
+            <GitHub className="w-6 h-6 sm:w-8 sm:h-8" />
+          </a>
+        </Tooltip>
       </div>
       <p>
         Powered by{' '}
-        <InlineLink href="https://www.npmjs.com/" title="Node Package Registry">
-          npm
-        </InlineLink>{' '}
+        <Tooltip label="node package registry">
+          <InlineLink href="https://www.npmjs.com/">npm</InlineLink>
+        </Tooltip>{' '}
         and{' '}
-        <InlineLink href="https://unpkg.com/" title="Content Delivery Network">
-          unpkg
-        </InlineLink>
+        <Tooltip label="cdn">
+          <InlineLink href="https://unpkg.com/">unpkg</InlineLink>
+        </Tooltip>
       </p>
     </footer>
   )

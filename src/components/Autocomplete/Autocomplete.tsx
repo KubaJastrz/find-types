@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import {Search} from '/@/components/Icons'
 import {Flow} from '/@/components/Loading'
 import {Suggestion} from './Suggestion'
+import Tooltip from '@reach/tooltip'
 
 interface Props<Item> {
   label: string
@@ -96,10 +97,11 @@ export function Autocomplete<Item>({
           className="pl-3 pr-10 leading-9 rounded outline-none bg-gray-blue-800 focus:bg-gray-blue-750 w-full shadow placeholder-gray-400 transition duration-100"
         />
         <div className="absolute right-0 top-0 h-full flex items-center pr-2">
-          <button type="submit" title="Search" className="w-6 h-6 flex items-center justify-center">
-            <span className="sr-only">Search</span>
-            <Search className="w-5 h-5" />
-          </button>
+          <Tooltip label="search">
+            <button type="submit" className="w-6 h-6 flex items-center justify-center">
+              <Search className="w-5 h-5" />
+            </button>
+          </Tooltip>
         </div>
       </div>
       <ul
