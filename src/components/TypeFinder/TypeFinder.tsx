@@ -28,18 +28,21 @@ export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
     if (packageKey) {
       refetch()
     }
-  }, [packageKey])
+  }, [packageKey, refetch])
 
-  const handleSearch = (packageString: string, isInitialQuery = false) => {
-    const {name} = parsePackageString(packageString)
-    if (!isInitialQuery) {
-      onQueryChange(name)
-    }
-    if (!name) {
-      return
-    }
-    setPackageKey(name)
-  }
+  const handleSearch = React.useCallback(
+    (packageString: string, isInitialQuery = false) => {
+      const {name} = parsePackageString(packageString)
+      if (!isInitialQuery) {
+        onQueryChange(name)
+      }
+      if (!name) {
+        return
+      }
+      setPackageKey(name)
+    },
+    [onQueryChange],
+  )
 
   // handle initial query
   React.useEffect(() => {
@@ -50,7 +53,7 @@ export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
       setPackageString('')
       setPackageKey('')
     }
-  }, [initialQuery])
+  }, [handleSearch, initialQuery])
 
   const handleSelect = (suggestion?: SuggestionsResponseData | null) => {
     const packageName = getOptionValue(suggestion)
@@ -71,7 +74,6 @@ export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
           inputValue={packageString}
           onInput={setPackageString}
           onSelect={handleSelect}
-          autoFocus
           items={suggestions || []}
           isLoading={isSuggestionsLoading}
           getOptionLabel={getOptionLabel}
