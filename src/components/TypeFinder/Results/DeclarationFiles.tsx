@@ -2,7 +2,7 @@ import React from 'react'
 
 import {ResultEntry, ResultType, SuccessIcon, ErrorIcon} from './ResultEntry'
 import {InlineLink} from '/@/components/InlineLink'
-import {getCdnFileLink, parseRelativePath} from '/@/utils/common'
+import {getCdnFileLink, getTypesFileName, parseRelativePath} from '/@/utils/common'
 
 interface Props {
   packageName: string
@@ -18,7 +18,7 @@ export const DeclarationFiles: React.FC<Props> = ({packageName, packageJsonTypes
     >
       <ul className="pl-5 text-sm list-disc">
         <li>
-          <InlineLink href={getCdnFileLink(packageName, packageJsonTypes)}>
+          <InlineLink href={getCdnFileLink(packageName, getTypesFileName(packageJsonTypes))}>
             {parseRelativePath(packageJsonTypes)}
           </InlineLink>
         </li>

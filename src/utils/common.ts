@@ -32,6 +32,10 @@ export function getCdnFileLink(packageName: string, pathToFile: string) {
   return `https://unpkg.com/${packageName}/${parsedPath}`
 }
 
+export function getTypesFileName(pathToFile: string) {
+  return pathToFile.endsWith('.d.ts') ? pathToFile : `${pathToFile}.d.ts`
+}
+
 // scoped packages should be parsed like this: @foo/bar -> foo__bar
 // https://github.com/DefinitelyTyped/DefinitelyTyped#what-about-scoped-packages
 export function getTypesPackageName(npmPackage: string) {

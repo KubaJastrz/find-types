@@ -1,4 +1,4 @@
-import {parsePackageString, getTypesPackageName} from './common'
+import {parsePackageString, getTypesFileName, getTypesPackageName} from './common'
 
 describe('parsePackageString', () => {
   it('extracts name and version', () => {
@@ -37,6 +37,17 @@ describe('parsePackageString', () => {
   it('transforms name to lower case', () => {
     expect(parsePackageString('VuE')).toMatchObject({name: 'vue'})
     expect(parsePackageString('vUe@3.0')).toMatchObject({name: 'vue', version: '3.0'})
+  })
+})
+
+describe('getTypesFileName', () => {
+  it('appends file extension if missing', () => {
+    expect(getTypesFileName('index')).toBe('index.d.ts')
+    expect(getTypesFileName('index.d.ts')).toBe('index.d.ts')
+    expect(getTypesFileName('sub/index')).toBe('sub/index.d.ts')
+    expect(getTypesFileName('sub/index.d.ts')).toBe('sub/index.d.ts')
+    // shouldn't happen but whatever
+    expect(getTypesFileName('index.js')).toBe('index.js.d.ts')
   })
 })
 
