@@ -7,5 +7,13 @@
     {"src": "package.json", "use": "@now/static-build"},
     {"src": "src/api/package.ts", "use": "@now/node"}
   ],
-  "routes": [{"src": "/api/package", "dest": "/src/api/package.ts"}]
+  "routes": [
+    {
+      "src": "/api/package",
+      "dest": "/src/api/package.ts",
+      "headers": {
+        "Cache-Control": "s-maxage=600"
+      }
+    }
+  ]
 }
