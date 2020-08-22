@@ -29,7 +29,7 @@ export function parseRelativePath(pathToFile: string) {
 
 export function getCdnFileLink(packageName: string, pathToFile: string) {
   const parsedPath = parseRelativePath(pathToFile)
-  return `https://unpkg.com/${packageName}/${parsedPath}`
+  return `https://unpkg.com/browse/${packageName}/${parsedPath}`
 }
 
 export function getTypesFileName(pathToFile: string) {
