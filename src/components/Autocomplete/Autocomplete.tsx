@@ -10,6 +10,7 @@ import Tooltip from '@reach/tooltip'
 
 interface Props<Item> {
   label: string
+  name?: string
   inputValue: string
   onInput: (inputText: string) => void
   onSelect: (option?: Item | null) => void
@@ -22,6 +23,7 @@ interface Props<Item> {
 
 export function Autocomplete<Item>({
   label,
+  name,
   inputValue,
   onInput,
   onSelect,
@@ -85,6 +87,7 @@ export function Autocomplete<Item>({
         <input
           {...getInputProps({
             ref: inputRef,
+            name,
             onInput: ({currentTarget}) => onInput(currentTarget.value),
             onKeyDown: (event) => {
               if (event.key === 'Enter' && highlightedIndex === -1) {
@@ -106,6 +109,7 @@ export function Autocomplete<Item>({
               type="submit"
               className="w-6 h-6 flex items-center justify-center"
             >
+              <span className="sr-only">Search</span>
               <Search className="w-5 h-5" />
             </button>
           </Tooltip>

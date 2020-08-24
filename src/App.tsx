@@ -1,6 +1,5 @@
 import React from 'react'
 import {Route, Routes} from 'react-router-dom'
-import RQD from 'react-query-devtools'
 
 import {Home} from '/@/pages/Home'
 import {NotFound} from '/@/pages/NotFound'
@@ -12,7 +11,6 @@ export const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <RQD.ReactQueryDevtools initialIsOpen={true} />
     </>
   )
 }

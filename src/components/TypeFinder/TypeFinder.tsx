@@ -30,19 +30,16 @@ export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
     }
   }, [packageKey, refetch])
 
-  const handleSearch = React.useCallback(
-    (packageString: string, isInitialQuery = false) => {
-      const {name} = parsePackageString(packageString)
-      if (!isInitialQuery) {
-        onQueryChange(name)
-      }
-      if (!name) {
-        return
-      }
-      setPackageKey(name)
-    },
-    [onQueryChange],
-  )
+  const handleSearch = (packageString: string, isInitialQuery = false) => {
+    const {name} = parsePackageString(packageString)
+    if (!isInitialQuery) {
+      onQueryChange(name)
+    }
+    if (!name) {
+      return
+    }
+    setPackageKey(name)
+  }
 
   // handle initial query
   React.useEffect(() => {
@@ -53,7 +50,8 @@ export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
       setPackageString('')
       setPackageKey('')
     }
-  }, [handleSearch, initialQuery])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialQuery])
 
   const handleSelect = (suggestion?: SuggestionsResponseData | null) => {
     const packageName = getOptionValue(suggestion)
@@ -70,6 +68,7 @@ export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
       <form name="types" onSubmit={handleSubmit} className="w-full">
         <Autocomplete
           label="npm package"
+          name="q"
           placeholder={'eg. query-string (Press "/" to focus)'}
           inputValue={packageString}
           onInput={setPackageString}

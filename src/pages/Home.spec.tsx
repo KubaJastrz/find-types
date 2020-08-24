@@ -19,17 +19,25 @@ it('works', async () => {
   const input = screen.getByRole('textbox') as HTMLInputElement
 
   await act(() => userEvent.type(input, 'react', {delay: 1}))
-
   fireEvent.keyDown(input, {
     key: 'Enter',
   })
 
   await waitForLoadingToStart()
   await waitForLoadingToFinish()
-  expect(spy).toHaveBeenCalledWith('react')
+
   expect(spy).toHaveBeenCalledTimes(1)
+  expect(spy).toHaveBeenLastCalledWith('react')
 
-  // console.log(input.value)
+  userEvent.clear(input)
+  await act(() => userEvent.type(input, 'vue', {delay: 1}))
+  fireEvent.keyDown(input, {
+    key: 'Enter',
+  })
 
-  // screen.debug()
+  await waitForLoadingToStart()
+  await waitForLoadingToFinish()
+
+  expect(spy).toHaveBeenCalledTimes(2)
+  expect(spy).toHaveBeenLastCalledWith('vue')
 })
