@@ -13,7 +13,6 @@ interface Props<Item> {
   inputValue: string
   onInput: (inputText: string) => void
   onSelect: (option?: Item | null) => void
-  autoFocus?: boolean
   placeholder?: string
   items: Item[]
   isLoading: boolean
@@ -26,7 +25,6 @@ export function Autocomplete<Item>({
   inputValue,
   onInput,
   onSelect,
-  autoFocus = false,
   placeholder,
   items,
   isLoading,
@@ -34,6 +32,7 @@ export function Autocomplete<Item>({
   getOptionValue,
 }: Props<Item>) {
   const inputRef = React.useRef<HTMLInputElement>(null)
+  const submitRef = React.useRef<HTMLButtonElement>(null)
 
   useEventListener<'keydown'>(
     'keydown',
@@ -87,7 +86,11 @@ export function Autocomplete<Item>({
           {...getInputProps({
             ref: inputRef,
             onInput: ({currentTarget}) => onInput(currentTarget.value),
-            autoFocus,
+            onKeyDown: (event) => {
+              if (event.key === 'Enter' && highlightedIndex === -1) {
+                submitRef.current?.click()
+              }
+            },
             placeholder,
             spellCheck: false,
             autoCapitalize: 'off',
@@ -98,7 +101,11 @@ export function Autocomplete<Item>({
         />
         <div className="absolute right-0 top-0 h-full flex items-center pr-2">
           <Tooltip label="search">
-            <button type="submit" className="w-6 h-6 flex items-center justify-center">
+            <button
+              ref={submitRef}
+              type="submit"
+              className="w-6 h-6 flex items-center justify-center"
+            >
               <Search className="w-5 h-5" />
             </button>
           </Tooltip>
@@ -107,28 +114,30 @@ export function Autocomplete<Item>({
       <ul
         {...getMenuProps()}
         className={clsx(
-          'absolute inset-x-0 bg-gray-blue-700 mt-2 rounded shadow-md overflow-hidden py-1 z-10',
+          'absolute inset-x-0 bg-gray-blue-700 mt-2 rounded shadow-md overflow-hidden py-1 z-1',
           {
             hidden: !isOpen,
           },
         )}
       >
-        {isLoading || items.length === 0 ? (
-          <div className="text-center pt-1 pb-2">
-            <Flow />
-          </div>
-        ) : (
-          items.map((item, index) => {
-            return (
-              <Suggestion
-                key={getOptionValue(item)}
-                label={getOptionLabel(item)}
-                isHighlighted={index === highlightedIndex}
-                {...getItemProps({item, index})}
-              />
-            )
-          })
-        )}
+        {isOpen ? (
+          isLoading || items.length === 0 ? (
+            <div className="text-center pt-1 pb-2">
+              <Flow />
+            </div>
+          ) : (
+            items.map((item, index) => {
+              return (
+                <Suggestion
+                  key={getOptionValue(item)}
+                  label={getOptionLabel(item)}
+                  isHighlighted={index === highlightedIndex}
+                  {...getItemProps({item, index})}
+                />
+              )
+            })
+          )
+        ) : null}
       </ul>
     </div>
   )

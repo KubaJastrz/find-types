@@ -3,12 +3,16 @@ import {delay} from '../utils/mocks'
 import {packageDB} from './data/packages'
 import {SuggestionsResponseData} from '../types/api'
 
+const sleep = (ms = 0) => {
+  return process.env.NODE_ENV === 'test' ? Promise.resolve() : delay(ms)
+}
+
 export const handlers = [
   rest.get('/api/package', async (req, res, ctx) => {
     const name = req.url.searchParams.get('name')
 
     if (!name) {
-      await delay(150)
+      await sleep(150)
       return res(
         ctx.status(400),
         ctx.json({
@@ -21,7 +25,7 @@ export const handlers = [
     const packageData = await packageDB.read(name)
 
     if (!packageData) {
-      await delay(150)
+      await sleep(150)
       return res(
         ctx.status(404),
         ctx.json({
@@ -31,7 +35,7 @@ export const handlers = [
       )
     }
 
-    await delay(300)
+    await sleep(300)
     return res(ctx.status(200), ctx.json(packageData))
   }),
 
@@ -53,7 +57,7 @@ export const handlers = [
         }
       })
 
-    await delay(1000)
+    await sleep(1000)
     return res(ctx.status(200), ctx.json(response))
   }),
 ]

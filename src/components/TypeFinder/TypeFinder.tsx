@@ -87,7 +87,7 @@ export const TypeFinder: React.FC<Props> = ({initialQuery, onQueryChange}) => {
             {failureCount > 0 && <div>Retrying</div>}
           </div>
         ) : error ? (
-          <div className="text-center">{error.message}</div>
+          <div className="text-center">Failed: {error.message}</div>
         ) : data ? (
           <Results packageData={data.package} typesPackageData={data.typesPackage} />
         ) : null}
