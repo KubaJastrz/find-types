@@ -6,7 +6,7 @@ const config: UserConfig = {
   jsx: 'react',
   plugins: [reactPlugin],
   optimizeDeps: {
-    include: ['ky', 'react-query-devtools'],
+    include: ['ky'],
   },
   alias: {
     '/@/': path.resolve(__dirname, 'src'),

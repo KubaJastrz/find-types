@@ -1,16 +1,17 @@
-import './main.css'
-import 'focus-visible'
 import '@reach/tooltip/styles.css'
+import 'focus-visible'
+import './main.css'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
 
 import {App} from './App'
+import {AppProviders} from './AppProviders'
 
 ReactDOM.render(
-  <React.StrictMode>
+  <AppProviders>
     <App />
-  </React.StrictMode>,
+  </AppProviders>,
   document.getElementById('root'),
 )
 
