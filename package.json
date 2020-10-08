@@ -88,7 +88,7 @@
     "jest-transform-stub": "^2.0.0",
     "jest-watch-typeahead": "^0.6.0",
     "lint-staged": "^10.2.11",
-    "msw": "^0.20.5",
+    "msw": "^0.21.2",
     "now": "^20.0.0",
     "prettier": "~2.0.5",
     "type-fest": "^0.16.0",
