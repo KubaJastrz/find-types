@@ -73,6 +73,7 @@ module.exports = {
   purge: ['./index.html', './src/**/*.tsx', './src/**/*.ts', './src/**/*.css'],
   future: {
     removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
   },
   variants: {
     textColor: ['responsive', 'hover', 'focus', 'focus-within'],
