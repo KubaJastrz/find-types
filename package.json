@@ -67,7 +67,7 @@
     "@testing-library/react": "^11.0.4",
     "@testing-library/user-event": "^12.1.7",
     "@types/dompurify": "^2.0.4",
-    "@types/hosted-git-info": "^3.0.0",
+    "@types/hosted-git-info": "^3.0.1",
     "@types/jest": "^26.0.14",
     "@types/react": "^16.9.51",
     "@types/react-dom": "^16.9.8",
