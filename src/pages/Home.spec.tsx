@@ -2,14 +2,13 @@ import React from 'react'
 import {
   render,
   screen,
-  act,
   userEvent,
   fireEvent,
   waitForLoadingToStart,
   waitForLoadingToFinish,
-} from '/@/utils/testing'
+} from '@/utils/testing'
 import {Home} from './Home'
-import {API} from '/@/api/client'
+import {API} from '@/api/client'
 
 it('works', async () => {
   const spy = jest.spyOn(API, 'getPackageDetails')
@@ -18,7 +17,7 @@ it('works', async () => {
 
   const input = screen.getByRole('textbox') as HTMLInputElement
 
-  await act(() => userEvent.type(input, 'react', {delay: 1}))
+  userEvent.type(input, 'react')
   fireEvent.keyDown(input, {
     key: 'Enter',
   })
@@ -30,7 +29,7 @@ it('works', async () => {
   expect(spy).toHaveBeenLastCalledWith('react')
 
   userEvent.clear(input)
-  await act(() => userEvent.type(input, 'vue', {delay: 1}))
+  userEvent.type(input, 'vue')
   fireEvent.keyDown(input, {
     key: 'Enter',
   })

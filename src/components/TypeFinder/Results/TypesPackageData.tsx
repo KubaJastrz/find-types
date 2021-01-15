@@ -1,8 +1,8 @@
 import React from 'react'
 import {PackageDetails} from './PackageDetails'
 import {ResultEntry, ResultType, WarningIcon, SuccessIcon, ErrorIcon} from './ResultEntry'
-import type {ErrorResponseData, PackageData} from '/@/types/api'
-import {isErrorResponse} from '/@/utils/errors'
+import type {ErrorResponseData, PackageData} from '@/types/api'
+import {isErrorResponse} from '@/utils/errors'
 
 interface Props {
   packageData: PackageData | ErrorResponseData

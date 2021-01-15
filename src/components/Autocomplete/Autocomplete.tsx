@@ -3,8 +3,8 @@ import {useCombobox} from 'downshift'
 import useEventListener from '@use-it/event-listener'
 import clsx from 'clsx'
 
-import {Search} from '/@/components/Icons'
-import {Flow} from '/@/components/Loading'
+import {Search} from '@/components/Icons'
+import {Flow} from '@/components/Loading'
 import {Suggestion} from './Suggestion'
 import Tooltip from '@reach/tooltip'
 
@@ -100,7 +100,7 @@ export function Autocomplete<Item>({
             autoComplete: 'off',
             autoCorrect: 'off',
           })}
-          className="pl-3 pr-10 leading-9 rounded outline-none bg-gray-blue-800 focus:bg-gray-blue-750 w-full shadow placeholder-gray-400 transition duration-100"
+          className="pl-3 pr-10 leading-9 rounded outline-none bg-gray-blue-800 focus:bg-gray-blue-750 w-full shadow placeholder-neutral2 transition duration-100"
         />
         <div className="absolute right-0 top-0 h-full flex items-center pr-2">
           <Tooltip label="search">

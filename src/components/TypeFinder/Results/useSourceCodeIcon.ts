@@ -1,4 +1,4 @@
-import {GitLab, Bitbucket, GitHub, Git} from '/@/components/Icons'
+import {GitLab, Bitbucket, GitHub, Git} from '@/components/Icons'
 
 const repositoryMap = {
   'github.com': GitHub,

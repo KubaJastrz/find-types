@@ -1,4 +1,4 @@
-import type {ErrorResponseData} from '/@/types/api'
+import type {ErrorResponseData} from '@/types/api'
 
 export class FetchError extends Error {
   constructor(statusCode: number, message: string) {
