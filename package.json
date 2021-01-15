@@ -89,7 +89,7 @@
     "jest-transform-stub": "^2.0.0",
     "jest-watch-typeahead": "^0.6.1",
     "lint-staged": "^10.5.3",
-    "now": "^20.0.0",
+    "now": "^21.0.1",
     "prettier": "~2.2.1",
     "type-fest": "^0.20.2",
     "typescript": "~4.1.3",
