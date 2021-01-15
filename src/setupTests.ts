@@ -2,7 +2,6 @@ import 'whatwg-fetch'
 import '@testing-library/jest-dom/extend-expect'
 
 import {configure} from '@testing-library/react'
-import {queryCache} from 'react-query'
 import {server} from './mocks/test-server'
 
 // Speeds up *ByRole queries a bit
@@ -14,8 +13,3 @@ configure({defaultHidden: true})
 beforeAll(() => server.listen({onUnhandledRequest: 'error'}))
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
-
-// Clean up
-afterEach(() => {
-  queryCache.clear()
-})

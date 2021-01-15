@@ -1,19 +1,14 @@
 import {rest} from 'msw'
-import {delay} from '../utils/mocks'
 import {packageDB} from './data/packages'
 import {SuggestionsResponseData} from '../types/api'
-
-const sleep = (ms = 0) => {
-  return process.env.NODE_ENV === 'test' ? Promise.resolve() : delay(ms)
-}
 
 export const handlers = [
   rest.get('/api/package', async (req, res, ctx) => {
     const name = req.url.searchParams.get('name')
 
     if (!name) {
-      await sleep(150)
       return res(
+        ctx.delay(),
         ctx.status(400),
         ctx.json({
           statusCode: 400,
@@ -25,8 +20,8 @@ export const handlers = [
     const packageData = await packageDB.read(name)
 
     if (!packageData) {
-      await sleep(150)
       return res(
+        ctx.delay(),
         ctx.status(404),
         ctx.json({
           statusCode: 404,
@@ -35,8 +30,7 @@ export const handlers = [
       )
     }
 
-    await sleep(300)
-    return res(ctx.status(200), ctx.json(packageData))
+    return res(ctx.delay(), ctx.status(200), ctx.json(packageData))
   }),
 
   rest.get('https://api.npms.io/v2/search/suggestions', async (req, res, ctx) => {
@@ -57,7 +51,6 @@ export const handlers = [
         }
       })
 
-    await sleep(1000)
-    return res(ctx.status(200), ctx.json(response))
+    return res(ctx.delay(1000), ctx.status(200), ctx.json(response))
   }),
 ]

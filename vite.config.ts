@@ -1,17 +1,18 @@
-import * as reactPlugin from 'vite-plugin-react'
-import type {UserConfig} from 'vite'
+import reactRefresh from '@vitejs/plugin-react-refresh'
+import {defineConfig} from 'vite'
 import path from 'path'
 
-const config: UserConfig = {
-  jsx: 'react',
-  plugins: [reactPlugin],
+export default defineConfig({
+  plugins: [reactRefresh()],
   optimizeDeps: {
     include: ['ky'],
   },
   alias: {
-    '/@/': path.resolve(__dirname, 'src'),
+    '@': path.resolve(__dirname, '/src'),
   },
-  sourcemap: true,
-}
-
-export default config
+  css: {
+    modules: {
+      localsConvention: 'dashes',
+    },
+  },
+})

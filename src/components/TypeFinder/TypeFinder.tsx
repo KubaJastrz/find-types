@@ -1,12 +1,12 @@
 import React from 'react'
 
-import {Autocomplete} from '/@/components/Autocomplete'
-import {parsePackageString} from '/@/utils/common'
-import {Flow} from '/@/components/Loading/Flow'
+import {Autocomplete} from '@/components/Autocomplete'
+import {parsePackageString} from '@/utils/common'
+import {Flow} from '@/components/Loading/Flow'
 import {Results} from './Results'
 import {useSuggestions} from './useSuggestions'
 import {usePackageDetails} from './usePackageDetails'
-import {SuggestionsResponseData} from '/@/types/api'
+import {SuggestionsResponseData} from '@/types/api'
 
 interface Props {
   initialQuery?: string

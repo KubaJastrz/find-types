@@ -1,8 +1,8 @@
 import {useQuery} from 'react-query'
 import {useDebounce} from 'use-debounce'
 
-import {API} from '/@/api/client'
-import {SuggestionsResponseData} from '/@/types/api'
+import {API} from '@/api/client'
+import {SuggestionsResponseData} from '@/types/api'
 
 export function useSuggestions(packageName: string) {
   const [packageKey] = useDebounce(packageName, 200, {
@@ -12,9 +12,7 @@ export function useSuggestions(packageName: string) {
   return useQuery<SuggestionsResponseData[], Error>({
     queryKey: ['suggestions', packageKey],
     queryFn: () => API.getSuggestions(packageKey),
-    config: {
-      enabled: !!packageKey,
-      staleTime: Infinity,
-    },
+    enabled: !!packageKey,
+    staleTime: Infinity,
   })
 }

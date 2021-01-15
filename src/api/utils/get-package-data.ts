@@ -1,7 +1,7 @@
 import got from 'got'
 import {PackageJson} from 'type-fest'
 
-import type {PackageData, NpmResponseData} from '/@/types/api'
+import type {PackageData, NpmResponseData} from '@/types/api'
 import {FetchError} from './errors'
 import {normalizePackageJson, NormalizedPackageJson} from './normalize-package-json'
 

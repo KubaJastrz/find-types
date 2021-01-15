@@ -1,8 +1,8 @@
 import React from 'react'
 import {Link, useSearchParams} from 'react-router-dom'
 
-import {Layout, PageTitle} from '/@/components/Layout'
-import {TypeFinder} from '/@/components/TypeFinder'
+import {Layout, PageTitle} from '@/components/Layout'
+import {TypeFinder} from '@/components/TypeFinder'
 
 export const Home: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams()

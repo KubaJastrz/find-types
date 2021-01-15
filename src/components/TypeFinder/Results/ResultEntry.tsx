@@ -33,4 +33,4 @@ export {
   AlertTriangle as WarningIcon,
   CheckCircle as SuccessIcon,
   X as ErrorIcon,
-} from '/@/components/Icons'
+} from '@/components/Icons'
