@@ -4,8 +4,8 @@
     "silent": true
   },
   "builds": [
-    {"src": "package.json", "use": "@now/static-build"},
-    {"src": "src/api/package.ts", "use": "@now/node"}
+    {"src": "package.json", "use": "@vercel/static-build"},
+    {"src": "src/api/package.ts", "use": "@vercel/node"}
   ],
   "routes": [
     {
