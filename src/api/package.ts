@@ -1,9 +1,10 @@
 import {NowRequest, NowResponse} from '@vercel/node'
 
 import type {PackageResponseData} from '@/types/api'
+
+import {getTypesPackageName} from '../utils/common'
 import {FetchError} from './utils/errors'
 import {getPackageData} from './utils/get-package-data'
-import {getTypesPackageName} from '../utils/common'
 
 /**
  * Route handler

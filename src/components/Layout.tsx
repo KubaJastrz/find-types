@@ -1,7 +1,7 @@
 import React from 'react'
 
-import styles from './Layout.module.css'
 import {Footer} from './Footer'
+import styles from './Layout.module.css'
 
 export const Layout: React.FC = ({children}) => {
   return (

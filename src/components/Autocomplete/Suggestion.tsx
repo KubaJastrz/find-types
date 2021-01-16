@@ -1,6 +1,6 @@
-import React from 'react'
-import DOMPurify from 'dompurify'
 import clsx from 'clsx'
+import DOMPurify from 'dompurify'
+import React from 'react'
 
 import styles from './Suggestion.module.css'
 

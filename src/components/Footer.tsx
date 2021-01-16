@@ -1,6 +1,6 @@
-import React from 'react'
-import clsx from 'clsx'
 import Tooltip from '@reach/tooltip'
+import clsx from 'clsx'
+import React from 'react'
 
 import {GitHub} from './Icons'
 import {InlineLink} from './InlineLink'

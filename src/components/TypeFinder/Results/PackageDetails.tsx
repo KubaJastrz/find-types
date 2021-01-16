@@ -1,10 +1,11 @@
+import Tooltip from '@reach/tooltip'
 import clsx from 'clsx'
 import React from 'react'
 
-import type {PackageData} from '@/types/api'
 import {InlineLink} from '@/components/InlineLink'
+import type {PackageData} from '@/types/api'
+
 import {useSourceCodeIcon} from './useSourceCodeIcon'
-import Tooltip from '@reach/tooltip'
 
 interface Props {
   packageData: PackageData

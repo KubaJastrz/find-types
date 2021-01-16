@@ -1,8 +1,9 @@
 import React from 'react'
 
-import {ResultEntry, ResultType, SuccessIcon, ErrorIcon} from './ResultEntry'
 import {InlineLink} from '@/components/InlineLink'
 import {getCdnFileLink, getTypesFileName, parseRelativePath} from '@/utils/common'
+
+import {ErrorIcon, ResultEntry, ResultType, SuccessIcon} from './ResultEntry'
 
 interface Props {
   packageName: string

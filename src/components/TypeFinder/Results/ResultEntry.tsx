@@ -1,5 +1,5 @@
-import React from 'react'
 import clsx from 'clsx'
+import React from 'react'
 
 export enum ResultType {
   success,
@@ -30,7 +30,7 @@ export const ResultEntry: React.FC<Props> = ({children, icon, title, type}) => {
 }
 
 export {
-  AlertTriangle as WarningIcon,
-  CheckCircle as SuccessIcon,
   X as ErrorIcon,
+  CheckCircle as SuccessIcon,
+  AlertTriangle as WarningIcon,
 } from '@/components/Icons'

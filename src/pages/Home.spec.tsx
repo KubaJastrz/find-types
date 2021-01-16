@@ -1,14 +1,16 @@
 import React from 'react'
+
+import {API} from '@/api/client'
 import {
+  fireEvent,
   render,
   screen,
   userEvent,
-  fireEvent,
-  waitForLoadingToStart,
   waitForLoadingToFinish,
+  waitForLoadingToStart,
 } from '@/utils/testing'
+
 import {Home} from './Home'
-import {API} from '@/api/client'
 
 it('works', async () => {
   const spy = jest.spyOn(API, 'getPackageDetails')
