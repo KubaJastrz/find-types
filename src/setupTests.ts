@@ -2,6 +2,7 @@ import 'whatwg-fetch'
 import '@testing-library/jest-dom/extend-expect'
 
 import {configure} from '@testing-library/react'
+
 import {server} from './mocks/test-server'
 
 // Speeds up *ByRole queries a bit

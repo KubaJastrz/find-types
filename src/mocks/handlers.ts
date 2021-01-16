@@ -1,6 +1,7 @@
 import {rest} from 'msw'
-import {packageDB} from './data/packages'
+
 import {SuggestionsResponseData} from '../types/api'
+import {packageDB} from './data/packages'
 
 export const handlers = [
   rest.get('/api/package', async (req, res, ctx) => {
@@ -51,6 +52,6 @@ export const handlers = [
         }
       })
 
-    return res(ctx.delay(1000), ctx.status(200), ctx.json(response))
+    return res(ctx.delay(), ctx.status(200), ctx.json(response))
   }),
 ]

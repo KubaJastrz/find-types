@@ -1,6 +1,6 @@
+import is from '@sindresorhus/is'
 import hostedGitInfo from 'hosted-git-info'
 import {PackageJson} from 'type-fest'
-import is from '@sindresorhus/is'
 
 export interface RepositoryObject {
   type: string

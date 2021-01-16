@@ -1,12 +1,13 @@
-import React from 'react'
-import {useCombobox} from 'downshift'
+import Tooltip from '@reach/tooltip'
 import useEventListener from '@use-it/event-listener'
 import clsx from 'clsx'
+import {useCombobox} from 'downshift'
+import React from 'react'
 
 import {Search} from '@/components/Icons'
 import {Flow} from '@/components/Loading'
+
 import {Suggestion} from './Suggestion'
-import Tooltip from '@reach/tooltip'
 
 interface Props<Item> {
   label: string

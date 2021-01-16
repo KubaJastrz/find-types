@@ -1,9 +1,10 @@
 import React from 'react'
+
+import type {ErrorResponseData, PackageData} from '@/types/api'
+
+import {DeclarationFiles} from './DeclarationFiles'
 import {PackageDetails} from './PackageDetails'
 import {TypesPackageDetails} from './TypesPackageData'
-import {DeclarationFiles} from './DeclarationFiles'
-
-import type {PackageData, ErrorResponseData} from '@/types/api'
 
 interface Props {
   packageData: PackageData

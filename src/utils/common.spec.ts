@@ -1,4 +1,4 @@
-import {parsePackageString, getTypesFileName, getTypesPackageName} from './common'
+import {getTypesFileName, getTypesPackageName, parsePackageString} from './common'
 
 describe('parsePackageString', () => {
   it('extracts name and version', () => {

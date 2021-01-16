@@ -1,5 +1,6 @@
 import * as RTL from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+
 import {AppProviders} from '../AppProviders'
 
 type RenderOptions = RTL.RenderOptions & {

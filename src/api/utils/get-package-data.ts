@@ -1,9 +1,10 @@
 import got from 'got'
 import {PackageJson} from 'type-fest'
 
-import type {PackageData, NpmResponseData} from '@/types/api'
+import type {NpmResponseData, PackageData} from '@/types/api'
+
 import {FetchError} from './errors'
-import {normalizePackageJson, NormalizedPackageJson} from './normalize-package-json'
+import {NormalizedPackageJson, normalizePackageJson} from './normalize-package-json'
 
 export async function getPackageData(packageName: string): Promise<PackageData> {
   let npmMetadata: NpmResponseData | undefined
