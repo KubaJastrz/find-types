@@ -1,3 +1,5 @@
+import 'twin.macro'
+
 import React from 'react'
 
 import {Footer} from './Footer'
@@ -5,9 +7,9 @@ import styles from './Layout.module.css'
 
 export const Layout: React.FC = ({children}) => {
   return (
-    <div className="flex flex-col flex-grow items-center">
+    <div tw="flex flex-col flex-grow items-center">
       {children}
-      <Footer className="mt-auto mb-3" />
+      <Footer tw="mt-auto mb-3" />
     </div>
   )
 }
