@@ -1604,10 +1604,10 @@
   resolved "https://registry.yarnpkg.com/@vercel/ruby/-/ruby-1.2.5.tgz#23ce8425b3c36e99462e1b6febfaa289881f4992"
   integrity sha512-Rl7rS46ShZktgBTYqjF7yXczsRx24tjak/LbceWsjaPmtOoQrpuvElknAtZgvOpCib5r4toLYZXu0BNQgkXn0w==
 
-"@vitejs/plugin-react-refresh@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-react-refresh/-/plugin-react-refresh-1.1.2.tgz#09343cff21c5e726777d0a8e969824648937a9ca"
-  integrity sha512-iczCmFZRFx2lJTIzwEba63SeIpEiwGTpFdIGxCOJcZAZ5nmCF56gsM8gGYvvRACiUvj8ytZsRE06zdYBhzTvNg==
+"@vitejs/plugin-react-refresh@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-react-refresh/-/plugin-react-refresh-1.1.3.tgz#75d24b1877d2bbe60911aac41bb43bf94f9c7814"
+  integrity sha512-xY1VqI4/F59pd8vkMMWuz4GIqk2J4BEy8DGb+ryOOeKidewBRPsLc8PTURTHiFqqU0rVB8TrsA/kTIZscwLLVg==
   dependencies:
     "@babel/core" "^7.12.10"
     "@babel/plugin-syntax-import-meta" "^7.10.4"
