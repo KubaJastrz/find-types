@@ -65,7 +65,7 @@
     "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
-    "@testing-library/user-event": "^12.6.0",
+    "@testing-library/user-event": "^13.0.16",
     "@types/dompurify": "^2.2.1",
     "@types/hosted-git-info": "^3.0.1",
     "@types/jest": "^26.0.20",
