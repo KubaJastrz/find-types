@@ -46,7 +46,7 @@
     "focus-visible": "^5.2.0",
     "got": "^11.8.1",
     "history": "^5.0.0",
-    "hosted-git-info": "^3.0.7",
+    "hosted-git-info": "^3.0.8",
     "ky": "^0.26.0",
     "msw": "^0.25.0",
     "react": "^17.0.1",
