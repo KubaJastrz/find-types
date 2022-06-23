@@ -44,7 +44,7 @@
     "dompurify": "^2.2.6",
     "downshift": "^6.0.16",
     "focus-visible": "^5.2.0",
-    "got": "^11.8.1",
+    "got": "^11.8.5",
     "history": "^5.0.0",
     "hosted-git-info": "^3.0.7",
     "ky": "^0.26.0",
