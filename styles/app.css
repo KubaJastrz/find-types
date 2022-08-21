@@ -1,3 +1,43 @@
+@import '@reach/tooltip/styles.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .animate-flow:nth-child(1) {
+    animation-delay: -0.3s;
+  }
+
+  .animate-flow:nth-child(2) {
+    animation-delay: -0.15s;
+  }
+}
+
+@layer base {
+  html {
+    @apply h-full;
+  }
+
+  body {
+    @apply antialiased min-h-full flex flex-col;
+
+    color: theme('colors.gray-blue.100');
+    background-color: theme('colors.gray-blue.900');
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: theme('colors.white');
+  }
+
+  button:disabled {
+    cursor: 'default';
+  }
+
+  .js-focus-visible :focus:not(.focus-visible) {
+    outline: none;
+  }
+}
