@@ -4,7 +4,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "run-s build:js build:css",
+    "build": "run-s build:css build:js",
     "build:js": "remix build",
     "build:css": "tailwindcss -m -i ./styles/app.css -o app/styles/app.css",
     "dev": "run-p dev:*",
