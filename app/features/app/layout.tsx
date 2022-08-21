@@ -9,22 +9,21 @@ import { InlineLink } from '~/components/inline-link';
 export function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col flex-grow items-center">
+      <Header />
       {children}
       <Footer className="mt-auto mb-3" />
     </div>
   );
 }
 
-export function Header() {
+function Header() {
   return (
-    <PageTitle>
-      <Link to="/">Find Types</Link>
-    </PageTitle>
+    <header>
+      <h1 className="page-title">
+        <Link to="/">Find Types</Link>
+      </h1>
+    </header>
   );
-}
-
-export function PageTitle({ children }: { children: ReactNode }) {
-  return <h1 className="page-title">{children}</h1>;
 }
 
 function Footer({ className }: { className: string }) {

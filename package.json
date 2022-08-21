@@ -33,11 +33,16 @@
     "@remix-run/node": "^1.6.8",
     "@remix-run/react": "^1.6.8",
     "@remix-run/vercel": "^1.6.8",
+    "@types/dompurify": "^2.3.3",
+    "@use-it/event-listener": "^0.1.7",
     "@vercel/node": "^2.5.8",
     "clsx": "^1.2.1",
-    "focus-visible": "^5.2.0",
+    "dompurify": "^2.3.10",
+    "downshift": "^6.1.9",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-query": "^3.39.2",
+    "use-debounce": "^8.0.3"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.6.8",

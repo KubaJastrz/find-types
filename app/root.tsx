@@ -1,5 +1,3 @@
-import 'focus-visible';
-
 import type { LinksFunction, MetaFunction } from '@remix-run/node';
 import {
   Links,
@@ -10,10 +8,13 @@ import {
   ScrollRestoration,
   useCatch,
 } from '@remix-run/react';
+import type { ReactNode } from 'react';
+import { QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { Layout } from '~/features/app/layout';
-import { PageTitle } from '~/features/app/layout';
 
+import { queryClient } from './features/app/query-client';
 import styles from './styles/app.css';
 
 // https://remix.run/api/conventions#links
@@ -32,9 +33,12 @@ export const meta: MetaFunction = () => ({
 export default function App() {
   return (
     <Document>
-      <Layout>
-        <Outlet />
-      </Layout>
+      <QueryClientProvider client={queryClient}>
+        <Layout>
+          <Outlet />
+        </Layout>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
     </Document>
   );
 }
@@ -46,7 +50,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
     <Document title="Error! - Find Types">
       <Layout>
         <div>
-          <PageTitle>There was an error</PageTitle>
+          <h1>There was an error</h1>
           <p>{error.message}</p>
           <hr />
           <p>Hey, developer, you should replace this with what you want your users to see.</p>
@@ -76,16 +80,16 @@ export function CatchBoundary() {
   return (
     <Document title={`${caught.status} ${caught.statusText} - Find Types`}>
       <Layout>
-        <PageTitle>
+        <h1>
           {caught.status}: {caught.statusText}
-        </PageTitle>
+        </h1>
         {message}
       </Layout>
     </Document>
   );
 }
 
-function Document({ children, title }: { children: React.ReactNode; title?: string }) {
+function Document({ children, title }: { children: ReactNode; title?: string }) {
   return (
     <html lang="en">
       <head>

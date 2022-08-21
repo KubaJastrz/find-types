@@ -4,16 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .animate-flow:nth-child(1) {
-    animation-delay: -0.3s;
-  }
-
-  .animate-flow:nth-child(2) {
-    animation-delay: -0.15s;
-  }
-}
-
 @layer base {
   html {
     @apply h-full;
@@ -37,12 +27,24 @@
     cursor: 'default';
   }
 
-  .js-focus-visible :focus:not(.focus-visible) {
-    outline: none;
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-results-button,
+  input[type='search']::-webkit-search-results-decoration {
+    display: none;
+  }
+
+  .search-suggestion em {
+    font-style: normal;
+    font-weight: bold;
   }
 }
 
-@layer utilities {
+@layer components {
+  .default-container {
+    @apply w-5/6 md:w-3/4 lg:w-7/12 xxl:w-1/3 mx-auto;
+  }
+
   .page-title {
     font-size: 1.67em;
     margin-top: 1em;
@@ -55,5 +57,19 @@
       margin-top: 1.33em;
       margin-bottom: 1em;
     }
+  }
+
+  .key {
+    background-color: #eee;
+    border-radius: 3px;
+    border: 1px solid #b4b4b4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+    color: #333;
+    display: inline-block;
+    font-size: 0.85em;
+    font-weight: 700;
+    line-height: 1;
+    padding: 2px 4px;
+    white-space: nowrap;
   }
 }

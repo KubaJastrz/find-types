@@ -32,7 +32,9 @@ module.exports = {
         },
       },
       animation: {
-        flow: 'flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s infinite both',
+        'flow-1': 'flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.3s infinite both',
+        'flow-2': 'flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.15s infinite both',
+        'flow-3': 'flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s infinite both',
       },
       keyframes: (theme) => ({
         flow: {
