@@ -11,7 +11,8 @@
     "dev:js": "remix dev",
     "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css",
     "prepare": "husky install",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "lint": "eslint ."
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
@@ -42,6 +43,9 @@
     "@types/react-dom": "^18.0.6",
     "autoprefixer": "^10.4.8",
     "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
     "npm-run-all": "^4.1.5",
