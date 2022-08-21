@@ -43,7 +43,7 @@ export default function App() {
 export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
   return (
-    <Document title="Error!">
+    <Document title="Error! - Find Types">
       <Layout>
         <div>
           <PageTitle>There was an error</PageTitle>
@@ -74,7 +74,7 @@ export function CatchBoundary() {
   }
 
   return (
-    <Document title={`${caught.status} ${caught.statusText}`}>
+    <Document title={`${caught.status} ${caught.statusText} - Find Types`}>
       <Layout>
         <PageTitle>
           {caught.status}: {caught.statusText}

@@ -1,4 +1,5 @@
 import Tooltip from '@reach/tooltip';
+import { Link } from '@remix-run/react';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
@@ -11,6 +12,14 @@ export function Layout({ children }: { children: ReactNode }) {
       {children}
       <Footer className="mt-auto mb-3" />
     </div>
+  );
+}
+
+export function Header() {
+  return (
+    <PageTitle>
+      <Link to="/">Find Types</Link>
+    </PageTitle>
   );
 }
 

@@ -2,12 +2,12 @@ import type { MetaFunction } from '@remix-run/node';
 
 import { Header } from '~/features/app/layout';
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ params }) => {
   return {
-    title: 'Find Types',
+    title: `${params.name} - Find Types`,
   };
 };
 
-export default function Index() {
+export default function Package() {
   return <Header />;
 }
