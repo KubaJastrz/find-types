@@ -4,8 +4,12 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev",
+    "build": "run-s build:js build:css",
+    "build:js": "remix build",
+    "build:css": "tailwindcss -m -i ./styles/app.css -o app/styles/app.css",
+    "dev": "run-p dev:*",
+    "dev:js": "remix dev",
+    "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css",
     "prepare": "husky install",
     "format": "prettier --write ."
   },
@@ -36,9 +40,13 @@
     "@remix-run/serve": "^1.6.8",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "autoprefixer": "^10.4.8",
     "eslint": "^8.22.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8",
     "typescript": "~4.7.4"
   },
   "engines": {
