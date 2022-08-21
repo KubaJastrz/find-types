@@ -1,6 +1,6 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Link, useCatch, useLoaderData } from "@remix-run/react";
+import type { LoaderFunction, MetaFunction } from '@remix-run/node';
+import { json } from '@remix-run/node';
+import { Link, useCatch, useLoaderData } from '@remix-run/react';
 
 // The `$` in route filenames becomes a pattern that's parsed from the URL and
 // passed to your loaders so you can look up data.
@@ -8,27 +8,27 @@ import { Link, useCatch, useLoaderData } from "@remix-run/react";
 export let loader: LoaderFunction = async ({ params }) => {
   // pretend like we're using params.id to look something up in the db
 
-  if (params.id === "this-record-does-not-exist") {
+  if (params.id === 'this-record-does-not-exist') {
     // If the record doesn't exist we can't render the route normally, so
     // instead we throw a 404 reponse to stop running code here and show the
     // user the catch boundary.
-    throw new Response("Not Found", { status: 404 });
+    throw new Response('Not Found', { status: 404 });
   }
 
   // now pretend like the record exists but the user just isn't authorized to
   // see it.
-  if (params.id === "shh-its-a-secret") {
+  if (params.id === 'shh-its-a-secret') {
     // Again, we can't render the component if the user isn't authorized. You
     // can even put data in the response that might help the user rectify the
     // issue! Like emailing the webmaster for access to the page. (Oh, right,
     // `json` is just a Response helper that makes it easier to send JSON
     // responses).
-    throw json({ webmasterEmail: "hello@remix.run" }, { status: 401 });
+    throw json({ webmasterEmail: 'hello@remix.run' }, { status: 401 });
   }
 
   // Sometimes your code just blows up and you never anticipated it. Remix will
   // automatically catch it and send the UI to the error boundary.
-  if (params.id === "kaboom") {
+  if (params.id === 'kaboom') {
     lol();
   }
 
@@ -42,7 +42,7 @@ export default function ParamDemo() {
   let data = useLoaderData();
   return (
     <h1>
-      The param is <i style={{ color: "red" }}>{data.param}</i>
+      The param is <i style={{ color: 'red' }}>{data.param}</i>
     </h1>
   );
 }
@@ -58,14 +58,12 @@ export function CatchBoundary() {
     case 401:
       message = (
         <p>
-          Looks like you tried to visit a page that you do not have access to.
-          Maybe ask the webmaster ({caught.data.webmasterEmail}) for access.
+          Looks like you tried to visit a page that you do not have access to. Maybe ask the
+          webmaster ({caught.data.webmasterEmail}) for access.
         </p>
       );
     case 404:
-      message = (
-        <p>Looks like you tried to visit a page that does not exist.</p>
-      );
+      message = <p>Looks like you tried to visit a page that does not exist.</p>;
     default:
       message = (
         <p>
@@ -81,8 +79,8 @@ export function CatchBoundary() {
       <h2>Oops!</h2>
       <p>{message}</p>
       <p>
-        (Isn't it cool that the user gets to stay in context and try a different
-        link in the parts of the UI that didn't blow up?)
+        (Isn't it cool that the user gets to stay in context and try a different link in the parts
+        of the UI that didn't blow up?)
       </p>
     </>
   );
@@ -97,8 +95,8 @@ export function ErrorBoundary({ error }: { error: Error }) {
       <h2>Error!</h2>
       <p>{error.message}</p>
       <p>
-        (Isn't it cool that the user gets to stay in context and try a different
-        link in the parts of the UI that didn't blow up?)
+        (Isn't it cool that the user gets to stay in context and try a different link in the parts
+        of the UI that didn't blow up?)
       </p>
     </>
   );
@@ -106,6 +104,6 @@ export function ErrorBoundary({ error }: { error: Error }) {
 
 export let meta: MetaFunction = ({ data }) => {
   return {
-    title: data ? `Param: ${data.param}` : "Oops...",
+    title: data ? `Param: ${data.param}` : 'Oops...',
   };
 };
