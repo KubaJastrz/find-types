@@ -14,6 +14,10 @@ export function Layout({ children }: { children: ReactNode }) {
   );
 }
 
+export function PageTitle({ children }: { children: ReactNode }) {
+  return <h1 className="page-title">{children}</h1>;
+}
+
 function Footer({ className }: { className: string }) {
   return (
     <footer

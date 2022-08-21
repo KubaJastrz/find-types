@@ -12,6 +12,7 @@ import {
 } from '@remix-run/react';
 
 import { Layout } from '~/features/app/layout';
+import { PageTitle } from '~/features/app/layout';
 
 import styles from './styles/app.css';
 
@@ -45,7 +46,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
     <Document title="Error!">
       <Layout>
         <div>
-          <h1>There was an error</h1>
+          <PageTitle>There was an error</PageTitle>
           <p>{error.message}</p>
           <hr />
           <p>Hey, developer, you should replace this with what you want your users to see.</p>
@@ -75,9 +76,9 @@ export function CatchBoundary() {
   return (
     <Document title={`${caught.status} ${caught.statusText}`}>
       <Layout>
-        <h1>
+        <PageTitle>
           {caught.status}: {caught.statusText}
-        </h1>
+        </PageTitle>
         {message}
       </Layout>
     </Document>
