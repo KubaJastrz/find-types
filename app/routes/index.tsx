@@ -1,7 +1,18 @@
-import type { MetaFunction } from '@remix-run/node';
+import type { LoaderFunction, MetaFunction } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 import { useTransition } from '@remix-run/react';
 
 import { PackageSearch } from '~/features/package-search';
+
+// Handles legacy `q` query param.
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url);
+  const packageName = url.searchParams.get('q');
+  if (packageName) {
+    return redirect(`/package/${packageName}`);
+  }
+  return null;
+};
 
 export const meta: MetaFunction = () => {
   return {

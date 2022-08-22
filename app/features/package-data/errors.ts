@@ -1,0 +1,29 @@
+export class HttpError extends Error {
+  public response: Response;
+
+  constructor(response: Response) {
+    super(`HttpError: ${response.status} - ${response.statusText}`);
+    this.name = this.constructor.name;
+    this.response = response;
+  }
+}
+
+export interface ErrorResponseData {
+  statusCode: number;
+  message: string;
+}
+
+export class FetchError extends Error {
+  public response: ErrorResponseData;
+
+  constructor(statusCode: number, message: string) {
+    super(message);
+    this.name = this.constructor.name;
+    this.response = FetchError.createResponse(statusCode, message);
+  }
+
+  public static createResponse = (statusCode: number, message: string): ErrorResponseData => ({
+    statusCode,
+    message,
+  });
+}

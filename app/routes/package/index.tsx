@@ -6,5 +6,8 @@ import { redirect } from '@remix-run/node';
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const packageName = url.searchParams.get('packageName');
-  return redirect(`/package/${packageName}`);
+  if (packageName) {
+    return redirect(`/package/${packageName}`);
+  }
+  return redirect('/');
 };
