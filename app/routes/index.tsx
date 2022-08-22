@@ -2,7 +2,7 @@ import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import { useTransition } from '@remix-run/react';
 
-import { PackageSearch } from '~/features/package-search';
+import { LoadingResults, PackageSearch } from '~/features/package-search';
 
 // Handles legacy `q` query param.
 export const loader: LoaderFunction = async ({ request }) => {
@@ -29,7 +29,7 @@ export default function Index() {
   return (
     <main className="default-container">
       <PackageSearch />
-      {/* {isLoadingPackage ? <LoadingResults /> : <About />} */}
+      {isLoadingPackage ? <LoadingResults /> : null}
     </main>
   );
 }

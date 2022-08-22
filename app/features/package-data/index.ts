@@ -1,3 +1,5 @@
+export type { ErrorResponseData } from './errors';
 export { FetchError } from './errors';
-export { getPackageData } from './get-package-data';
+export type { PackageDataLoaderData } from './package-data.server';
+export { packageDataLoader } from './package-data.server';
 export type { PackageData, PackageErrorData } from './types';

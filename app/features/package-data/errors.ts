@@ -13,6 +13,10 @@ export interface ErrorResponseData {
   message: string;
 }
 
+export function isErrorResponse(value: any): value is ErrorResponseData {
+  return 'statusCode' in value && 'message' in value;
+}
+
 export class FetchError extends Error {
   public response: ErrorResponseData;
 
