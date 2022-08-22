@@ -1,9 +1,15 @@
-import type { LoaderFunction, MetaFunction } from '@remix-run/node';
+import type { HeadersFunction, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { useLoaderData, useTransition } from '@remix-run/react';
 
 import type { PackageDataLoaderData } from '~/features/package-data';
 import { packageDataLoader } from '~/features/package-data';
 import { LoadingResults, PackageSearch, SearchResults } from '~/features/package-search';
+
+export const headers: HeadersFunction = ({ loaderHeaders }) => {
+  return {
+    'Cache-Control': loaderHeaders.get('Cache-Control') ?? '',
+  };
+};
 
 export const loader: LoaderFunction = async ({ params }) => {
   const packageName = params['*']!;

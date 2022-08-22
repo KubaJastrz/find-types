@@ -1,3 +1,4 @@
+import type { TypedResponse } from '@remix-run/node';
 import { json } from '@remix-run/node';
 
 import { getTypesPackageName } from '~/utils/package';
@@ -18,7 +19,9 @@ export type PackageDataLoaderData =
       error: ErrorResponseData;
     };
 
-export async function packageDataLoader(packageName: string) {
+type LoaderReturnType = TypedResponse<PackageDataLoaderData>;
+
+export async function packageDataLoader(packageName: string): Promise<LoaderReturnType> {
   let packageData: PackageData;
   let typesPackageData: PackageData | ErrorResponseData;
 
@@ -56,11 +59,18 @@ export async function packageDataLoader(packageName: string) {
     }
   }
 
-  return {
-    name: packageName,
-    package: packageData,
-    typesPackage: typesPackageData,
-  };
+  return json(
+    {
+      name: packageName,
+      package: packageData,
+      typesPackage: typesPackageData,
+    },
+    {
+      headers: {
+        'Cache-Control': 'public, max-age=300',
+      },
+    },
+  );
 }
 
 function errorJson<T>(status: number, data: T) {
