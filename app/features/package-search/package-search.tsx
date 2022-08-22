@@ -53,7 +53,7 @@ export function PackageSearch({ initialQuery = '' }: Props) {
       <input ref={submitRef} type="submit" className="hidden" />
       <Combobox
         id={comboboxId}
-        label="npm package name"
+        label="npm package"
         name="packageName"
         placeholder="eg. typescript"
         isLoading={isSuggestionsLoading}
