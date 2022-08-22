@@ -19,13 +19,27 @@ import styles from './styles/app.css';
 
 // https://remix.run/api/conventions#links
 export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: styles }];
+  return [
+    { rel: 'stylesheet', href: styles },
+    { rel: 'manifest', href: '/manifest.webmanifest' },
+    { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+    { rel: 'icon', sizes: '32x32', href: '/favicon-32x32.png' },
+    { rel: 'icon', sizes: '16x16', href: '/favicon-16x16.png' },
+  ];
 };
 
 // https://remix.run/api/conventions#meta
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
   viewport: 'width=device-width,initial-scale=1',
+
+  description: 'Search engine for TypeScript definitions',
+  'og:type': 'website',
+  'og:image': 'https://types.kubajastrz.com/share-image.png',
+  'og:image:width': '640',
+  'og:image:height': '320',
+  'twitter:card': 'summary',
+  'twitter:image': 'https://types.kubajastrz.com/android-chrome-512x512.png',
 });
 
 // https://remix.run/api/conventions#default-export

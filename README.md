@@ -1,27 +1,61 @@
-# Remix
+# Find Types
 
-This directory is a brief example of a [Remix](https://remix.run/docs) site that can be deployed to Vercel with zero configuration.
+<a href="https://github.com/KubaJastrz/find-types-remix/blob/main/LICENSE">
+  <img alt="MIT License" src="https://img.shields.io/github/license/KubaJastrz/find-types-remix">
+</a>
+<a href="https://github.com/KubaJastrz/find-types-remix/actions?query=workflow%3AValidate">
+  <img alt="Pipeline Validate Status" src="https://img.shields.io/github/workflow/status/KubaJastrz/find-types-remix/Validate">
+<a>
 
-## Deploy Your Own
+Complete search engine for TypeScript definitions. Available online at [types.kubajastrz.com](https://types.kubajastrz.com/).
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/remix&template=remix)
+## Features
 
-_Live Example: https://remix-run-template.vercel.app_
+Current list of supported features:
 
-## Development
+- npm package search with convenient autosuggestions
+- brief package details with links to npm registry and source code repository
+- direct link to package living in a monorepo (such as DefinitelyTyped)
+- deprecated `@types` package warning
+- URL query ([`/package/<package>`](https://types.kubajastrz.com/package/%s)) for custom in-browser search engines
 
-To run your Remix app locally, make sure your project's local dependencies are installed:
+Is there anything missing you'd like to see?
+[File an issue](https://github.com/KubaJastrz/find-types-remix/issues/new).
 
-```sh
-npm install
+## Motivation
+
+I've often struggled with following questions:
+
+- Does this npm package provide its own definitions?
+- Or maybe I need to install a separate DefinitelyTyped package?
+- Is this `@types` package up-to-date with the source code?
+
+Official [TypeSearch](https://microsoft.github.io/TypeSearch/) website only lists `@types` packages
+from [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) repository and doesn't
+have a lot of quality of life features.
+
+### Other solutions
+
+- [TypeSearch](https://microsoft.github.io/TypeSearch/) - official search engine for DefinitelyTyped packages
+- [TypeSync](https://github.com/jeffijoe/typesync) - scan your `package.json` and install missing `@types`
+- [Types auto installer](https://marketplace.visualstudio.com/items?itemName=jvitor83.types-autoinstaller) -
+  VSCode extension for installing/uninstalling `@types`
+- [@yarnpkg/plugin-typescript](https://github.com/yarnpkg/berry/tree/master/packages/plugin-typescript) -
+  automatically install `@types` when adding a new dependency with `yarn@berry`
+
+## Contributing
+
+Pull Requests are always welcome :smiley:
+
+### Setup
+
+Fork the repository, install node dependencies with `yarn` and start up the development server.
+
+```bash
+yarn install
+yarn dev
 ```
 
-Afterwards, start the Remix development server like so:
+## License
 
-```sh
-npm run dev
-```
-
-Open up [http://localhost:3000](http://localhost:3000) and you should be ready to go!
-
-If you're used to using the `vercel dev` command provided by [Vercel CLI](https://vercel.com/cli) instead, you can also use that, but it's not needed.
+[MIT](LICENSE)

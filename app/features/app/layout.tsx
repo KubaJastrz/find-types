@@ -36,7 +36,7 @@ function Footer({ className }: { className: string }) {
     >
       <div className="mb-1 text-center">
         <Tooltip label="Source code">
-          <a href="https://github.com/KubaJastrz/find-types" className="inline-block">
+          <a href="https://github.com/KubaJastrz/find-types-remix" className="inline-block">
             <span className="sr-only">Source code</span>
             <GitHub className="w-6 h-6 sm:w-8 sm:h-8" />
           </a>
