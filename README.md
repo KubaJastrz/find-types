@@ -1,10 +1,10 @@
 # Find Types
 
-<a href="https://github.com/KubaJastrz/find-types-remix/blob/main/LICENSE">
-  <img alt="MIT License" src="https://img.shields.io/github/license/KubaJastrz/find-types-remix">
+<a href="https://github.com/KubaJastrz/find-types/blob/main/LICENSE">
+  <img alt="MIT License" src="https://img.shields.io/github/license/KubaJastrz/find-types">
 </a>
-<a href="https://github.com/KubaJastrz/find-types-remix/actions?query=workflow%3AValidate">
-  <img alt="Pipeline Validate Status" src="https://img.shields.io/github/workflow/status/KubaJastrz/find-types-remix/Validate">
+<a href="https://github.com/KubaJastrz/find-types/actions?query=workflow%3AValidate">
+  <img alt="Pipeline Validate Status" src="https://img.shields.io/github/workflow/status/KubaJastrz/find-types/Validate">
 <a>
 
 Complete search engine for TypeScript definitions. Available online at [types.kubajastrz.com](https://types.kubajastrz.com/).
@@ -20,7 +20,7 @@ Current list of supported features:
 - URL query ([`/package/<package>`](https://types.kubajastrz.com/package/%s)) for custom in-browser search engines
 
 Is there anything missing you'd like to see?
-[File an issue](https://github.com/KubaJastrz/find-types-remix/issues/new).
+[File an issue](https://github.com/KubaJastrz/find-types/issues/new).
 
 ## Motivation
 
