@@ -1,11 +1,11 @@
-import type { LoaderFunction, MetaFunction } from '@remix-run/node';
+import type { LoaderArgs, MetaFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import { useTransition } from '@remix-run/react';
 
 import { LoadingResults, PackageSearch } from '~/features/package-search';
 
 // Handles legacy `q` query param.
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
   const url = new URL(request.url);
   const packageName = url.searchParams.get('q');
   if (packageName) {
