@@ -20,12 +20,15 @@ export function PackageDetails({ packageData, small }: Props) {
         <Tooltip label="npm registry">
           <InlineLink
             href={links.npm}
-            className={clsx('font-mono font-bold', small ? 'text-base' : 'text-lg md:text-xl')}
+            className={clsx(
+              'font-mono font-bold text-shadow-2px',
+              small ? 'text-base' : 'text-lg md:text-xl',
+            )}
           >
             {name}
           </InlineLink>
         </Tooltip>
-        <span className="inline-block p-1 py-0.5 leading-4 text-xs font-bold rounded-sm bg-gray-blue-700 text-shadow-px">
+        <span className="inline-block p-1 py-0.5 leading-4 text-xs font-bold font-mono rounded-sm bg-gray-blue-700 text-shadow-2px">
           <span className="sr-only">version</span>
           {version}
         </span>
