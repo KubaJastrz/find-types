@@ -16,6 +16,7 @@ interface Props<Item> {
   inputValue: string;
   onInput: (inputText: string) => void;
   onSelect: (option?: Item | null) => void;
+  onEnter?: () => void;
   placeholder?: string;
   items: Item[];
   isLoading: boolean;
@@ -31,6 +32,7 @@ export function Combobox<Item>({
   inputValue,
   onInput,
   onSelect,
+  onEnter,
   placeholder,
   items,
   isLoading,
@@ -74,8 +76,6 @@ export function Combobox<Item>({
     stateReducer: (state, actionAndChanges) => {
       const { type, changes } = actionAndChanges;
 
-      console.log(actionAndChanges);
-
       if (type === useCombobox.stateChangeTypes.InputFocus && changes.inputValue === '') {
         return { ...changes, isOpen: false };
       }
@@ -115,6 +115,7 @@ export function Combobox<Item>({
             onKeyDown: (event) => {
               if (event.key === 'Enter' && highlightedIndex === -1) {
                 closeMenu();
+                onEnter?.();
               }
             },
             onInput: ({ currentTarget }) => onInput(currentTarget.value),

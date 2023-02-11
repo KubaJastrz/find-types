@@ -1,12 +1,18 @@
 import { Form, useNavigate } from '@remix-run/react';
 import type { FormEventHandler } from 'react';
 import { useId } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Combobox } from '~/components/combobox';
 
 import type { SuggestionsResponseData } from './suggestions';
 import { useSuggestions } from './suggestions';
+
+interface PackageFormElement extends HTMLFormElement {
+  elements: HTMLFormControlsCollection & {
+    packageName: HTMLInputElement;
+  };
+}
 
 interface Props {
   initialQuery?: string;
@@ -16,35 +22,35 @@ export function PackageSearch({ initialQuery = '' }: Props) {
   const comboboxId = useId();
 
   const submitRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<PackageFormElement>(null);
 
   const [packageString, setPackageString] = useState(initialQuery);
 
   const { data: suggestions, isLoading: isSuggestionsLoading } = useSuggestions(packageString);
-  const hasUserSelectedSuggestion = useRef(false);
 
   const handleSuggestionSelect = (suggestion?: SuggestionsResponseData | null) => {
     const packageName = getOptionValue(suggestion);
-    setPackageString(packageName);
-    hasUserSelectedSuggestion.current = true;
-  };
-
-  useEffect(() => {
-    if (hasUserSelectedSuggestion.current) {
-      submitRef.current?.click();
-      hasUserSelectedSuggestion.current = false;
+    if (formRef.current) {
+      // Set the value for the upcoming form submission.
+      // Submit will be attempted before the next render can happen.
+      formRef.current.elements.packageName.value = packageName;
     }
-  }, [packageString]);
+    setPackageString(packageName);
+    submitRef.current?.click();
+  };
 
   const navigate = useNavigate();
 
-  const handleSubmit: FormEventHandler = (event) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    const cleanName = packageString.trim().toLowerCase();
+    const data = new FormData(event.currentTarget);
+    const cleanName = (data.get('packageName') as string).trim().toLowerCase();
     navigate(`/package/${cleanName}`);
   };
 
   return (
     <Form
+      ref={formRef}
       onSubmit={handleSubmit}
       // needed for disabled JS
       action="/package"
@@ -63,6 +69,7 @@ export function PackageSearch({ initialQuery = '' }: Props) {
         inputValue={packageString}
         onInput={setPackageString}
         onSelect={handleSuggestionSelect}
+        onEnter={() => submitRef.current?.click()}
         required
       />
     </Form>
