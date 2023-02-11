@@ -1,5 +1,5 @@
-import type { ErrorResponseData, PackageData } from '~/features/package-data';
-import { isErrorResponse } from '~/features/package-data/errors';
+import type { ErrorResponseData, PackageData } from '~/server-services/package-data';
+import { isErrorResponse } from '~/server-services/package-data/errors';
 
 import { PackageDetails } from './package-details';
 import { ErrorIcon, ResultEntry, ResultType, SuccessIcon, WarningIcon } from './results-entry';

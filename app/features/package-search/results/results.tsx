@@ -1,4 +1,4 @@
-import type { PackageDataLoaderData } from '~/features/package-data';
+import type { PackageDataLoaderData } from '~/server-services/package-data';
 
 import { DeclarationFiles } from './declaration-files';
 import { PackageDetails } from './package-details';

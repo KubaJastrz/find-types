@@ -2,7 +2,7 @@ import { Tooltip } from '@reach/tooltip';
 import clsx from 'clsx';
 
 import { InlineLink } from '~/components/inline-link';
-import type { PackageData } from '~/features/package-data';
+import type { PackageData } from '~/server-services/package-data';
 
 import { useSourceCodeIcon } from './use-source-code-icon';
 
