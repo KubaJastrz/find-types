@@ -1,4 +1,4 @@
-import Tooltip from '@reach/tooltip';
+import { Tooltip } from '@reach/tooltip';
 import clsx from 'clsx';
 
 import { InlineLink } from '~/components/inline-link';

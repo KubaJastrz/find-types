@@ -1,7 +1,7 @@
-import Tooltip from '@reach/tooltip';
+import { Tooltip } from '@reach/tooltip';
 import clsx from 'clsx';
 import { useCombobox } from 'downshift';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { ClientOnly } from '~/components/client-only';
 import { Search } from '~/components/icons';
@@ -16,6 +16,7 @@ interface Props<Item> {
   inputValue: string;
   onInput: (inputText: string) => void;
   onSelect: (option?: Item | null) => void;
+  onEnter?: () => void;
   placeholder?: string;
   items: Item[];
   isLoading: boolean;
@@ -31,6 +32,7 @@ export function Combobox<Item>({
   inputValue,
   onInput,
   onSelect,
+  onEnter,
   placeholder,
   items,
   isLoading,
@@ -40,8 +42,6 @@ export function Combobox<Item>({
 }: Props<Item>) {
   const inputRef = useRef<HTMLInputElement>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
-
-  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
@@ -60,7 +60,6 @@ export function Combobox<Item>({
   const {
     getLabelProps,
     getInputProps,
-    getComboboxProps,
     getMenuProps,
     getItemProps,
     highlightedIndex,
@@ -76,6 +75,10 @@ export function Combobox<Item>({
     },
     stateReducer: (state, actionAndChanges) => {
       const { type, changes } = actionAndChanges;
+
+      if (type === useCombobox.stateChangeTypes.InputFocus && changes.inputValue === '') {
+        return { ...changes, isOpen: false };
+      }
 
       if (type === useCombobox.stateChangeTypes.InputChange && changes.inputValue === '') {
         return { ...changes, isOpen: false };
@@ -105,18 +108,17 @@ export function Combobox<Item>({
           </p>
         </ClientOnly>
       </div>
-      <div {...getComboboxProps()} className="relative">
+      <div className="relative">
         <input
           {...getInputProps({
             ref: inputRef,
             onKeyDown: (event) => {
               if (event.key === 'Enter' && highlightedIndex === -1) {
                 closeMenu();
+                onEnter?.();
               }
             },
             onInput: ({ currentTarget }) => onInput(currentTarget.value),
-            onFocus: () => setIsFocused(true),
-            onBlur: () => setIsFocused(false),
             type: 'search',
             name,
             placeholder,
