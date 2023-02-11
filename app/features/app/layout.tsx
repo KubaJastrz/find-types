@@ -1,4 +1,4 @@
-import Tooltip from '@reach/tooltip';
+import { Tooltip } from '@reach/tooltip';
 import { Link } from '@remix-run/react';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';

@@ -1,7 +1,7 @@
-import Tooltip from '@reach/tooltip';
+import { Tooltip } from '@reach/tooltip';
 import clsx from 'clsx';
 import { useCombobox } from 'downshift';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { ClientOnly } from '~/components/client-only';
 import { Search } from '~/components/icons';
@@ -41,8 +41,6 @@ export function Combobox<Item>({
   const inputRef = useRef<HTMLInputElement>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
 
-  const [isFocused, setIsFocused] = useState(false);
-
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
       if (event.key === '/' && event.target !== inputRef.current) {
@@ -60,7 +58,6 @@ export function Combobox<Item>({
   const {
     getLabelProps,
     getInputProps,
-    getComboboxProps,
     getMenuProps,
     getItemProps,
     highlightedIndex,
@@ -76,6 +73,12 @@ export function Combobox<Item>({
     },
     stateReducer: (state, actionAndChanges) => {
       const { type, changes } = actionAndChanges;
+
+      console.log(actionAndChanges);
+
+      if (type === useCombobox.stateChangeTypes.InputFocus && changes.inputValue === '') {
+        return { ...changes, isOpen: false };
+      }
 
       if (type === useCombobox.stateChangeTypes.InputChange && changes.inputValue === '') {
         return { ...changes, isOpen: false };
@@ -105,7 +108,7 @@ export function Combobox<Item>({
           </p>
         </ClientOnly>
       </div>
-      <div {...getComboboxProps()} className="relative">
+      <div className="relative">
         <input
           {...getInputProps({
             ref: inputRef,
@@ -115,8 +118,6 @@ export function Combobox<Item>({
               }
             },
             onInput: ({ currentTarget }) => onInput(currentTarget.value),
-            onFocus: () => setIsFocused(true),
-            onBlur: () => setIsFocused(false),
             type: 'search',
             name,
             placeholder,
