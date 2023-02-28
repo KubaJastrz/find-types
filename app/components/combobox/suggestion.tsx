@@ -13,9 +13,9 @@ export const Suggestion = forwardRef<HTMLLIElement, Props>(function Suggestion(
   ref,
 ) {
   return (
-    <li {...rest} ref={ref} className="flex search-suggestion">
+    <li {...rest} ref={ref} className="search-suggestion flex">
       <button
-        className={clsx('flex-grow text-left px-3 py-0.5', {
+        className={clsx('flex-grow px-3 py-0.5 text-left', {
           'bg-gray-blue-600': isHighlighted,
         })}
         dangerouslySetInnerHTML={{

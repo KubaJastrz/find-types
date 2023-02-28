@@ -22,7 +22,7 @@ export function ResultEntry({ children, icon, title, type }: Props) {
   });
 
   return (
-    <div className="grid grid-cols-status gap-2">
+    <div className="grid-cols-status grid gap-2">
       <div className={cellClasses}>{icon}</div>
       <div className={cellClasses}>{title}</div>
       {children && <div className="col-start-2">{children}</div>}

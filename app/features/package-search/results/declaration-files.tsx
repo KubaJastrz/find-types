@@ -15,7 +15,7 @@ export function DeclarationFiles({ packageName, packageJsonTypes }: Props) {
       icon={<SuccessIcon />}
       title="Built-in declaration files"
     >
-      <ul className="pl-5 text-sm list-disc">
+      <ul className="list-disc pl-5 text-sm">
         <li>
           <InlineLink href={getCdnFileLink(packageName, getTypesFileName(packageJsonTypes))}>
             {parseRelativePath(packageJsonTypes)}

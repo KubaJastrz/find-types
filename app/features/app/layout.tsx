@@ -8,7 +8,7 @@ import { InlineLink } from '~/components/inline-link';
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex flex-col flex-grow items-center">
+    <div className="flex flex-grow flex-col items-center">
       <Header />
       {children}
       <Footer className="mt-auto mb-3" />
@@ -31,14 +31,14 @@ function Footer({ className }: { className: string }) {
     <footer
       className={clsx(
         className,
-        'p-2 pt-4 text-xs sm:text-sm text-gray-blue-400 hover:text-gray-blue-100 focus-within:text-gray-blue-100',
+        'p-2 pt-4 text-xs text-gray-blue-400 focus-within:text-gray-blue-100 hover:text-gray-blue-100 sm:text-sm',
       )}
     >
       <div className="mb-1 text-center">
         <Tooltip label="Source code">
           <a href="https://github.com/KubaJastrz/find-types" className="inline-block">
             <span className="sr-only">Source code</span>
-            <GitHub className="w-6 h-6 sm:w-8 sm:h-8" />
+            <GitHub className="h-6 w-6 sm:h-8 sm:w-8" />
           </a>
         </Tooltip>
       </div>

@@ -21,14 +21,14 @@ export function PackageDetails({ packageData, small }: Props) {
           <InlineLink
             href={links.npm}
             className={clsx(
-              'font-mono font-bold text-shadow-2px',
+              'text-shadow-2px font-mono font-bold',
               small ? 'text-base' : 'text-lg md:text-xl',
             )}
           >
             {name}
           </InlineLink>
         </Tooltip>
-        <span className="inline-block p-1 py-0.5 leading-4 text-xs font-bold font-mono rounded-sm bg-gray-blue-700 text-shadow-2px">
+        <span className="text-shadow-2px inline-block rounded-sm bg-gray-blue-700 p-1 py-0.5 font-mono text-xs font-bold leading-4">
           <span className="sr-only">version</span>
           {version}
         </span>
@@ -36,7 +36,7 @@ export function PackageDetails({ packageData, small }: Props) {
           {RepositoryIcon && links.repository ? (
             <Tooltip label="source code">
               <a href={links.repository}>
-                <RepositoryIcon className="w-5 h-5" />
+                <RepositoryIcon className="h-5 w-5" />
               </a>
             </Tooltip>
           ) : null}

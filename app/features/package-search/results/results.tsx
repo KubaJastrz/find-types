@@ -10,11 +10,11 @@ interface Props {
 
 export function Results({ packageData }: Props) {
   if ('error' in packageData) {
-    return <div className="mt-6 md:mt-12 space-y-6 text-center">{packageData.error.message}</div>;
+    return <div className="mt-6 space-y-6 text-center md:mt-12">{packageData.error.message}</div>;
   }
 
   return (
-    <div className="mt-6 md:mt-12 space-y-6">
+    <div className="mt-6 space-y-6 md:mt-12">
       <PackageDetails packageData={packageData.package} />
       <div className="space-y-5">
         <TypesPackageDetails packageData={packageData.typesPackage} />

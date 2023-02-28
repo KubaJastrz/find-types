@@ -93,13 +93,13 @@ export function Combobox<Item>({
   });
 
   return (
-    <div className="w-full relative">
-      <div className="w-full flex">
-        <label {...getLabelProps()} className="block mb-1">
+    <div className="relative w-full">
+      <div className="flex w-full">
+        <label {...getLabelProps()} className="mb-1 block">
           {label}
         </label>
         <ClientOnly>
-          <p className="ml-auto text-sm text-gray-600 dark:text-gray-400 select-none">
+          <p className="ml-auto select-none text-sm text-gray-600 dark:text-gray-400">
             (Press{' '}
             <kbd title="forward slash" className="key">
               /
@@ -128,17 +128,17 @@ export function Combobox<Item>({
             autoComplete: 'off',
             autoCorrect: 'off',
           })}
-          className="pl-3 pr-10 leading-9 rounded outline-none bg-gray-blue-800 focus:bg-gray-blue-750 w-full shadow placeholder-neutral2 transition duration-100"
+          className="w-full rounded bg-gray-blue-800 pl-3 pr-10 leading-9 placeholder-neutral2 shadow outline-none transition duration-100 focus:bg-gray-blue-750"
         />
-        <div className="absolute right-0 top-0 h-full flex items-center pr-2">
+        <div className="absolute right-0 top-0 flex h-full items-center pr-2">
           <Tooltip label="search">
             <button
               ref={submitRef}
               type="submit"
-              className="w-6 h-6 flex items-center justify-center"
+              className="flex h-6 w-6 items-center justify-center"
             >
               <span className="sr-only">Search</span>
-              <Search className="w-5 h-5" />
+              <Search className="h-5 w-5" />
             </button>
           </Tooltip>
         </div>
@@ -146,7 +146,7 @@ export function Combobox<Item>({
       <ul
         {...getMenuProps()}
         className={clsx(
-          'absolute inset-x-0 bg-gray-blue-700 mt-2 rounded shadow-md overflow-hidden py-1 z-1',
+          'absolute inset-x-0 z-1 mt-2 overflow-hidden rounded bg-gray-blue-700 py-1 shadow-md',
           {
             hidden: !isOpen,
           },
@@ -154,7 +154,7 @@ export function Combobox<Item>({
       >
         {isOpen ? (
           isLoading || items.length === 0 ? (
-            <div className="text-center pt-1 pb-2">
+            <div className="pt-1 pb-2 text-center">
               <Flow />
             </div>
           ) : (
