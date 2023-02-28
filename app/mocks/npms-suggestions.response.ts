@@ -27,13 +27,13 @@ export function npmsSuggestionsReact() {
     },
   ];
   return rest.get('https://api.npms.io/v2/search/suggestions', (req, res, ctx) => {
-    return res(ctx.json(data));
+    return res(ctx.delay(), ctx.json(data));
   });
 }
 
 export function npmsSuggestionsEmpty() {
   const data: SuggestionsResponseData[] = [];
   return rest.get('https://api.npms.io/v2/search/suggestions', (req, res, ctx) => {
-    return res(ctx.json(data));
+    return res(ctx.delay(), ctx.json(data));
   });
 }
