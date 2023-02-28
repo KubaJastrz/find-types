@@ -66,6 +66,7 @@ export function PackageSearch({ initialQuery = '' }: Props) {
         items={suggestions ?? []}
         getOptionLabel={getOptionLabel}
         getOptionValue={getOptionValue}
+        getOptionTitle={getOptionTitle}
         inputValue={packageString}
         onInput={setPackageString}
         onSelect={handleSuggestionSelect}
@@ -82,4 +83,8 @@ function getOptionLabel(suggestion?: SuggestionsResponseData | null): string {
 
 function getOptionValue(suggestion?: SuggestionsResponseData | null): string {
   return suggestion ? suggestion.package.name : '';
+}
+
+function getOptionTitle(suggestion?: SuggestionsResponseData | null): string {
+  return suggestion ? suggestion.package.description : '';
 }

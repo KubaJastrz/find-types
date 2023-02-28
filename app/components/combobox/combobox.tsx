@@ -22,6 +22,7 @@ interface Props<Item> {
   isLoading: boolean;
   getOptionLabel: (option?: Item | null) => string;
   getOptionValue: (option?: Item | null) => string;
+  getOptionTitle?: (option?: Item | null) => string | undefined;
   required?: boolean;
 }
 
@@ -38,6 +39,7 @@ export function Combobox<Item>({
   isLoading,
   getOptionLabel,
   getOptionValue,
+  getOptionTitle = () => '',
   required = false,
 }: Props<Item>) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -165,6 +167,7 @@ export function Combobox<Item>({
                 <Suggestion
                   key={getOptionValue(item)}
                   label={getOptionLabel(item)}
+                  title={getOptionTitle(item)}
                   isHighlighted={index === highlightedIndex}
                   {...getItemProps({ item, index })}
                 />

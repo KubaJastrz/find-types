@@ -4,6 +4,7 @@ export interface SuggestionsResponseData {
   package: {
     name: string;
     version: string;
+    description: string;
   };
   /**
    * a string containing highlighted matched text
