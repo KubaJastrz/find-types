@@ -38,6 +38,7 @@ export async function getPackageData(packageName: string): Promise<PackageData> 
       homepage: packageJson.homepage ?? null,
       npm: `https://www.npmjs.com/package/${packageName}`,
       repository: packageJson.repository ?? null,
+      unpkg: `https://unpkg.com/browse/${packageName}/`,
     },
     types: packageJson.types ?? packageJson.typings ?? indexDeclarationFile ?? null,
     deprecated: !!latestMetadata.deprecated,

@@ -1,6 +1,7 @@
 import { Tooltip } from '@reach/tooltip';
 import clsx from 'clsx';
 
+import { Code } from '~/components/icons';
 import { InlineLink } from '~/components/inline-link';
 import type { PackageData } from '~/server-services/package-data';
 
@@ -32,7 +33,7 @@ export function PackageDetails({ packageData, small }: Props) {
           <span className="sr-only">version</span>
           {version}
         </span>
-        <span className="inline-block text-gray-200">
+        <span className="inline-flex items-center space-x-2 text-gray-200">
           {RepositoryIcon && links.repository ? (
             <Tooltip label="source code">
               <a href={links.repository}>
@@ -40,6 +41,11 @@ export function PackageDetails({ packageData, small }: Props) {
               </a>
             </Tooltip>
           ) : null}
+          <Tooltip label="distributed files">
+            <a href={links.unpkg}>
+              <Code className="h-5 w-5" />
+            </a>
+          </Tooltip>
         </span>
       </div>
       {description ? <p className="text-sm">{description}</p> : null}

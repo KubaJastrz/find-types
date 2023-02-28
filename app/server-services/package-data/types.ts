@@ -8,6 +8,7 @@ export interface PackageData {
     homepage: string | null;
     npm: string;
     repository: string | null;
+    unpkg: string;
   };
   types: string | null;
   deprecated: boolean;
