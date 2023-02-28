@@ -2,7 +2,7 @@ import type { HeadersFunction, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { useLoaderData, useTransition } from '@remix-run/react';
 
 import { LoadingResults, PackageSearch, SearchResults } from '~/features/package-search';
-import { packageDataLoader } from '~/server-services/package-data';
+import { usePackageData } from '~/utils/use-package-data';
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   return {
@@ -19,11 +19,12 @@ export const meta: MetaFunction = ({ params }) => {
 
 export const loader = async ({ params }: LoaderArgs) => {
   const packageName = params['*']!;
-  return packageDataLoader(packageName);
+  return { name: packageName };
 };
 
 export default function Package() {
-  const packageData = useLoaderData<typeof loader>();
+  const { name } = useLoaderData<typeof loader>();
+  const packageData = usePackageData(name);
   const transition = useTransition();
 
   const isLoadingPackage =
@@ -31,7 +32,7 @@ export default function Package() {
 
   return (
     <main className="default-container">
-      <PackageSearch initialQuery={packageData.name} />
+      <PackageSearch initialQuery={name} />
       {isLoadingPackage ? <LoadingResults /> : <SearchResults packageData={packageData} />}
     </main>
   );

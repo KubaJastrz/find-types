@@ -36,7 +36,7 @@ export function getTypesFileName(pathToFile: string) {
   return pathToFile.endsWith('.d.ts') ? pathToFile : `${pathToFile}.d.ts`;
 }
 
-// scoped packages should be parsed like this: @foo/bar -> foo__bar
+// scoped packages should be parsed like this: @foo/bar -> @types/foo__bar
 // https://github.com/DefinitelyTyped/DefinitelyTyped#what-about-scoped-packages
 export function getTypesPackageName(npmPackage: string) {
   const parsedName = npmPackage.replace('@', '').replace(/\//g, '__');

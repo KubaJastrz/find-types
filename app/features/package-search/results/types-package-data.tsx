@@ -5,10 +5,14 @@ import { PackageDetails } from './package-details';
 import { ErrorIcon, ResultEntry, ResultType, SuccessIcon, WarningIcon } from './results-entry';
 
 interface Props {
-  packageData: PackageData | ErrorResponseData;
+  packageData: PackageData | ErrorResponseData | undefined;
 }
 
 export function TypesPackageDetails({ packageData }: Props) {
+  if (!packageData) {
+    return null;
+  }
+
   if (isErrorResponse(packageData)) {
     return packageData.statusCode === 404 ? (
       <ResultEntry

@@ -1,5 +1,4 @@
-import type { TypedResponse } from '@remix-run/node';
-import { json } from '@remix-run/node';
+import { eventStream } from 'remix-utils';
 
 import { getTypesPackageName } from '~/utils/package';
 
@@ -8,71 +7,80 @@ import { FetchError } from './errors';
 import { getPackageData } from './get-package-data';
 import type { PackageData } from './types';
 
-export type PackageDataLoaderData =
-  | {
-      name: string;
-      package: PackageData;
-      typesPackage: PackageData | ErrorResponseData;
-    }
-  | {
-      name: string;
-      error: ErrorResponseData;
+export type PackageDataLoaderPayloadSuccess = {
+  key: 'metadata' | 'types';
+  data: PackageData;
+};
+
+export type PackageDataLoaderPayloadError = {
+  key: 'metadata' | 'types';
+  error: ErrorResponseData;
+};
+
+export type PackageDataLoaderPayload =
+  | PackageDataLoaderPayloadSuccess
+  | PackageDataLoaderPayloadError;
+
+export type PackageDataLoaderData = {
+  name: string;
+  metadata?: PackageData | ErrorResponseData;
+  typesPackage?: PackageData | ErrorResponseData;
+};
+
+export async function packageDataLoaderStream(
+  packageName: string,
+  abortSignal: AbortSignal,
+): Promise<any> {
+  return eventStream(abortSignal, (send) => {
+    const sendPayload = (payload: PackageDataLoaderPayload) => {
+      send({
+        event: 'packageData',
+        data: JSON.stringify(payload),
+      });
     };
 
-type LoaderReturnType = TypedResponse<PackageDataLoaderData>;
-
-export async function packageDataLoader(packageName: string): Promise<LoaderReturnType> {
-  let packageData: PackageData;
-  let typesPackageData: PackageData | ErrorResponseData;
-
-  try {
-    packageData = await getPackageData(packageName);
-  } catch (error) {
-    if (error instanceof FetchError) {
-      return errorJson(error.response.statusCode, {
-        name: packageName,
-        error: error.response,
+    getPackageData(packageName)
+      .then((data) => {
+        sendPayload({
+          key: 'metadata',
+          data,
+        });
+      })
+      .catch((error) => {
+        const errorData = handleError(error);
+        sendPayload({
+          key: 'metadata',
+          error: errorData,
+        });
+      })
+      .then(() => {
+        const typesPackageName = getTypesPackageName(packageName);
+        return getPackageData(typesPackageName);
+      })
+      .then((data) => {
+        sendPayload({
+          key: 'types',
+          data,
+        });
+      })
+      .catch((error) => {
+        const errorData = handleError(error);
+        sendPayload({
+          key: 'types',
+          error: errorData,
+        });
       });
-    }
 
-    console.error(error);
-    const errorData = FetchError.createResponse(500, 'Internal Server Error');
-    return errorJson(errorData.statusCode, {
-      name: packageName,
-      error: errorData,
-    });
-  }
-
-  try {
-    const typesPackageName = getTypesPackageName(packageName);
-    typesPackageData = await getPackageData(typesPackageName);
-  } catch (error) {
-    if (error instanceof FetchError) {
-      typesPackageData = error.response;
-    } else {
-      console.error(error);
-      const errorData = FetchError.createResponse(500, 'Internal Server Error');
-      return errorJson(errorData.statusCode, {
-        name: packageName,
-        error: errorData,
-      });
-    }
-  }
-
-  return json(
-    {
-      name: packageName,
-      package: packageData,
-      typesPackage: typesPackageData,
-    },
-    {
-      headers: {
-        'Cache-Control': 'public, max-age=300',
-      },
-    },
-  );
+    return () => {
+      // TODO: abort server fetch
+    };
+  });
 }
 
-function errorJson<T>(status: number, data: T) {
-  return json(data, { status });
+function handleError(error: unknown) {
+  if (error instanceof FetchError) {
+    return error.response;
+  }
+  console.error(error);
+  return FetchError.createResponse(500, 'Internal Server Error');
 }
