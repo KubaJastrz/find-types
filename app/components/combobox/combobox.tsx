@@ -2,8 +2,8 @@ import { Tooltip } from '@reach/tooltip';
 import clsx from 'clsx';
 import { useCombobox } from 'downshift';
 import { useEffect, useRef } from 'react';
+import { ClientOnly } from 'remix-utils';
 
-import { ClientOnly } from '~/components/client-only';
 import { Search } from '~/components/icons';
 import { Flow } from '~/components/loading';
 
@@ -99,13 +99,15 @@ export function Combobox<Item>({
           {label}
         </label>
         <ClientOnly>
-          <p className="ml-auto select-none text-sm text-gray-600 dark:text-gray-400">
-            (Press{' '}
-            <kbd title="forward slash" className="key">
-              /
-            </kbd>{' '}
-            to focus)
-          </p>
+          {() => (
+            <p className="ml-auto select-none text-sm text-gray-600 dark:text-gray-400">
+              (Press{' '}
+              <kbd title="forward slash" className="key">
+                /
+              </kbd>{' '}
+              to focus)
+            </p>
+          )}
         </ClientOnly>
       </div>
       <div className="relative">
