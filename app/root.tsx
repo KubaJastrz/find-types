@@ -16,7 +16,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { Layout } from '~/features/app/layout';
 
 import { queryClient } from './features/app/query-client';
-import styles from './styles/app.css';
+import styles from './tailwind.css';
 
 // https://remix.run/api/conventions#links
 export const links: LinksFunction = () => {
