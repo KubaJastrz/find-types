@@ -8,6 +8,7 @@ export function npmsSuggestionsReact() {
       package: {
         name: 'react',
         version: '18.2.0',
+        description: 'React is a JavaScript library for building user interfaces.',
       },
       highlight: '<em>react</em>',
     },
@@ -15,6 +16,7 @@ export function npmsSuggestionsReact() {
       package: {
         name: 'react-dom',
         version: '18.2.0',
+        description: 'React package for working with the DOM.',
       },
       highlight: '<em>react</em>-dom',
     },
@@ -22,6 +24,7 @@ export function npmsSuggestionsReact() {
       package: {
         name: 'react-redux',
         version: '8.0.5',
+        description: 'Official React bindings for Redux.',
       },
       highlight: '<em>react</em>-redux',
     },

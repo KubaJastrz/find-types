@@ -1,4 +1,4 @@
-import type { LoaderArgs, MetaFunction } from '@remix-run/node';
+import type { LoaderArgs, V2_MetaFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
 import { useTransition } from '@remix-run/react';
 
@@ -14,10 +14,8 @@ export const loader = async ({ request }: LoaderArgs) => {
   return null;
 };
 
-export const meta: MetaFunction = () => {
-  return {
-    title: 'Find Types',
-  };
+export const meta: V2_MetaFunction = () => {
+  return [{ title: 'Find Types' }];
 };
 
 export default function Index() {

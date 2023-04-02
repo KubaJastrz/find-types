@@ -30,9 +30,9 @@
   },
   "dependencies": {
     "@reach/tooltip": "^0.18.0",
-    "@remix-run/node": "^1.13.0",
-    "@remix-run/react": "^1.13.0",
-    "@remix-run/vercel": "^1.13.0",
+    "@remix-run/node": "^1.15.0",
+    "@remix-run/react": "^1.15.0",
+    "@remix-run/vercel": "^1.15.0",
     "@types/dompurify": "^2.4.0",
     "@use-it/event-listener": "^0.1.7",
     "@vercel/node": "^2.9.9",
@@ -48,9 +48,9 @@
     "use-debounce": "^9.0.3"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.13.0",
-    "@remix-run/eslint-config": "^1.13.0",
-    "@remix-run/serve": "^1.13.0",
+    "@remix-run/dev": "^1.15.0",
+    "@remix-run/eslint-config": "^1.15.0",
+    "@remix-run/serve": "^1.15.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",

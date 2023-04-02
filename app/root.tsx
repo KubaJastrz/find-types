@@ -1,12 +1,13 @@
-import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import type { LinksFunction, V2_MetaFunction } from '@remix-run/node';
 import {
+  isRouteErrorResponse,
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch,
+  useRouteError,
 } from '@remix-run/react';
 import type { ReactNode } from 'react';
 import { QueryClientProvider } from 'react-query';
@@ -29,18 +30,19 @@ export const links: LinksFunction = () => {
 };
 
 // https://remix.run/api/conventions#meta
-export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
-  viewport: 'width=device-width,initial-scale=1',
-
-  description: 'Search engine for TypeScript definitions',
-  'og:type': 'website',
-  'og:image': 'https://types.kubajastrz.com/share-image.png',
-  'og:image:width': '640',
-  'og:image:height': '320',
-  'twitter:card': 'summary',
-  'twitter:image': 'https://types.kubajastrz.com/android-chrome-512x512.png',
-});
+export const meta: V2_MetaFunction = () => {
+  return [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
+    { name: 'description', content: 'Search engine for TypeScript definitions' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:image', content: 'https://types.kubajastrz.com/share-image.png' },
+    { property: 'og:image:width', content: '640' },
+    { property: 'og:image:height', content: '320' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:image', content: 'https://types.kubajastrz.com/android-chrome-512x512.png' },
+  ];
+};
 
 // https://remix.run/api/conventions#default-export
 // https://remix.run/api/conventions#route-filenames
@@ -58,46 +60,36 @@ export default function App() {
 }
 
 // https://remix.run/api/conventions#errorboundary
-export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
-  return (
-    <Document title="Error! - Find Types">
-      <Layout>
-        <div>
-          <h1>There was an error</h1>
-          <p>{error.message}</p>
-          <hr />
-          <p>Hey, developer, you should replace this with what you want your users to see.</p>
-        </div>
-      </Layout>
-    </Document>
-  );
-}
+export function ErrorBoundary() {
+  const error = useRouteError();
 
-// https://remix.run/api/conventions#catchboundary
-export function CatchBoundary() {
-  const caught = useCatch();
+  if (isRouteErrorResponse(error)) {
+    return (
+      <Document>
+        <Layout>
+          <div>
+            <h1>Oops</h1>
+            <p>{error.status}</p>
+            <p>{error.statusText}</p>
+          </div>
+        </Layout>
+      </Document>
+    );
+  }
 
-  let message;
-  switch (caught.status) {
-    case 401:
-      message = <p>Oops! Looks like you tried to visit a page that you do not have access to.</p>;
-      break;
-    case 404:
-      message = <p>Oops! Looks like you tried to visit a page that does not exist.</p>;
-      break;
-
-    default:
-      throw new Error(caught.data || caught.statusText);
+  let errorMessage = 'Unknown error';
+  if (error instanceof Error) {
+    errorMessage = error.message;
   }
 
   return (
-    <Document title={`${caught.status} ${caught.statusText} - Find Types`}>
+    <Document>
       <Layout>
-        <h1>
-          {caught.status}: {caught.statusText}
-        </h1>
-        {message}
+        <div>
+          <h1>Uh oh ...</h1>
+          <p>Something went wrong.</p>
+          <pre>{errorMessage}</pre>
+        </div>
       </Layout>
     </Document>
   );

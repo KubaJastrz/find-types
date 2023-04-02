@@ -1,4 +1,4 @@
-import type { HeadersFunction, LoaderArgs, MetaFunction } from '@remix-run/node';
+import type { HeadersFunction, LoaderArgs, V2_MetaFunction } from '@remix-run/node';
 import { useLoaderData, useTransition } from '@remix-run/react';
 
 import { LoadingResults, PackageSearch, SearchResults } from '~/features/package-search';
@@ -10,11 +10,9 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   };
 };
 
-export const meta: MetaFunction = ({ params }) => {
+export const meta: V2_MetaFunction = ({ params }) => {
   const packageName = params['*']!;
-  return {
-    title: `${packageName} - Find Types`,
-  };
+  return [{ title: `${packageName} - Find Types` }];
 };
 
 export const loader = async ({ params }: LoaderArgs) => {
