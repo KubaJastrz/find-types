@@ -72,7 +72,7 @@ it('navigates to the package page when a suggestion is selected', async () => {
 
   await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
 
-  const option = screen.getByRole('option', { name: /react -dom/i });
+  const option = screen.getByRole('option', { name: /^react-dom$/i });
   await user.click(option);
 
   await waitFor(() => {

@@ -167,6 +167,7 @@ export function Combobox<Item>({
                 <Suggestion
                   key={getOptionValue(item)}
                   label={getOptionLabel(item)}
+                  aria-label={getOptionValue(item)}
                   title={getOptionTitle(item)}
                   isHighlighted={index === highlightedIndex}
                   {...getItemProps({ item, index })}
