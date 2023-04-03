@@ -40,7 +40,9 @@ export const Bitbucket = forwardRef<SVGSVGElement, IconProps>(function Bitbucket
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(4.79 -7.935)"
         >
+          {/* eslint-disable-next-line react/no-unknown-property */}
           <stop offset=".18" fill="#0052cc" stopColor="#0052cc" />
+          {/* eslint-disable-next-line react/no-unknown-property */}
           <stop offset="1" fill="#2684ff" stopColor="#2684ff" />
         </linearGradient>
       </defs>

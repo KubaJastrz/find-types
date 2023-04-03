@@ -11,4 +11,7 @@ node_modules
 /api/index.js
 /api/index.js.map
 
-/app/styles
+.eslintrc.js
+server.js
+remix.config.js
+tailwind.config.js

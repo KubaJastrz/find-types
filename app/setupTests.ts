@@ -5,8 +5,7 @@ import fetch from 'node-fetch';
 import { queryClient } from './features/app/query-client';
 import { server } from './utils/mock-server';
 
-// needed for msw https://github.com/mswjs/msw/issues/1388
-// @ts-expect-error
+// @ts-expect-error: needed for msw https://github.com/mswjs/msw/issues/1388
 globalThis.fetch = fetch;
 
 beforeAll(() => {

@@ -3,7 +3,7 @@ export class HttpError extends Error {
 
   constructor(response: Response) {
     super(`HttpError: ${response.status} - ${response.statusText}`);
-    this.name = this.constructor.name;
+    this.name = 'HttpError';
     this.response = response;
   }
 }
@@ -22,7 +22,7 @@ export class FetchError extends Error {
 
   constructor(statusCode: number, message: string) {
     super(message);
-    this.name = this.constructor.name;
+    this.name = 'FetchError';
     this.response = FetchError.createResponse(statusCode, message);
   }
 

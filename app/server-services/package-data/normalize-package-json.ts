@@ -13,7 +13,7 @@ export interface NormalizedPackageJson extends PackageJson {
 
 export function normalizePackageJson(packageJson: PackageJson): NormalizedPackageJson {
   if (!packageJson.repository) {
-    return packageJson as any;
+    return packageJson as Omit<NormalizedPackageJson, 'repository'>;
   }
 
   const repository: RepositoryObject =
@@ -38,5 +38,5 @@ function getRepositoryUrl(repository: RepositoryObject) {
     return repository.url;
   }
 
-  return info.browse(repository.directory as any);
+  return info.browse(repository.directory ?? '');
 }

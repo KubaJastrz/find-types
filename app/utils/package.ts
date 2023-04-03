@@ -12,14 +12,14 @@ export function parsePackageString(packageString?: string) {
     const [, name, version] = trimmedString.split('@');
     return {
       name: `@${name}`.trimEnd().toLowerCase(),
-      version: version && version.trim(),
+      version: version?.trim(),
     };
   }
 
   const [name, version] = trimmedString.split('@');
   return {
-    name: name && name.trim().toLowerCase(),
-    version: version && version.trim(),
+    name: name?.trim().toLowerCase(),
+    version: version?.trim(),
   };
 }
 

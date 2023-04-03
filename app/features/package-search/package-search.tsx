@@ -1,7 +1,6 @@
 import { Form, useNavigate } from '@remix-run/react';
 import type { FormEventHandler } from 'react';
-import { useId } from 'react';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 
 import { Combobox } from '~/components/combobox';
 

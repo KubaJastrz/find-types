@@ -41,7 +41,7 @@ export async function getPackageData(packageName: string): Promise<PackageData> 
       unpkg: `https://unpkg.com/browse/${packageName}/`,
     },
     types: packageJson.types ?? packageJson.typings ?? indexDeclarationFile ?? null,
-    deprecated: !!latestMetadata.deprecated,
+    deprecated: Boolean(latestMetadata.deprecated),
   };
 }
 
@@ -51,31 +51,31 @@ async function getNpmPackageMetadata(packageName: string): Promise<NpmResponseDa
       // use abbreviated metadata format
       Accept: 'application/vnd.npm.install-v1+json',
     },
-  }).then(toJson);
+  }).then((response) => toJson<NpmResponseData>(response));
 }
 
 async function getPackageJson(packageName: string): Promise<NormalizedPackageJson> {
   return fetch(`https://unpkg.com/${packageName}/package.json`)
-    .then(toJson)
+    .then((response) => toJson<NormalizedPackageJson>(response))
     .then(normalizePackageJson);
 }
 
 async function getIndexDeclarationFile(packageName: string): Promise<boolean> {
   return fetch(`https://unpkg.com/${packageName}/index.d.ts`)
-    .then(toBoolean)
+    .then((response) => toBoolean(response))
     .catch(() => false);
 }
 
-function toJson(response: Response) {
+function toJson<T>(response: Response) {
   if (response.ok) {
-    return response.json();
+    return response.json() as T;
   }
   throw new HttpError(response);
 }
 
 async function toBoolean(response: Response) {
   if (response.ok) {
-    return !!(await response.text());
+    return Boolean(await response.text());
   }
   return false;
 }
