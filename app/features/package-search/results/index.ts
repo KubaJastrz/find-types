@@ -1,2 +1,2 @@
 export { LoadingResults } from './loading-results';
-export { Results } from './results';
+export { ErrorResults, Results } from './results';

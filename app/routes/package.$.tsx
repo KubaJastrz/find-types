@@ -1,8 +1,19 @@
-import type { HeadersFunction, LoaderArgs, V2_MetaFunction } from '@remix-run/node';
-import { useLoaderData, useTransition } from '@remix-run/react';
+import {
+  defer,
+  type HeadersFunction,
+  type LoaderArgs,
+  type V2_MetaFunction,
+} from '@remix-run/node';
+import { useLoaderData, useNavigation } from '@remix-run/react';
 
-import { LoadingResults, PackageSearch, SearchResults } from '~/features/package-search';
-import { packageDataLoader } from '~/server-services/package-data';
+import {
+  ErrorResults,
+  LoadingResults,
+  PackageSearch,
+  SearchResults,
+} from '~/features/package-search';
+import { getPackageMetadata, getTypesPackageMetadata } from '~/server-services/package-data';
+import { isErrorResponse } from '~/server-services/package-data/errors';
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   return {
@@ -17,20 +28,47 @@ export const meta: V2_MetaFunction = ({ params }) => {
 
 export const loader = async ({ params }: LoaderArgs) => {
   const packageName = params['*']!;
-  return packageDataLoader(packageName);
+  const metadata = await getPackageMetadata(packageName);
+
+  if (isErrorResponse(metadata)) {
+    return defer(
+      {
+        name: packageName,
+        metadata: null,
+        typesPackage: Promise.resolve(null),
+        error: metadata.message,
+      },
+      { status: metadata.statusCode },
+    );
+  }
+  return defer(
+    {
+      name: packageName,
+      metadata,
+      typesPackage: getTypesPackageMetadata(packageName),
+      error: null,
+    },
+    { headers: { 'Cache-Control': 'public, max-age=3600' } },
+  );
 };
 
 export default function Package() {
-  const packageData = useLoaderData<typeof loader>();
-  const transition = useTransition();
+  const { name, metadata, typesPackage, error } = useLoaderData<typeof loader>();
+  const navigation = useNavigation();
 
   const isLoadingPackage =
-    transition.state === 'loading' && transition.location.pathname.startsWith('/package');
+    navigation.state === 'loading' && navigation.location.pathname.startsWith('/package');
 
   return (
     <main className="default-container">
-      <PackageSearch initialQuery={packageData.name} />
-      {isLoadingPackage ? <LoadingResults /> : <SearchResults packageData={packageData} />}
+      <PackageSearch initialQuery={name} />
+      {isLoadingPackage ? (
+        <LoadingResults />
+      ) : error ? (
+        <ErrorResults>{error}</ErrorResults>
+      ) : (
+        <SearchResults packageData={{ name, metadata, typesPackage }} />
+      )}
     </main>
   );
 }

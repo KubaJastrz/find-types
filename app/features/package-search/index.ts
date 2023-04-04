@@ -1,2 +1,2 @@
 export { PackageSearch } from './package-search';
-export { LoadingResults, Results as SearchResults } from './results';
+export { ErrorResults, LoadingResults, Results as SearchResults } from './results';

@@ -23,7 +23,7 @@ export interface PackageErrorData {
 // source: https://github.com/npm/registry/blob/master/docs/responses/package-metadata.md
 export interface NpmResponseData {
   name: string;
-  modified: string;
+  modified: string; // ISO 8601 date
   'dist-tags': {
     latest: string;
     [tagName: string]: string;

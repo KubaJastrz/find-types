@@ -1,6 +1,6 @@
 import type { LoaderArgs, V2_MetaFunction } from '@remix-run/node';
 import { redirect } from '@remix-run/node';
-import { useTransition } from '@remix-run/react';
+import { useNavigation } from '@remix-run/react';
 
 import { LoadingResults, PackageSearch } from '~/features/package-search';
 
@@ -19,10 +19,10 @@ export const meta: V2_MetaFunction = () => {
 };
 
 export default function Index() {
-  const transition = useTransition();
+  const navigation = useNavigation();
 
   const isLoadingPackage =
-    transition.state === 'loading' && transition.location.pathname.startsWith('/package');
+    navigation.state === 'loading' && navigation.location.pathname.startsWith('/package');
 
   return (
     <main className="default-container">

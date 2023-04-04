@@ -2,7 +2,7 @@ export class HttpError extends Error {
   public response: Response;
 
   constructor(response: Response) {
-    super(`HttpError: ${response.status} - ${response.statusText}`);
+    super(`${response.status} - ${response.statusText}`);
     this.name = 'HttpError';
     this.response = response;
   }
