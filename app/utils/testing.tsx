@@ -1,3 +1,4 @@
+import { TooltipProvider } from '@radix-ui/react-tooltip';
 import type { Router } from '@remix-run/router';
 import { render } from '@testing-library/react';
 import { cloneElement } from 'react';
@@ -19,7 +20,14 @@ export class RenderBuilder {
     jsx: JSX.Element;
   }[] = [];
 
-  constructor(private ui: JSX.Element) {}
+  constructor(private ui: JSX.Element) {
+    this.withBaseProviders();
+  }
+
+  withBaseProviders() {
+    this.wrappers.push({ order: 100, jsx: <TooltipProvider>dummy</TooltipProvider> });
+    return this;
+  }
 
   withRouter({ additionalRoutes = [] }: WithRouter = {}) {
     const router = createMemoryRouter([{ path: '/', element: this.ui }, ...additionalRoutes]);

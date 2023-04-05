@@ -10,12 +10,10 @@ import {
   useRouteError,
 } from '@remix-run/react';
 import type { ReactNode } from 'react';
-import { QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { Layout } from '~/features/app/layout';
 
-import { queryClient } from './features/app/query-client';
+import { Providers } from './features/app/providers';
 import styles from './tailwind.css';
 
 // https://remix.run/api/conventions#links
@@ -49,12 +47,11 @@ export const meta: V2_MetaFunction = () => {
 export default function App() {
   return (
     <Document>
-      <QueryClientProvider client={queryClient}>
+      <Providers>
         <Layout>
           <Outlet />
         </Layout>
-        <ReactQueryDevtools />
-      </QueryClientProvider>
+      </Providers>
     </Document>
   );
 }
@@ -66,13 +63,15 @@ export function ErrorBoundary() {
   if (isRouteErrorResponse(error)) {
     return (
       <Document>
-        <Layout>
-          <div>
-            <h1>Oops</h1>
-            <p>{error.status}</p>
-            <p>{error.statusText}</p>
-          </div>
-        </Layout>
+        <Providers>
+          <Layout>
+            <div>
+              <h1>Oops</h1>
+              <p>{error.status}</p>
+              <p>{error.statusText}</p>
+            </div>
+          </Layout>
+        </Providers>
       </Document>
     );
   }
@@ -84,13 +83,15 @@ export function ErrorBoundary() {
 
   return (
     <Document>
-      <Layout>
-        <div>
-          <h1>Uh oh ...</h1>
-          <p>Something went wrong.</p>
-          <pre>{errorMessage}</pre>
-        </div>
-      </Layout>
+      <Providers>
+        <Layout>
+          <div>
+            <h1>Uh oh ...</h1>
+            <p>Something went wrong.</p>
+            <pre>{errorMessage}</pre>
+          </div>
+        </Layout>
+      </Providers>
     </Document>
   );
 }

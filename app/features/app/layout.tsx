@@ -1,17 +1,17 @@
-import { Tooltip } from '@reach/tooltip';
 import { Link } from '@remix-run/react';
-import clsx from 'clsx';
 import type { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import { GitHub } from '~/components/icons';
 import { InlineLink } from '~/components/inline-link';
+import { Tooltip } from '~/components/tooltip';
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-grow flex-col items-center">
       <Header />
       {children}
-      <Footer className="mt-auto mb-3" />
+      <Footer className="mb-3 mt-auto" />
     </div>
   );
 }
@@ -29,9 +29,9 @@ function Header() {
 function Footer({ className }: { className: string }) {
   return (
     <footer
-      className={clsx(
-        className,
+      className={twMerge(
         'p-2 pt-4 text-xs text-gray-blue-400 focus-within:text-gray-blue-100 hover:text-gray-blue-100 sm:text-sm',
+        className,
       )}
     >
       <div className="mb-1 text-center">

@@ -25,15 +25,15 @@ export function Results({ packageData }: Props) {
     <div className="mt-6 space-y-6 md:mt-12">
       <PackageDetails packageData={packageData.metadata} />
       <div className="space-y-5">
+        <DeclarationFiles
+          packageName={packageData.name}
+          packageJsonTypes={packageData.metadata.types}
+        />
         <Suspense>
           <Await resolve={packageData.typesPackage}>
             {(typesPackage) => <TypesPackageDetails packageData={typesPackage} />}
           </Await>
         </Suspense>
-        <DeclarationFiles
-          packageName={packageData.name}
-          packageJsonTypes={packageData.metadata.types}
-        />
       </div>
     </div>
   );

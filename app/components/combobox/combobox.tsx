@@ -1,11 +1,11 @@
-import { Tooltip } from '@reach/tooltip';
-import clsx from 'clsx';
 import { useCombobox } from 'downshift';
 import { useEffect, useRef } from 'react';
 import { ClientOnly } from 'remix-utils';
+import { twMerge } from 'tailwind-merge';
 
 import { Search } from '~/components/icons';
 import { Flow } from '~/components/loading';
+import { Tooltip } from '~/components/tooltip';
 
 import { Suggestion } from './suggestion';
 
@@ -149,16 +149,14 @@ export function Combobox<Item>({
       </div>
       <ul
         {...getMenuProps()}
-        className={clsx(
+        className={twMerge(
           'absolute inset-x-0 z-1 mt-2 overflow-hidden rounded bg-gray-blue-700 py-1 shadow-md',
-          {
-            hidden: !isOpen,
-          },
+          !isOpen && 'hidden',
         )}
       >
         {isOpen ? (
           isLoading || items.length === 0 ? (
-            <div className="pt-1 pb-2 text-center">
+            <div className="pb-2 pt-1 text-center">
               <Flow />
             </div>
           ) : (

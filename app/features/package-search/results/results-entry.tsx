@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import type { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 export enum ResultType {
   success,
@@ -15,11 +15,12 @@ interface Props {
 }
 
 export function ResultEntry({ children, icon, title, type }: Props) {
-  const cellClasses = clsx('font-bold text-sm leading-5 flex items-center', {
-    'text-success': type === ResultType.success,
-    'text-warning': type === ResultType.warning,
-    'text-neutral': type === ResultType.neutral,
-  });
+  const cellClasses = twMerge(
+    'font-bold text-sm leading-5 flex items-center',
+    type === ResultType.success && 'text-success',
+    type === ResultType.warning && 'text-warning',
+    type === ResultType.neutral && 'text-neutral',
+  );
 
   return (
     <div className="grid-cols-status grid gap-2">

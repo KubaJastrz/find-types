@@ -1,8 +1,8 @@
-import { Tooltip } from '@reach/tooltip';
-import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 import { Code } from '~/components/icons';
 import { InlineLink } from '~/components/inline-link';
+import { Tooltip } from '~/components/tooltip';
 import type { PackageData } from '~/server-services/package-data';
 
 import { useSourceCodeIcon } from './use-source-code-icon';
@@ -21,7 +21,7 @@ export function PackageDetails({ packageData, small }: Props) {
         <Tooltip label="npm registry">
           <InlineLink
             href={links.npm}
-            className={clsx(
+            className={twMerge(
               'text-shadow-2px font-mono font-bold',
               small ? 'text-base' : 'text-lg md:text-xl',
             )}
@@ -33,7 +33,7 @@ export function PackageDetails({ packageData, small }: Props) {
           <span className="sr-only">version</span>
           {version}
         </span>
-        <span className="inline-flex items-center space-x-2 text-gray-200">
+        <span className="inline-flex items-center gap-2 text-gray-200">
           {RepositoryIcon && links.repository ? (
             <Tooltip label="source code">
               <a href={links.repository}>
