@@ -5,6 +5,7 @@ module.exports = {
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
     'unused-imports/no-unused-imports': 'error',
+    'import/no-extraneous-dependencies': 'off',
   },
   parserOptions: {
     project: './tsconfig.json',

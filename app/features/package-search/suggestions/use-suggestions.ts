@@ -1,5 +1,5 @@
+import { useDebouncedValue } from '@mantine/hooks';
 import { useQuery } from 'react-query';
-import { useDebounce } from 'use-debounce';
 
 import type { SuggestionsResponseData } from './models';
 
@@ -16,7 +16,7 @@ async function fetchSuggestions(packageKey: string) {
 }
 
 export function useSuggestions(packageName: string) {
-  const [packageKey] = useDebounce(packageName, 200, {
+  const [packageKey] = useDebouncedValue(packageName, 200, {
     leading: true,
   });
 
