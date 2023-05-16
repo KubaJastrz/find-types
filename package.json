@@ -6,9 +6,10 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev",
-    "prepare": "husky install",
+    "e2e": "playwright test",
     "format": "prettier --write .",
     "lint": "eslint .",
+    "prepare": "husky install",
     "test": "vitest"
   },
   "lint-staged": {
@@ -21,8 +22,11 @@
   },
   "prettier": {
     "printWidth": 100,
-    "trailingComma": "all",
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "resolutions": {
+    "@remix-run/web-fetch": "4.3.1"
   },
   "dependencies": {
     "@mantine/hooks": "^6.0.11",
@@ -43,6 +47,7 @@
     "tailwind-merge": "^1.12.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.33.0",
     "@remix-run/dev": "^1.16.0",
     "@remix-run/eslint-config": "^1.16.0",
     "@remix-run/serve": "^1.16.0",
@@ -64,13 +69,11 @@
     "lint-staged": "^13.2.2",
     "msw": "^1.2.1",
     "node-fetch": "^3.3.1",
+    "playwright-msw": "^2.2.1",
     "postcss": "^8.4.23",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "tailwindcss": "^3.3.2",
     "typescript": "~5.0.4",
     "vitest": "^0.29.8"
-  },
-  "resolutions": {
-    "@remix-run/web-fetch": "4.3.1"
   }
 }
