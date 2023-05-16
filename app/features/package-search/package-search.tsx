@@ -1,5 +1,4 @@
-import { Form, useNavigate } from '@remix-run/react';
-import type { FormEventHandler } from 'react';
+import { Form } from '@remix-run/react';
 import { useId, useRef, useState } from 'react';
 
 import { Combobox } from '~/components/combobox';
@@ -38,23 +37,8 @@ export function PackageSearch({ initialQuery = '' }: Props) {
     submitRef.current?.click();
   };
 
-  const navigate = useNavigate();
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const cleanName = (data.get('packageName') as string).trim().toLowerCase();
-    navigate(`/package/${cleanName}`);
-  };
-
   return (
-    <Form
-      ref={formRef}
-      onSubmit={handleSubmit}
-      // needed for disabled JS
-      action="/package"
-      method="get"
-    >
+    <Form ref={formRef} action="/package" method="get">
       <input ref={submitRef} type="submit" className="hidden" />
       <Combobox
         id={comboboxId}
