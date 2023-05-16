@@ -18,6 +18,6 @@ module.exports = {
     v2_normalizeFormMethod: true,
     v2_routeConvention: true,
     v2_meta: true,
-    unstable_tailwind: true,
   },
+  tailwind: true,
 };
