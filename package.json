@@ -40,7 +40,7 @@
     "tailwind-merge": "^2.1.0"
   },
   "devDependencies": {
-    "@10clouds/eslint-config": "2.0.0-pre.18",
+    "@10clouds/eslint-config": "2.0.0-pre.20",
     "@playwright/test": "^1.40.1",
     "@remix-run/dev": "^2.3.1",
     "@remix-run/serve": "^2.3.1",
