@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 export enum ResultType {

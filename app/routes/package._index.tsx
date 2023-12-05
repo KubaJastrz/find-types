@@ -1,5 +1,4 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
 
 // Handles cases where JavaScript is disabled in the browsers and the search form sends
 // a GET request to `/package`, eg. `/package?packageName=vue`

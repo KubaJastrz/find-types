@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { Code } from "~/components/icons";
 import { InlineLink } from "~/components/inline-link";
 import { Tooltip } from "~/components/tooltip";
-import type { PackageData } from "~/server-services/package-data";
+import { type PackageData } from "~/server-services/package-data";
 
 import { useSourceCodeIcon } from "./use-source-code-icon";
 

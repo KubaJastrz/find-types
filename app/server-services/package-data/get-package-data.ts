@@ -1,7 +1,6 @@
 import { FetchError, HttpError } from "./errors";
-import type { NormalizedPackageJson } from "./normalize-package-json";
-import { normalizePackageJson } from "./normalize-package-json";
-import type { NpmResponseData, PackageData } from "./types";
+import { normalizePackageJson, type NormalizedPackageJson } from "./normalize-package-json";
+import { type NpmResponseData, type PackageData } from "./types";
 
 export async function getPackageData(packageName: string): Promise<PackageData> {
   let npmMetadata: NpmResponseData | undefined;

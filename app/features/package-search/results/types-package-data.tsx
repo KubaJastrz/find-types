@@ -1,5 +1,8 @@
-import type { ErrorResponseData, PackageData } from "~/server-services/package-data";
-import { isErrorResponse } from "~/server-services/package-data";
+import {
+  isErrorResponse,
+  type ErrorResponseData,
+  type PackageData,
+} from "~/server-services/package-data";
 
 import { PackageDetails } from "./package-details";
 import { ErrorIcon, ResultEntry, ResultType, SuccessIcon, WarningIcon } from "./results-entry";

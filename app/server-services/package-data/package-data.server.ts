@@ -1,9 +1,8 @@
 import { getTypesPackageName } from "~/utils/package";
 
-import type { ErrorResponseData } from "./errors";
-import { FetchError } from "./errors";
+import { FetchError, type ErrorResponseData } from "./errors";
 import { getPackageData } from "./get-package-data";
-import type { PackageData } from "./types";
+import { type PackageData } from "./types";
 
 export type PackageDataLoaderData = {
   name: string;

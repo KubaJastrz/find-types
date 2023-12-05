@@ -1,5 +1,5 @@
 import hostedGitInfo from "hosted-git-info";
-import type { PackageJson } from "type-fest";
+import { type PackageJson } from "type-fest";
 
 export interface RepositoryObject {
   type: string;

@@ -1,7 +1,7 @@
 import { useDebouncedValue } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 
-import type { SuggestionsResponseData } from "./models";
+import { type SuggestionsResponseData } from "./models";
 
 async function fetchSuggestions(packageKey: string) {
   const url = new URL(`https://api.npms.io/v2/search/suggestions`);

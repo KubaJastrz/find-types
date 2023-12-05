@@ -1,4 +1,4 @@
-import type { ErrorResponseData } from "./errors";
+import { type ErrorResponseData } from "./errors";
 
 export interface PackageData {
   name: string;

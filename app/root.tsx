@@ -1,4 +1,4 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import { type LinksFunction, type MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -9,7 +9,7 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { Layout } from "~/features/app/layout";
 

@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { GitHub } from "~/components/icons";

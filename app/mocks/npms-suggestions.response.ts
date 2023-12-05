@@ -1,6 +1,6 @@
 import { rest } from "msw";
 
-import type { SuggestionsResponseData } from "~/features/package-search/suggestions";
+import { type SuggestionsResponseData } from "~/features/package-search/suggestions";
 
 export function npmsSuggestionsReact() {
   const data: SuggestionsResponseData[] = [
