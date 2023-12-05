@@ -1,7 +1,7 @@
-import { InlineLink } from '~/components/inline-link';
-import { getCdnFileLink, getTypesFileName, parseRelativePath } from '~/utils/package';
+import { InlineLink } from "~/components/inline-link";
+import { getCdnFileLink, getTypesFileName, parseRelativePath } from "~/utils/package";
 
-import { ErrorIcon, ResultEntry, ResultType, SuccessIcon } from './results-entry';
+import { ErrorIcon, ResultEntry, ResultType, SuccessIcon } from "./results-entry";
 
 interface Props {
   packageName: string;

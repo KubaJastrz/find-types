@@ -1,7 +1,7 @@
-import { FetchError, HttpError } from './errors';
-import type { NormalizedPackageJson } from './normalize-package-json';
-import { normalizePackageJson } from './normalize-package-json';
-import type { NpmResponseData, PackageData } from './types';
+import { FetchError, HttpError } from "./errors";
+import type { NormalizedPackageJson } from "./normalize-package-json";
+import { normalizePackageJson } from "./normalize-package-json";
+import type { NpmResponseData, PackageData } from "./types";
 
 export async function getPackageData(packageName: string): Promise<PackageData> {
   let npmMetadata: NpmResponseData | undefined;
@@ -26,9 +26,9 @@ export async function getPackageData(packageName: string): Promise<PackageData> 
     throw new FetchError(500, `Fetching "${packageName}" package data failed`);
   }
 
-  const latestVersion = npmMetadata['dist-tags'].latest;
+  const latestVersion = npmMetadata["dist-tags"].latest;
   const latestMetadata = npmMetadata.versions[latestVersion];
-  const indexDeclarationFile = hasIndexDeclaration ? 'index.d.ts' : null;
+  const indexDeclarationFile = hasIndexDeclaration ? "index.d.ts" : null;
 
   return {
     name: npmMetadata.name,
@@ -49,7 +49,7 @@ async function getNpmPackageMetadata(packageName: string): Promise<NpmResponseDa
   return fetch(`https://registry.npmjs.org/${packageName}`, {
     headers: {
       // use abbreviated metadata format
-      Accept: 'application/vnd.npm.install-v1+json',
+      Accept: "application/vnd.npm.install-v1+json",
     },
   }).then((response) => toJson<NpmResponseData>(response));
 }

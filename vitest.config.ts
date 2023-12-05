@@ -1,19 +1,19 @@
-import react from '@vitejs/plugin-react';
-import path from 'path';
-import { defineConfig } from 'vitest/config';
+import react from "@vitejs/plugin-react";
+import path from "path";
+import { defineConfig } from "vitest/config";
 
-process.env.TZ = 'UTC';
+process.env.TZ = "UTC";
 
 export default defineConfig({
   test: {
-    environment: 'jsdom',
+    environment: "jsdom",
     globals: true,
-    setupFiles: ['app/setupTests.ts'],
-    include: ['app/**/*.spec.{ts,tsx}'],
+    setupFiles: ["app/setupTests.ts"],
+    include: ["app/**/*.spec.{ts,tsx}"],
   },
   resolve: {
     alias: {
-      '~': path.resolve(__dirname, 'app'),
+      "~": path.resolve(__dirname, "app"),
     },
   },
   plugins: [react()],

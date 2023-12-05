@@ -8,15 +8,15 @@ export function parsePackageString(packageString?: string) {
 
   const trimmedString = packageString.trim();
 
-  if (trimmedString.charAt(0) === '@') {
-    const [, name, version] = trimmedString.split('@');
+  if (trimmedString.charAt(0) === "@") {
+    const [, name, version] = trimmedString.split("@");
     return {
       name: `@${name}`.trimEnd().toLowerCase(),
       version: version?.trim(),
     };
   }
 
-  const [name, version] = trimmedString.split('@');
+  const [name, version] = trimmedString.split("@");
   return {
     name: name?.trim().toLowerCase(),
     version: version?.trim(),
@@ -24,7 +24,7 @@ export function parsePackageString(packageString?: string) {
 }
 
 export function parseRelativePath(pathToFile: string) {
-  return pathToFile.startsWith('./') ? pathToFile.replace('./', '') : pathToFile;
+  return pathToFile.startsWith("./") ? pathToFile.replace("./", "") : pathToFile;
 }
 
 export function getCdnFileLink(packageName: string, pathToFile: string) {
@@ -33,12 +33,12 @@ export function getCdnFileLink(packageName: string, pathToFile: string) {
 }
 
 export function getTypesFileName(pathToFile: string) {
-  return pathToFile.endsWith('.d.ts') ? pathToFile : `${pathToFile}.d.ts`;
+  return pathToFile.endsWith(".d.ts") ? pathToFile : `${pathToFile}.d.ts`;
 }
 
 // scoped packages should be parsed like this: @foo/bar -> @types/foo__bar
 // https://github.com/DefinitelyTyped/DefinitelyTyped#what-about-scoped-packages
 export function getTypesPackageName(npmPackage: string) {
-  const parsedName = npmPackage.replace('@', '').replace(/\//g, '__');
+  const parsedName = npmPackage.replace("@", "").replace(/\//g, "__");
   return `@types/${parsedName}`;
 }

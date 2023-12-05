@@ -6,18 +6,22 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.14.0
-      - uses: bahmutov/npm-install@v1
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+
+      - name: Install dependencies
+        uses: ./.github/actions/pnpm-install
+
       - name: Lint
-        run: yarn lint
+        run: pnpm lint
+
       - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
+        run: pnpm exec playwright install --with-deps
+
       - name: Run e2e tests
-        run: yarn playwright test
-      - uses: actions/upload-artifact@v3
+        run: pnpm exec playwright test
+
+      - uses: actions/upload-artifact@v3.1.3
         if: always()
         with:
           name: playwright-report

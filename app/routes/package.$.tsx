@@ -1,33 +1,33 @@
 import {
   defer,
   type HeadersFunction,
-  type LoaderArgs,
-  type V2_MetaFunction,
-} from '@remix-run/node';
-import { useLoaderData, useNavigation } from '@remix-run/react';
+  type LoaderFunctionArgs,
+  type MetaFunction,
+} from "@remix-run/node";
+import { useLoaderData, useNavigation } from "@remix-run/react";
 
 import {
   ErrorResults,
   LoadingResults,
   PackageSearch,
   SearchResults,
-} from '~/features/package-search';
-import { getPackageMetadata, getTypesPackageMetadata } from '~/server-services/package-data';
-import { isErrorResponse } from '~/server-services/package-data/errors';
+} from "~/features/package-search";
+import { getPackageMetadata, getTypesPackageMetadata } from "~/server-services/package-data";
+import { isErrorResponse } from "~/server-services/package-data/errors";
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   return {
-    'Cache-Control': loaderHeaders.get('Cache-Control') ?? '',
+    "Cache-Control": loaderHeaders.get("Cache-Control") ?? "",
   };
 };
 
-export const meta: V2_MetaFunction = ({ params }) => {
-  const packageName = params['*']!;
+export const meta: MetaFunction = ({ params }) => {
+  const packageName = params["*"]!;
   return [{ title: `${packageName} - Find Types` }];
 };
 
-export const loader = async ({ params }: LoaderArgs) => {
-  const packageName = params['*']!;
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  const packageName = params["*"]!;
   const metadata = await getPackageMetadata(packageName);
 
   if (isErrorResponse(metadata)) {
@@ -48,7 +48,7 @@ export const loader = async ({ params }: LoaderArgs) => {
       typesPackage: getTypesPackageMetadata(packageName),
       error: null,
     },
-    { headers: { 'Cache-Control': 'public, max-age=3600' } },
+    { headers: { "Cache-Control": "public, max-age=3600" } },
   );
 };
 
@@ -57,7 +57,7 @@ export default function Package() {
   const navigation = useNavigation();
 
   const isLoadingPackage =
-    navigation.state === 'loading' && navigation.location.pathname.startsWith('/package');
+    navigation.state === "loading" && navigation.location.pathname.startsWith("/package");
 
   return (
     <main className="default-container">

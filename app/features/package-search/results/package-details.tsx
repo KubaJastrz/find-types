@@ -1,11 +1,11 @@
-import { twMerge } from 'tailwind-merge';
+import { twMerge } from "tailwind-merge";
 
-import { Code } from '~/components/icons';
-import { InlineLink } from '~/components/inline-link';
-import { Tooltip } from '~/components/tooltip';
-import type { PackageData } from '~/server-services/package-data';
+import { Code } from "~/components/icons";
+import { InlineLink } from "~/components/inline-link";
+import { Tooltip } from "~/components/tooltip";
+import type { PackageData } from "~/server-services/package-data";
 
-import { useSourceCodeIcon } from './use-source-code-icon';
+import { useSourceCodeIcon } from "./use-source-code-icon";
 
 interface Props {
   packageData: PackageData;
@@ -22,8 +22,8 @@ export function PackageDetails({ packageData, small }: Props) {
           <InlineLink
             href={links.npm}
             className={twMerge(
-              'text-shadow-2px font-mono font-bold',
-              small ? 'text-base' : 'text-lg md:text-xl',
+              "text-shadow-2px font-mono font-bold",
+              small ? "text-base" : "text-lg md:text-xl",
             )}
           >
             {name}

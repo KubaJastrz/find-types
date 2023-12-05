@@ -1,10 +1,10 @@
-import { Link } from '@remix-run/react';
-import type { ReactNode } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { Link } from "@remix-run/react";
+import type { ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
-import { GitHub } from '~/components/icons';
-import { InlineLink } from '~/components/inline-link';
-import { Tooltip } from '~/components/tooltip';
+import { GitHub } from "~/components/icons";
+import { InlineLink } from "~/components/inline-link";
+import { Tooltip } from "~/components/tooltip";
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
@@ -30,7 +30,7 @@ function Footer({ className }: { className: string }) {
   return (
     <footer
       className={twMerge(
-        'p-2 pt-4 text-xs text-gray-blue-400 focus-within:text-gray-blue-100 hover:text-gray-blue-100 sm:text-sm',
+        "p-2 pt-4 text-xs text-gray-blue-400 focus-within:text-gray-blue-100 hover:text-gray-blue-100 sm:text-sm",
         className,
       )}
     >
@@ -43,11 +43,11 @@ function Footer({ className }: { className: string }) {
         </Tooltip>
       </div>
       <p>
-        Powered by{' '}
+        Powered by{" "}
         <Tooltip label="node package registry">
           <InlineLink href="https://www.npmjs.com/">npm</InlineLink>
-        </Tooltip>{' '}
-        and{' '}
+        </Tooltip>{" "}
+        and{" "}
         <Tooltip label="cdn">
           <InlineLink href="https://unpkg.com/">unpkg</InlineLink>
         </Tooltip>

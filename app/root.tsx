@@ -1,4 +1,4 @@
-import type { LinksFunction, V2_MetaFunction } from '@remix-run/node';
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   isRouteErrorResponse,
   Links,
@@ -8,37 +8,37 @@ import {
   Scripts,
   ScrollRestoration,
   useRouteError,
-} from '@remix-run/react';
-import type { ReactNode } from 'react';
+} from "@remix-run/react";
+import type { ReactNode } from "react";
 
-import { Layout } from '~/features/app/layout';
+import { Layout } from "~/features/app/layout";
 
-import { Providers } from './features/app/providers';
-import styles from './tailwind.css';
+import { Providers } from "./features/app/providers";
+import styles from "./tailwind.css";
 
 // https://remix.run/api/conventions#links
 export const links: LinksFunction = () => {
   return [
-    { rel: 'stylesheet', href: styles },
-    { rel: 'manifest', href: '/manifest.webmanifest' },
-    { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-    { rel: 'icon', sizes: '32x32', href: '/favicon-32x32.png' },
-    { rel: 'icon', sizes: '16x16', href: '/favicon-16x16.png' },
+    { rel: "stylesheet", href: styles },
+    { rel: "manifest", href: "/manifest.webmanifest" },
+    { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+    { rel: "icon", sizes: "32x32", href: "/favicon-32x32.png" },
+    { rel: "icon", sizes: "16x16", href: "/favicon-16x16.png" },
   ];
 };
 
 // https://remix.run/api/conventions#meta
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
-    { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width,initial-scale=1' },
-    { name: 'description', content: 'Search engine for TypeScript definitions' },
-    { property: 'og:type', content: 'website' },
-    { property: 'og:image', content: 'https://types.kubajastrz.com/share-image.png' },
-    { property: 'og:image:width', content: '640' },
-    { property: 'og:image:height', content: '320' },
-    { name: 'twitter:card', content: 'summary' },
-    { name: 'twitter:image', content: 'https://types.kubajastrz.com/android-chrome-512x512.png' },
+    { charset: "utf-8" },
+    { name: "viewport", content: "width=device-width,initial-scale=1" },
+    { name: "description", content: "Search engine for TypeScript definitions" },
+    { property: "og:type", content: "website" },
+    { property: "og:image", content: "https://types.kubajastrz.com/share-image.png" },
+    { property: "og:image:width", content: "640" },
+    { property: "og:image:height", content: "320" },
+    { name: "twitter:card", content: "summary" },
+    { name: "twitter:image", content: "https://types.kubajastrz.com/android-chrome-512x512.png" },
   ];
 };
 
@@ -76,7 +76,7 @@ export function ErrorBoundary() {
     );
   }
 
-  let errorMessage = 'Unknown error';
+  let errorMessage = "Unknown error";
   if (error instanceof Error) {
     errorMessage = error.message;
   }

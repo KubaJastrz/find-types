@@ -1,9 +1,9 @@
-import { Bitbucket, Git, GitHub, GitLab } from '~/components/icons';
+import { Bitbucket, Git, GitHub, GitLab } from "~/components/icons";
 
 const repositoryMap = {
-  'github.com': GitHub,
-  'gitlab.com': GitLab,
-  'bitbucket.org': Bitbucket,
+  "github.com": GitHub,
+  "gitlab.com": GitLab,
+  "bitbucket.org": Bitbucket,
 };
 
 export function useSourceCodeIcon(repositoryUrl: string | null) {

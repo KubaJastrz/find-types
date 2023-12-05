@@ -1,9 +1,9 @@
-import { getTypesPackageName } from '~/utils/package';
+import { getTypesPackageName } from "~/utils/package";
 
-import type { ErrorResponseData } from './errors';
-import { FetchError } from './errors';
-import { getPackageData } from './get-package-data';
-import type { PackageData } from './types';
+import type { ErrorResponseData } from "./errors";
+import { FetchError } from "./errors";
+import { getPackageData } from "./get-package-data";
+import type { PackageData } from "./types";
 
 export type PackageDataLoaderData = {
   name: string;
@@ -37,5 +37,5 @@ function handleError(error: unknown) {
     return error.response;
   }
   console.error(error);
-  return FetchError.createResponse(500, 'Internal Server Error');
+  return FetchError.createResponse(500, "Internal Server Error");
 }

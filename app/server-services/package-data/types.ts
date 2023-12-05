@@ -1,4 +1,4 @@
-import type { ErrorResponseData } from './errors';
+import type { ErrorResponseData } from "./errors";
 
 export interface PackageData {
   name: string;
@@ -24,7 +24,7 @@ export interface PackageErrorData {
 export interface NpmResponseData {
   name: string;
   modified: string; // ISO 8601 date
-  'dist-tags': {
+  "dist-tags": {
     latest: string;
     [tagName: string]: string;
   };

@@ -1,5 +1,5 @@
-import hostedGitInfo from 'hosted-git-info';
-import type { PackageJson } from 'type-fest';
+import hostedGitInfo from "hosted-git-info";
+import type { PackageJson } from "type-fest";
 
 export interface RepositoryObject {
   type: string;
@@ -13,13 +13,13 @@ export interface NormalizedPackageJson extends PackageJson {
 
 export function normalizePackageJson(packageJson: PackageJson): NormalizedPackageJson {
   if (!packageJson.repository) {
-    return packageJson as Omit<NormalizedPackageJson, 'repository'>;
+    return packageJson as Omit<NormalizedPackageJson, "repository">;
   }
 
   const repository: RepositoryObject =
-    typeof packageJson.repository === 'string'
+    typeof packageJson.repository === "string"
       ? {
-          type: 'git',
+          type: "git",
           url: packageJson.repository,
         }
       : packageJson.repository;
@@ -38,5 +38,5 @@ function getRepositoryUrl(repository: RepositoryObject) {
     return repository.url;
   }
 
-  return info.browse(repository.directory ?? '');
+  return info.browse(repository.directory ?? "");
 }

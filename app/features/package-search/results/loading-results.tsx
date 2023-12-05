@@ -1,4 +1,4 @@
-import { Flow } from '~/components/loading';
+import { Flow } from "~/components/loading";
 
 export function LoadingResults() {
   return (

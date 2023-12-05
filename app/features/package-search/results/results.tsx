@@ -1,12 +1,12 @@
-import { Await } from '@remix-run/react';
-import { Suspense } from 'react';
+import { Await } from "@remix-run/react";
+import { Suspense } from "react";
 
-import { isErrorResponse, type PackageDataLoaderData } from '~/server-services/package-data';
+import { isErrorResponse, type PackageDataLoaderData } from "~/server-services/package-data";
 
-import { DeclarationFiles } from './declaration-files';
-import { LoadingResults } from './loading-results';
-import { PackageDetails } from './package-details';
-import { TypesPackageDetails } from './types-package-data';
+import { DeclarationFiles } from "./declaration-files";
+import { LoadingResults } from "./loading-results";
+import { PackageDetails } from "./package-details";
+import { TypesPackageDetails } from "./types-package-data";
 
 interface Props {
   packageData: PackageDataLoaderData;

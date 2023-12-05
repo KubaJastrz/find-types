@@ -1,13 +1,13 @@
-import { useCombobox } from 'downshift';
-import { useEffect, useRef } from 'react';
-import { ClientOnly } from 'remix-utils';
-import { twMerge } from 'tailwind-merge';
+import { useCombobox } from "downshift";
+import { useEffect, useRef } from "react";
+import { ClientOnly } from "remix-utils/client-only";
+import { twMerge } from "tailwind-merge";
 
-import { Search } from '~/components/icons';
-import { Flow } from '~/components/loading';
-import { Tooltip } from '~/components/tooltip';
+import { Search } from "~/components/icons";
+import { Flow } from "~/components/loading";
+import { Tooltip } from "~/components/tooltip";
 
-import { Suggestion } from './suggestion';
+import { Suggestion } from "./suggestion";
 
 interface Props<Item> {
   id: string;
@@ -39,7 +39,7 @@ export function Combobox<Item>({
   isLoading,
   getOptionLabel,
   getOptionValue,
-  getOptionTitle = () => '',
+  getOptionTitle = () => "",
   required = false,
 }: Props<Item>) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,15 +47,15 @@ export function Combobox<Item>({
 
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
-      if (event.key === '/' && event.target !== inputRef.current) {
+      if (event.key === "/" && event.target !== inputRef.current) {
         // prevent slash `/` from being typed into search box
         event.preventDefault();
         inputRef.current?.focus();
       }
     };
-    window.addEventListener('keydown', listener);
+    window.addEventListener("keydown", listener);
     return () => {
-      window.removeEventListener('keydown', listener);
+      window.removeEventListener("keydown", listener);
     };
   }, []);
 
@@ -78,11 +78,11 @@ export function Combobox<Item>({
     stateReducer: (state, actionAndChanges) => {
       const { type, changes } = actionAndChanges;
 
-      if (type === useCombobox.stateChangeTypes.InputFocus && changes.inputValue === '') {
+      if (type === useCombobox.stateChangeTypes.InputFocus && changes.inputValue === "") {
         return { ...changes, isOpen: false };
       }
 
-      if (type === useCombobox.stateChangeTypes.InputChange && changes.inputValue === '') {
+      if (type === useCombobox.stateChangeTypes.InputChange && changes.inputValue === "") {
         return { ...changes, isOpen: false };
       }
 
@@ -103,10 +103,10 @@ export function Combobox<Item>({
         <ClientOnly>
           {() => (
             <p className="ml-auto select-none text-sm text-gray-600 dark:text-gray-400">
-              (Press{' '}
+              (Press{" "}
               <kbd title="forward slash" className="key">
                 /
-              </kbd>{' '}
+              </kbd>{" "}
               to focus)
             </p>
           )}
@@ -117,20 +117,20 @@ export function Combobox<Item>({
           {...getInputProps({
             ref: inputRef,
             onKeyDown: (event) => {
-              if (event.key === 'Enter' && highlightedIndex === -1) {
+              if (event.key === "Enter" && highlightedIndex === -1) {
                 closeMenu();
                 onEnter?.();
               }
             },
             onInput: ({ currentTarget }) => onInput(currentTarget.value),
-            type: 'search',
+            type: "search",
             name,
             placeholder,
             required,
             spellCheck: false,
-            autoCapitalize: 'off',
-            autoComplete: 'off',
-            autoCorrect: 'off',
+            autoCapitalize: "off",
+            autoComplete: "off",
+            autoCorrect: "off",
           })}
           className="w-full rounded bg-gray-blue-800 pl-3 pr-10 leading-9 placeholder-neutral2 shadow outline-none transition duration-100 focus:bg-gray-blue-750"
         />
@@ -150,8 +150,8 @@ export function Combobox<Item>({
       <ul
         {...getMenuProps()}
         className={twMerge(
-          'absolute inset-x-0 z-1 mt-2 overflow-hidden rounded bg-gray-blue-700 py-1 shadow-md',
-          !isOpen && 'hidden',
+          "absolute inset-x-0 z-1 mt-2 overflow-hidden rounded bg-gray-blue-700 py-1 shadow-md",
+          !isOpen && "hidden",
         )}
       >
         {isOpen ? (

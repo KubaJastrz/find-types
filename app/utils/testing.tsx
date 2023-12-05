@@ -1,12 +1,12 @@
-import { TooltipProvider } from '@radix-ui/react-tooltip';
-import type { Router } from '@remix-run/router';
-import { render } from '@testing-library/react';
-import { cloneElement } from 'react';
-import type { QueryClient } from 'react-query';
-import { QueryClientProvider } from 'react-query';
-import { createMemoryRouter, RouterProvider } from 'react-router';
+import { TooltipProvider } from "@radix-ui/react-tooltip";
+import type { Router } from "@remix-run/router";
+import type { QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { render } from "@testing-library/react";
+import { cloneElement } from "react";
+import { createMemoryRouter, RouterProvider } from "react-router";
 
-import { queryClient } from '~/features/app/query-client';
+import { queryClient } from "~/features/app/query-client";
 
 interface WithRouter {
   additionalRoutes?: { path: string; element: JSX.Element }[];
@@ -30,7 +30,7 @@ export class RenderBuilder {
   }
 
   withRouter({ additionalRoutes = [] }: WithRouter = {}) {
-    const router = createMemoryRouter([{ path: '/', element: this.ui }, ...additionalRoutes]);
+    const router = createMemoryRouter([{ path: "/", element: this.ui }, ...additionalRoutes]);
     this.wrappers.push({ order: 1, jsx: <RouterProvider router={router} /> });
     this.router = router;
     return this;

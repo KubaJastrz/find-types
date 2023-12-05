@@ -1,10 +1,10 @@
-import { Form } from '@remix-run/react';
-import { useId, useRef, useState } from 'react';
+import { Form } from "@remix-run/react";
+import { useId, useRef, useState } from "react";
 
-import { Combobox } from '~/components/combobox';
+import { Combobox } from "~/components/combobox";
 
-import type { SuggestionsResponseData } from './suggestions';
-import { useSuggestions } from './suggestions';
+import type { SuggestionsResponseData } from "./suggestions";
+import { useSuggestions } from "./suggestions";
 
 interface PackageFormElement extends HTMLFormElement {
   elements: HTMLFormControlsCollection & {
@@ -16,7 +16,7 @@ interface Props {
   initialQuery?: string;
 }
 
-export function PackageSearch({ initialQuery = '' }: Props) {
+export function PackageSearch({ initialQuery = "" }: Props) {
   const comboboxId = useId();
 
   const submitRef = useRef<HTMLInputElement>(null);
@@ -61,13 +61,13 @@ export function PackageSearch({ initialQuery = '' }: Props) {
 }
 
 function getOptionLabel(suggestion?: SuggestionsResponseData | null): string {
-  return suggestion ? suggestion.highlight || suggestion.package.name : '';
+  return suggestion ? suggestion.highlight || suggestion.package.name : "";
 }
 
 function getOptionValue(suggestion?: SuggestionsResponseData | null): string {
-  return suggestion ? suggestion.package.name : '';
+  return suggestion ? suggestion.package.name : "";
 }
 
 function getOptionTitle(suggestion?: SuggestionsResponseData | null): string {
-  return suggestion ? suggestion.package.description : '';
+  return suggestion ? suggestion.package.description : "";
 }

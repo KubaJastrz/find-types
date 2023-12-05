@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import { twMerge } from 'tailwind-merge';
+import type { ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 export enum ResultType {
   success,
@@ -16,10 +16,10 @@ interface Props {
 
 export function ResultEntry({ children, icon, title, type }: Props) {
   const cellClasses = twMerge(
-    'font-bold text-sm leading-5 flex items-center',
-    type === ResultType.success && 'text-success',
-    type === ResultType.warning && 'text-warning',
-    type === ResultType.neutral && 'text-neutral',
+    "font-bold text-sm leading-5 flex items-center",
+    type === ResultType.success && "text-success",
+    type === ResultType.warning && "text-warning",
+    type === ResultType.neutral && "text-neutral",
   );
 
   return (
@@ -35,4 +35,4 @@ export {
   X as ErrorIcon,
   CheckCircle as SuccessIcon,
   AlertTriangle as WarningIcon,
-} from '~/components/icons';
+} from "~/components/icons";

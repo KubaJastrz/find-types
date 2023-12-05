@@ -7,9 +7,7 @@ node_modules
 
 /build/
 /public/build
-/api/_assets
-/api/index.js
-/api/index.js.map
+/api
 
 /app/styles
 /test-results/

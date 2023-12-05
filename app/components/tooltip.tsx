@@ -1,5 +1,5 @@
-import { Arrow, Content, Root, Trigger } from '@radix-ui/react-tooltip';
-import { type ReactNode } from 'react';
+import { Arrow, Content, Root, Trigger } from "@radix-ui/react-tooltip";
+import { type ReactNode } from "react";
 
 interface Props {
   label: ReactNode;
