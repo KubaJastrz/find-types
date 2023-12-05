@@ -62,7 +62,7 @@ async function getPackageJson(packageName: string): Promise<NormalizedPackageJso
 
 async function getIndexDeclarationFile(packageName: string): Promise<boolean> {
   return fetch(`https://unpkg.com/${packageName}/index.d.ts`)
-    .then((response) => toBoolean(response))
+    .then(async (response) => toBoolean(response))
     .catch(() => false);
 }
 

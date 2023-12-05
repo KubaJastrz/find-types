@@ -29,14 +29,14 @@ export function npmsSuggestionsReact() {
       highlight: "<em>react</em>-redux",
     },
   ];
-  return rest.get("https://api.npms.io/v2/search/suggestions", (req, res, ctx) => {
+  return rest.get("https://api.npms.io/v2/search/suggestions", async (req, res, ctx) => {
     return res(ctx.delay(), ctx.json(data));
   });
 }
 
 export function npmsSuggestionsEmpty() {
   const data: SuggestionsResponseData[] = [];
-  return rest.get("https://api.npms.io/v2/search/suggestions", (req, res, ctx) => {
+  return rest.get("https://api.npms.io/v2/search/suggestions", async (req, res, ctx) => {
     return res(ctx.delay(), ctx.json(data));
   });
 }

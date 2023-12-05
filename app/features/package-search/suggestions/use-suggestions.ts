@@ -22,7 +22,7 @@ export function useSuggestions(packageName: string) {
 
   return useQuery({
     queryKey: ["suggestions", packageKey],
-    queryFn: () => fetchSuggestions(packageKey),
+    queryFn: async () => fetchSuggestions(packageKey),
     enabled: Boolean(packageKey),
     staleTime: Infinity,
   });

@@ -1,17 +1,25 @@
 module.exports = {
-  extends: ["emperor/react", "emperor/react/style"],
-  plugins: ["simple-import-sort", "unused-imports"],
-  rules: {
-    "simple-import-sort/imports": "warn",
-    "simple-import-sort/exports": "warn",
-    "unused-imports/no-unused-imports": "error",
-    "import/no-extraneous-dependencies": "off",
-    "@typescript-eslint/no-use-before-define": "off",
-  },
+  root: true,
   parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
     project: "./tsconfig.json",
+    warnOnUnsupportedTypeScriptVersion: false,
   },
   env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
     node: true,
+  },
+  extends: [
+    "@10clouds/eslint-config",
+    "@10clouds/eslint-config/react",
+    "@10clouds/eslint-config/prettier",
+  ],
+  rules: {
+    "react/jsx-props-no-spreading": "off",
+    "import/no-duplicates": "off",
+    "no-nested-ternary": "off",
   },
 };
