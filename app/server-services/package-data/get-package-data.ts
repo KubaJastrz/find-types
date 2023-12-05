@@ -41,7 +41,7 @@ export async function getPackageData(packageName: string): Promise<PackageData> 
       unpkg: `https://unpkg.com/browse/${packageName}/`,
     },
     types: packageJson.types ?? packageJson.typings ?? indexDeclarationFile ?? null,
-    deprecated: Boolean(latestMetadata.deprecated),
+    deprecated: Boolean(latestMetadata?.deprecated),
   };
 }
 
