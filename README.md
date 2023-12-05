@@ -49,11 +49,11 @@ Pull Requests are always welcome :smiley:
 
 ### Setup
 
-Fork the repository, install node dependencies with `yarn` and start up the development server.
+Fork the repository, install node dependencies with `pnpm` and start up the development server.
 
 ```bash
-yarn install
-yarn dev
+pnpm install
+pnpm dev
 ```
 
 ## License
