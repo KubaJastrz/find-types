@@ -1,5 +1,6 @@
 import hostedGitInfo from "hosted-git-info";
 import { type PackageJson } from "type-fest";
+import { type Nullish } from "~/utils/types";
 
 export interface RepositoryObject {
   type: string;
@@ -7,13 +8,18 @@ export interface RepositoryObject {
   directory?: string;
 }
 
-export interface NormalizedPackageJson extends PackageJson {
-  repository?: string;
+export interface NormalizedPackageJson {
+  name?: Nullish<string>;
+  description?: Nullish<string>;
+  repository?: Nullish<string>;
+  homepage?: Nullish<string>;
+  types?: Nullish<string>;
+  typings?: Nullish<string>;
 }
 
 export function normalizePackageJson(packageJson: PackageJson): NormalizedPackageJson {
   if (!packageJson.repository) {
-    return packageJson as Omit<NormalizedPackageJson, "repository">;
+    return { ...packageJson, repository: null };
   }
 
   const repository: RepositoryObject =

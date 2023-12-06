@@ -10,6 +10,14 @@ module.exports = {
     "@10clouds/eslint-config/prettier",
   ],
   rules: {
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        prefer: "type-imports",
+        fixStyle: "inline-type-imports",
+        disallowTypeAnnotations: true,
+      },
+    ],
     // custom
     "react/jsx-props-no-spreading": "off",
     "no-nested-ternary": "off",

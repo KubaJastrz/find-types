@@ -1,3 +1,4 @@
+import { type PackageJson } from "type-fest";
 import { FetchError, HttpError } from "./errors";
 import { normalizePackageJson, type NormalizedPackageJson } from "./normalize-package-json";
 import { type NpmResponseData, type PackageData } from "./types";
@@ -55,7 +56,7 @@ async function getNpmPackageMetadata(packageName: string): Promise<NpmResponseDa
 
 async function getPackageJson(packageName: string): Promise<NormalizedPackageJson> {
   return fetch(`https://unpkg.com/${packageName}/package.json`)
-    .then((response) => toJson<NormalizedPackageJson>(response))
+    .then((response) => toJson<PackageJson>(response))
     .then(normalizePackageJson);
 }
 
