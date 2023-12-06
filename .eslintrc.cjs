@@ -1,16 +1,8 @@
 module.exports = {
   root: true,
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
     project: "./tsconfig.json",
     warnOnUnsupportedTypeScriptVersion: false,
-  },
-  env: {
-    browser: true,
-    commonjs: true,
-    es6: true,
-    node: true,
   },
   extends: [
     "@10clouds/eslint-config",
