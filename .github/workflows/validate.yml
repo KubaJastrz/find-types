@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.4
 
       - name: Install dependencies
         uses: ./.github/actions/pnpm-install
@@ -21,7 +21,7 @@ jobs:
       - name: Run e2e tests
         run: pnpm exec playwright test
 
-      - uses: actions/upload-artifact@v4.3.0
+      - uses: actions/upload-artifact@v4.3.3
         if: always()
         with:
           name: playwright-report
