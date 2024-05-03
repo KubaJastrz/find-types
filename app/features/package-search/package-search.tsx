@@ -37,7 +37,7 @@ export function PackageSearch({ initialQuery = "" }: Props) {
   };
 
   return (
-    <Form ref={formRef} action="/package" method="get">
+    <Form ref={formRef} action="/package/" method="get">
       <input ref={submitRef} type="submit" className="hidden" />
       <Combobox
         id={comboboxId}

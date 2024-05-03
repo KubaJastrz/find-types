@@ -1,3 +1,4 @@
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { type LinksFunction, type MetaFunction } from "@remix-run/node";
 import {
   Links,
@@ -8,14 +9,13 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { type ReactNode } from "react";
-
-import { Layout } from "~/features/app/layout";
-
-import { Providers } from "./features/app/providers";
+import { MainLayout } from "~/components/layout";
 import styles from "./tailwind.css?url";
 
-// https://remix.run/api/conventions#links
 export const links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: styles },
@@ -26,11 +26,8 @@ export const links: LinksFunction = () => {
   ];
 };
 
-// https://remix.run/api/conventions#meta
 export const meta: MetaFunction = () => {
   return [
-    { charset: "utf-8" },
-    { name: "viewport", content: "width=device-width,initial-scale=1" },
     { name: "description", content: "Search engine for TypeScript definitions" },
     { property: "og:type", content: "website" },
     { property: "og:image", content: "https://types.kubajastrz.com/share-image.png" },
@@ -41,37 +38,30 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-// https://remix.run/api/conventions#default-export
-// https://remix.run/api/conventions#route-filenames
-export default function App() {
+export function Layout({ children }: { children: ReactNode }) {
   return (
     <Document>
-      <Providers>
-        <Layout>
-          <Outlet />
-        </Layout>
-      </Providers>
+      <MainLayout>{children}</MainLayout>
     </Document>
   );
 }
 
-// https://remix.run/api/conventions#errorboundary
+export default function App() {
+  return <Outlet />;
+}
+
 export function ErrorBoundary() {
   const error = useRouteError();
 
   if (isRouteErrorResponse(error)) {
     return (
-      <Document>
-        <Providers>
-          <Layout>
-            <div>
-              <h1>Oops</h1>
-              <p>{error.status}</p>
-              <p>{error.statusText}</p>
-            </div>
-          </Layout>
-        </Providers>
-      </Document>
+      <div>
+        <h1 className="font-medium">
+          {error.status} {error.statusText}
+        </h1>
+        <p>Something went wrong.</p>
+        <pre>{error.data}</pre>
+      </div>
     );
   }
 
@@ -81,32 +71,40 @@ export function ErrorBoundary() {
   }
 
   return (
-    <Document>
-      <Providers>
-        <Layout>
-          <div>
-            <h1>Uh oh ...</h1>
-            <p>Something went wrong.</p>
-            <pre>{errorMessage}</pre>
-          </div>
-        </Layout>
-      </Providers>
-    </Document>
+    <div>
+      <h1>Uh oh ...</h1>
+      <p>Something went wrong.</p>
+      <pre>{errorMessage}</pre>
+    </div>
   );
 }
 
-function Document({ children, title }: { children: ReactNode; title?: string }) {
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      staleTime: 10 * 60 * 1000, // 10 minutes
+    },
+    mutations: {},
+  },
+});
+
+function Document({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
-        {title ? <title>{title}</title> : null}
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>{children}</TooltipProvider>
+          <ReactQueryDevtools />
+        </QueryClientProvider>
         <Scripts />
+        <ScrollRestoration />
       </body>
     </html>
   );

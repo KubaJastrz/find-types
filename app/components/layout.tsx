@@ -6,7 +6,7 @@ import { GitHub } from "~/components/icons";
 import { InlineLink } from "~/components/inline-link";
 import { Tooltip } from "~/components/tooltip";
 
-export function Layout({ children }: { children: ReactNode }) {
+export function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-grow flex-col items-center">
       <Header />
