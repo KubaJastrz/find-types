@@ -12,8 +12,11 @@ import {
   PackageSearch,
   SearchResults,
 } from "~/features/package-search";
-import { getPackageMetadata, getTypesPackageMetadata } from "~/server-services/package-data";
 import { isErrorResponse } from "~/server-services/package-data/errors";
+import {
+  getPackageMetadata,
+  getTypesPackageMetadata,
+} from "~/server-services/package-data/package-data.server";
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   return {

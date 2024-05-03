@@ -42,7 +42,7 @@ function Footer({ className }: { className: string }) {
           </a>
         </Tooltip>
       </div>
-      <p>
+      <div>
         Powered by{" "}
         <Tooltip label="node package registry">
           <InlineLink href="https://www.npmjs.com/">npm</InlineLink>
@@ -51,7 +51,7 @@ function Footer({ className }: { className: string }) {
         <Tooltip label="cdn">
           <InlineLink href="https://unpkg.com/">unpkg</InlineLink>
         </Tooltip>
-      </p>
+      </div>
     </footer>
   );
 }

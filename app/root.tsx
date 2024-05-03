@@ -1,7 +1,6 @@
 import { type LinksFunction, type MetaFunction } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -14,7 +13,7 @@ import { type ReactNode } from "react";
 import { Layout } from "~/features/app/layout";
 
 import { Providers } from "./features/app/providers";
-import styles from "./tailwind.css";
+import styles from "./tailwind.css?url";
 
 // https://remix.run/api/conventions#links
 export const links: LinksFunction = () => {
@@ -108,7 +107,6 @@ function Document({ children, title }: { children: ReactNode; title?: string }) 
         {children}
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );
