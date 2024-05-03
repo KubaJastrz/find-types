@@ -1,6 +1,6 @@
 import { getTypesPackageName } from "~/utils/package";
 
-import { FetchError, type ErrorResponseData } from "./errors";
+import { type ErrorResponseData, FetchError } from "./errors";
 import { getPackageData } from "./get-package-data";
 import { type PackageData } from "./types";
 

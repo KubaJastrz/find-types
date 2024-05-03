@@ -3,7 +3,7 @@ import { useId, useRef, useState } from "react";
 
 import { Combobox } from "~/components/combobox";
 
-import { useSuggestions, type SuggestionsResponseData } from "./suggestions";
+import { type SuggestionsResponseData, useSuggestions } from "./suggestions";
 
 interface PackageFormElement extends HTMLFormElement {
   elements: HTMLFormControlsCollection & {

@@ -1,7 +1,7 @@
 import {
-  isErrorResponse,
   type ErrorResponseData,
   type PackageData,
+  isErrorResponse,
 } from "~/server-services/package-data";
 
 import { PackageDetails } from "./package-details";

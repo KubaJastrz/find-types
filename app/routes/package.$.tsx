@@ -1,8 +1,8 @@
 import {
-  defer,
   type HeadersFunction,
   type LoaderFunctionArgs,
   type MetaFunction,
+  defer,
 } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
 

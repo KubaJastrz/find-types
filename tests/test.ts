@@ -1,5 +1,5 @@
 import { test as baseTest } from "@playwright/test";
-import { createWorkerFixture, type MockServiceWorker } from "playwright-msw";
+import { type MockServiceWorker, createWorkerFixture } from "playwright-msw";
 
 export const test = baseTest.extend<{
   worker: MockServiceWorker;

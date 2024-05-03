@@ -1,0 +1,47 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.7.2/schema.json",
+  "files": {
+    "ignore": [
+      "./api/_assets",
+      "./api/index.js.map",
+      "./api/index.js",
+      "./app/styles",
+      "./build/",
+      "./public/build",
+      "**/.cache",
+      "**/.env",
+      "**/.eslintrc.cjs",
+      "**/.output",
+      "**/.vercel",
+      "**/node_modules",
+      "**/pnpm-lock.yaml",
+      "**/prettier.config.js",
+      "**/remix.config.js",
+      "**/server.js",
+      "**/tailwind.config.js"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100,
+    "attributePosition": "auto"
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double"
+    }
+  }
+}

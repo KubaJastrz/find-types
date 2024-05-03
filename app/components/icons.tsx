@@ -1,4 +1,4 @@
-import { forwardRef, type SVGAttributes } from "react";
+import { type SVGAttributes, forwardRef } from "react";
 
 export type IconProps = SVGAttributes<SVGSVGElement>;
 
