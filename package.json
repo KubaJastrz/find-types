@@ -12,7 +12,7 @@
     "format": "prettier --write .",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
-    "start": "remix-serve",
+    "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc"
   },
   "lint-staged": {
