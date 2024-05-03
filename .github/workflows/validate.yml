@@ -12,8 +12,8 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/pnpm-install
 
-      - name: Lint
-        run: pnpm lint
+      - name: Check
+        run: pnpm check
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
