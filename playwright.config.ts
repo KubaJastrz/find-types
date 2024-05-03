@@ -1,4 +1,4 @@
-import { defineConfig, devices } from "@playwright/test";
+import { chromium, defineConfig, devices } from "@playwright/test";
 
 /**
  * Read environment variables from file.
@@ -34,7 +34,10 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"], channel: "chrome" },
+      use: {
+        ...devices["Desktop Chrome"],
+        launchOptions: { executablePath: chromium.executablePath() },
+      },
     },
   ],
 
