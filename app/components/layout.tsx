@@ -6,7 +6,7 @@ import { GitHub } from "~/components/icons";
 import { InlineLink } from "~/components/inline-link";
 import { Tooltip } from "~/components/tooltip";
 
-export function Layout({ children }: { children: ReactNode }) {
+export function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-grow flex-col items-center">
       <Header />
@@ -42,7 +42,7 @@ function Footer({ className }: { className: string }) {
           </a>
         </Tooltip>
       </div>
-      <p>
+      <div>
         Powered by{" "}
         <Tooltip label="node package registry">
           <InlineLink href="https://www.npmjs.com/">npm</InlineLink>
@@ -51,7 +51,7 @@ function Footer({ className }: { className: string }) {
         <Tooltip label="cdn">
           <InlineLink href="https://unpkg.com/">unpkg</InlineLink>
         </Tooltip>
-      </p>
+      </div>
     </footer>
   );
 }

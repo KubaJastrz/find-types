@@ -1,6 +1,6 @@
 import { type PackageJson } from "type-fest";
 import { FetchError, HttpError } from "./errors";
-import { normalizePackageJson, type NormalizedPackageJson } from "./normalize-package-json";
+import { type NormalizedPackageJson, normalizePackageJson } from "./normalize-package-json.server";
 import { type NpmResponseData, type PackageData } from "./types";
 
 export async function getPackageData(packageName: string): Promise<PackageData> {

@@ -1,4 +1,4 @@
-import { redirect, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
+import { type LoaderFunctionArgs, type MetaFunction, redirect } from "@remix-run/node";
 import { useNavigation } from "@remix-run/react";
 
 import { LoadingResults, PackageSearch } from "~/features/package-search";

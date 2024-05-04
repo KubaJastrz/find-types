@@ -1,4 +1,4 @@
-import { forwardRef, type AnchorHTMLAttributes, type ReactNode } from "react";
+import { type AnchorHTMLAttributes, type ReactNode, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {

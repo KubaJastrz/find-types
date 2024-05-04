@@ -1,5 +1,5 @@
 import DOMPurify from "dompurify";
-import { forwardRef, type HTMLAttributes } from "react";
+import { type HTMLAttributes, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props extends HTMLAttributes<HTMLLIElement> {

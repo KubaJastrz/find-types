@@ -5,65 +5,61 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev --manual",
+    "build": "remix vite:build",
+    "check": "biome check .",
+    "dev": "remix vite:dev",
     "e2e": "playwright test",
-    "format": "prettier --write .",
-    "lint": "eslint .",
+    "fix": "biome check --apply --no-errors-on-unmatched .",
     "lint-staged": "lint-staged",
-    "typecheck": "tsc",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start": "remix-serve ./build/server/index.js",
+    "typecheck": "tsc"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint --fix"
-    ],
-    "*.{js,ts,tsx,json,md,html,yml,yaml}": [
-      "prettier --write"
-    ]
+    "*.{js,ts,tsx,json,md,html,yml,yaml}": ["biome check --no-errors-on-unmatched --apply"]
   },
   "dependencies": {
-    "@mantine/hooks": "^7.3.0",
+    "@mantine/hooks": "^7.9.0",
     "@radix-ui/react-tooltip": "^1.0.7",
-    "@remix-run/node": "^2.3.1",
-    "@remix-run/react": "^2.3.1",
-    "@tanstack/react-query": "^5.12.2",
-    "@vercel/remix": "^2.2.0",
-    "dompurify": "^3.0.6",
+    "@remix-run/node": "^2.9.1",
+    "@remix-run/react": "^2.9.1",
+    "@tanstack/react-query": "^5.32.1",
+    "@vercel/remix": "^2.9.1",
+    "dompurify": "^3.1.2",
     "downshift": "7.2.1",
     "hosted-git-info": "^7.0.1",
-    "isbot": "^3.7.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router": "^6.20.1",
-    "remix-utils": "^7.3.0",
-    "tailwind-merge": "^2.1.0"
+    "isbot": "^5.1.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "^6.23.0",
+    "remix-utils": "^7.6.0",
+    "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
-    "@10clouds/eslint-config": "2.0.0-pre.20",
-    "@playwright/test": "^1.40.1",
-    "@remix-run/dev": "^2.3.1",
-    "@remix-run/serve": "^2.3.1",
-    "@tanstack/react-query-devtools": "^5.12.2",
+    "@biomejs/biome": "1.7.2",
+    "@playwright/test": "^1.43.1",
+    "@remix-run/dev": "^2.9.1",
+    "@remix-run/serve": "^2.9.1",
+    "@tanstack/react-query-devtools": "^5.32.1",
     "@types/dompurify": "^3.0.5",
     "@types/hosted-git-info": "^3.0.5",
-    "@types/react": "^18.2.42",
-    "@types/react-dom": "^18.2.17",
-    "autoprefixer": "^10.4.16",
-    "eslint": "^8.55.0",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
-    "eslint-plugin-unused-imports": "^3.0.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.2.0",
-    "msw": "1.3.2",
-    "playwright-msw": "2.2.1",
-    "postcss": "^8.4.32",
-    "prettier": "^3.1.0",
-    "prettier-plugin-organize-imports": "^3.2.4",
-    "prettier-plugin-tailwindcss": "^0.5.9",
-    "tailwindcss": "^3.3.6",
-    "type-fest": "^4.8.3",
-    "typescript": "~5.3.2"
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "msw": "^2.2.14",
+    "playwright-msw": "^3.0.1",
+    "postcss": "^8.4.38",
+    "remix-flat-routes": "^0.6.4",
+    "tailwindcss": "^3.4.3",
+    "type-fest": "^4.18.1",
+    "typescript": "~5.4.5",
+    "vite": "^5.2.11",
+    "vite-tsconfig-paths": "^4.3.2"
   },
-  "packageManager": "pnpm@8.11.0"
+  "engines": {
+    "node": "20.x"
+  },
+  "packageManager": "pnpm@8.15.8"
 }

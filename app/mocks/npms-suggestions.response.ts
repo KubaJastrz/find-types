@@ -1,4 +1,4 @@
-import { rest } from "msw";
+import { http, HttpResponse, delay } from "msw";
 
 import { type SuggestionsResponseData } from "~/features/package-search/suggestions";
 
@@ -29,14 +29,16 @@ export function npmsSuggestionsReact() {
       highlight: "<em>react</em>-redux",
     },
   ];
-  return rest.get("https://api.npms.io/v2/search/suggestions", async (req, res, ctx) => {
-    return res(ctx.delay(), ctx.json(data));
+  return http.get("https://api.npms.io/v2/search/suggestions", async () => {
+    await delay();
+    return HttpResponse.json(data);
   });
 }
 
 export function npmsSuggestionsEmpty() {
   const data: SuggestionsResponseData[] = [];
-  return rest.get("https://api.npms.io/v2/search/suggestions", async (req, res, ctx) => {
-    return res(ctx.delay(), ctx.json(data));
+  return http.get("https://api.npms.io/v2/search/suggestions", async () => {
+    await delay();
+    return HttpResponse.json(data);
   });
 }

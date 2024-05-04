@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from "tailwindcss";
+
+export default {
   content: ["./app/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
@@ -37,7 +38,7 @@ module.exports = {
         "flow-2": "flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.15s infinite both",
         "flow-3": "flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s infinite both",
       },
-      keyframes: (theme) => ({
+      keyframes: ({ theme }) => ({
         flow: {
           "0%, 80%, 100%": {
             transform: "scale(0.3)",
@@ -50,9 +51,9 @@ module.exports = {
         },
       }),
       zIndex: {
-        1: 1,
+        1: "1",
       },
     },
   },
   plugins: [],
-};
+} satisfies Config;

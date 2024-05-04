@@ -3,7 +3,7 @@ import { useId, useRef, useState } from "react";
 
 import { Combobox } from "~/components/combobox";
 
-import { useSuggestions, type SuggestionsResponseData } from "./suggestions";
+import { type SuggestionsResponseData, useSuggestions } from "./suggestions";
 
 interface PackageFormElement extends HTMLFormElement {
   elements: HTMLFormControlsCollection & {
@@ -37,7 +37,7 @@ export function PackageSearch({ initialQuery = "" }: Props) {
   };
 
   return (
-    <Form ref={formRef} action="/package" method="get">
+    <Form ref={formRef} action="/package/" method="get">
       <input ref={submitRef} type="submit" className="hidden" />
       <Combobox
         id={comboboxId}

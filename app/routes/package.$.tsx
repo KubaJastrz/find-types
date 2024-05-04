@@ -1,8 +1,8 @@
 import {
-  defer,
   type HeadersFunction,
   type LoaderFunctionArgs,
   type MetaFunction,
+  defer,
 } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
 
@@ -12,8 +12,11 @@ import {
   PackageSearch,
   SearchResults,
 } from "~/features/package-search";
-import { getPackageMetadata, getTypesPackageMetadata } from "~/server-services/package-data";
 import { isErrorResponse } from "~/server-services/package-data/errors";
+import {
+  getPackageMetadata,
+  getTypesPackageMetadata,
+} from "~/server-services/package-data/package-data.server";
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
   return {

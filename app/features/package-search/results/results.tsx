@@ -1,8 +1,8 @@
 import { Await } from "@remix-run/react";
 import { Suspense } from "react";
 
-import { isErrorResponse, type PackageDataLoaderData } from "~/server-services/package-data";
-
+import { isErrorResponse } from "~/server-services/package-data/errors";
+import { type PackageDataLoaderData } from "~/server-services/package-data/package-data.server";
 import { DeclarationFiles } from "./declaration-files";
 import { LoadingResults } from "./loading-results";
 import { PackageDetails } from "./package-details";
