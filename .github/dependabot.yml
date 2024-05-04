@@ -8,3 +8,11 @@ updates:
       actions:
         patterns:
           - "*"
+  - package-ecosystem: "github-actions"
+    directory: "/.github/actions/setup-node"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions:
+        patterns:
+          - "*"

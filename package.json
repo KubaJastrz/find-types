@@ -9,14 +9,14 @@
     "check": "biome check .",
     "dev": "remix vite:dev",
     "e2e": "playwright test",
-    "fix": "biome check --apply .",
+    "fix": "biome check --apply --no-errors-on-unmatched .",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc"
   },
   "lint-staged": {
-    "*.{js,ts,tsx,json,md,html,yml,yaml}": ["biome check --apply"]
+    "*.{js,ts,tsx,json,md,html,yml,yaml}": ["biome check --no-errors-on-unmatched --apply"]
   },
   "dependencies": {
     "@mantine/hooks": "^7.9.0",

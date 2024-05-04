@@ -9,12 +9,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Install dependencies
-        uses: ./.github/actions/pnpm-install
+      - name: Set up Node.js
+        uses: ./.github/actions/setup-node
 
       - name: Check
         run: pnpm check
 
+      # TODO: cache playwright
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
 

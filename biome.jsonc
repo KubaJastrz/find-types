@@ -23,12 +23,8 @@
   },
   "formatter": {
     "enabled": true,
-    "formatWithErrors": false,
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineEnding": "lf",
-    "lineWidth": 100,
-    "attributePosition": "auto"
+    "indentStyle": "space", // TODO: change to tab
+    "lineWidth": 100
   },
   "organizeImports": {
     "enabled": true
@@ -37,11 +33,6 @@
     "enabled": true,
     "rules": {
       "recommended": false
-    }
-  },
-  "javascript": {
-    "formatter": {
-      "jsxQuoteStyle": "double"
     }
   }
 }
