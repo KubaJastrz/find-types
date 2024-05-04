@@ -36,14 +36,14 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        // launchOptions: { executablePath: process.env.CI ? undefined : chromium.executablePath() },
+        launchOptions: { executablePath: chromium.executablePath() },
       },
     },
   ],
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "pnpm dev",
+    command: process.env.CI ? "pnpm build && pnpm start" : "pnpm dev",
     url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
   },
