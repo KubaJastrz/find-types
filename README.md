@@ -1,12 +1,5 @@
 # Find Types
 
-<a href="https://github.com/KubaJastrz/find-types/blob/main/LICENSE">
-  <img alt="MIT License" src="https://img.shields.io/github/license/KubaJastrz/find-types">
-</a>
-<a href="https://github.com/KubaJastrz/find-types/actions?query=workflow%3AValidate">
-  <img alt="Pipeline Validate Status" src="https://img.shields.io/github/workflow/status/KubaJastrz/find-types/Validate">
-<a>
-
 Complete search engine for TypeScript definitions. Available online at [types.kubajastrz.com](https://types.kubajastrz.com/).
 
 ## Features
