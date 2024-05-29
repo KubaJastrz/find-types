@@ -26,7 +26,7 @@ test("opens a suggestion box and navigates to selected package", async ({ page, 
 
   expect(await page.getByRole("option").count()).toBe(0);
 
-  await page.waitForURL("http://127.0.0.1:3000/package/react-dom");
+  await page.waitForURL("/package/react-dom");
 
   const search2 = page.getByRole("combobox", { name: /npm package/i });
   await expect(search2).toHaveValue("react-dom");
@@ -54,7 +54,7 @@ test("navigates to package page without suggestions", async ({ page, worker }) =
 
   expect(await page.getByRole("option").count()).toBe(0);
 
-  await page.waitForURL("http://127.0.0.1:3000/package/react");
+  await page.waitForURL("/package/react");
 
   const search2 = page.getByRole("combobox", { name: /npm package/i });
   await expect(search2).toHaveValue("react");
