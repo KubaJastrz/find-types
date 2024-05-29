@@ -11,7 +11,7 @@
     "e2e": "playwright test",
     "fix": "biome check --apply --no-errors-on-unmatched .",
     "lint-staged": "lint-staged",
-    "prepare": "husky install",
+    "prepare": "husky",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc"
   },
