@@ -25,7 +25,7 @@ jobs:
       - name: Run e2e tests
         run: pnpm e2e
 
-      - uses: actions/upload-artifact@v4.3.4
+      - uses: actions/upload-artifact@v4.3.5
         if: always()
         with:
           name: playwright-report
