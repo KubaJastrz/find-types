@@ -1,9 +1,9 @@
-import { Flow } from "~/components/loading";
+import { Flow } from "#app/components/loading";
 
 export function LoadingResults() {
-  return (
-    <div className="mt-6 text-center md:mt-12">
-      <Flow />
-    </div>
-  );
+	return (
+		<div className="mt-6 text-center md:mt-12">
+			<Flow />
+		</div>
+	);
 }

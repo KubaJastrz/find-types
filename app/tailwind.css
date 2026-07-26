@@ -1,85 +1,129 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+	--breakpoint-xs: 360px;
+	--breakpoint-sm: 425px;
+	--breakpoint-md: 768px;
+	--breakpoint-lg: 992px;
+	--breakpoint-xl: 1200px;
+	--breakpoint-xxl: 1440px;
+
+	--color-primary: hsl(204, 100%, 40%);
+	--color-success: hsl(147, 60%, 50%);
+	--color-warning: hsl(55, 90%, 45%);
+	--color-neutral: hsl(204, 15%, 65%);
+	--color-neutral2: hsl(211deg, 25%, 84%);
+
+	--color-gray-blue-100: hsl(204, 10%, 90%);
+	--color-gray-blue-200: hsl(204, 10%, 75%);
+	--color-gray-blue-300: hsl(204, 15%, 65%);
+	--color-gray-blue-400: hsl(204, 15%, 59%);
+	--color-gray-blue-500: hsl(204, 15%, 50%);
+	--color-gray-blue-600: hsl(204, 20%, 40%);
+	--color-gray-blue-700: hsl(204, 20%, 30%);
+	--color-gray-blue-750: hsl(204, 20%, 25%);
+	--color-gray-blue-800: hsl(204, 20%, 20%);
+	--color-gray-blue-900: hsl(204, 30%, 12%);
+	--color-gray-blue-950: hsl(204, 30%, 7%);
+
+	--animate-flow-1: flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.3s infinite both;
+	--animate-flow-2: flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.15s infinite both;
+	--animate-flow-3: flow 1.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s infinite both;
+
+	--z-index-1: 1;
+
+	@keyframes flow {
+		0%,
+		80%,
+		100% {
+			transform: scale(0.3);
+			background-color: var(--color-white);
+		}
+		40% {
+			transform: scale(1);
+			background-color: var(--color-gray-blue-300);
+		}
+	}
+}
 
 @layer base {
-  html {
-    @apply h-full;
-  }
+	html {
+		@apply h-full;
+	}
 
-  body {
-    @apply flex min-h-full flex-col antialiased;
+	body {
+		@apply flex min-h-full flex-col antialiased;
 
-    color: theme("colors.gray-blue.100");
-    background-color: theme("colors.gray-blue.900");
-  }
+		color: var(--color-gray-blue-100);
+		background-color: var(--color-gray-blue-900);
+	}
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    color: theme("colors.white");
-  }
+	h1,
+	h2,
+	h3,
+	h4 {
+		color: var(--color-white);
+	}
 
-  button:disabled {
-    cursor: "default";
-  }
+	button:disabled {
+		cursor: "default";
+	}
 
-  input[type="search"]::-webkit-search-decoration,
-  input[type="search"]::-webkit-search-cancel-button,
-  input[type="search"]::-webkit-search-results-button,
-  input[type="search"]::-webkit-search-results-decoration {
-    display: none;
-  }
+	input[type="search"]::-webkit-search-decoration,
+	input[type="search"]::-webkit-search-cancel-button,
+	input[type="search"]::-webkit-search-results-button,
+	input[type="search"]::-webkit-search-results-decoration {
+		display: none;
+	}
 
-  .search-suggestion em {
-    font-style: normal;
-    font-weight: bold;
-  }
+	.search-suggestion em {
+		font-style: normal;
+		font-weight: bold;
+	}
 }
 
 @layer components {
-  .default-container {
-    @apply mx-auto w-5/6 md:w-3/4 lg:w-7/12 xxl:w-1/3;
-  }
+	.default-container {
+		@apply mx-auto w-5/6 md:w-3/4 lg:w-7/12 xxl:w-1/3;
+	}
 
-  .page-title {
-    font-size: 1.67em;
-    margin-top: 1em;
-    margin-bottom: 0.67em;
-  }
+	.page-title {
+		font-size: 1.67em;
+		margin-top: 1em;
+		margin-bottom: 0.67em;
+	}
 
-  @screen md {
-    .page-title {
-      font-size: 2.33em;
-      margin-top: 1.33em;
-      margin-bottom: 1em;
-    }
-  }
+	@media (min-width: 768px) {
+		.page-title {
+			font-size: 2.33em;
+			margin-top: 1.33em;
+			margin-bottom: 1em;
+		}
+	}
 
-  .key {
-    background-color: #eee;
-    border-radius: 3px;
-    border: 1px solid #b4b4b4;
-    box-shadow:
-      0 1px 1px rgba(0, 0, 0, 0.2),
-      0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
-    color: #333;
-    display: inline-block;
-    font-size: 0.85em;
-    font-weight: 700;
-    line-height: 1;
-    padding: 2px 4px;
-    white-space: nowrap;
-  }
+	.key {
+		background-color: #eee;
+		border-radius: 3px;
+		border: 1px solid #b4b4b4;
+		box-shadow:
+			0 1px 1px rgba(0, 0, 0, 0.2),
+			0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+		color: #333;
+		display: inline-block;
+		font-size: 0.85em;
+		font-weight: 700;
+		line-height: 1;
+		padding: 2px 4px;
+		white-space: nowrap;
+	}
 }
 
 @layer utilities {
-  .grid-cols-status {
-    grid-template-columns: max-content 1fr;
-  }
+	.grid-cols-status {
+		grid-template-columns: max-content 1fr;
+	}
 
-  .text-shadow-2px {
-    text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
-  }
+	.text-shadow-2px {
+		text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+	}
 }

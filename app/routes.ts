@@ -1,0 +1,8 @@
+import { index, type RouteConfig, route } from "@react-router/dev/routes";
+
+export default [
+	index("routes/index.tsx"),
+
+	route("package", "routes/package.index.tsx"),
+	route("package/:slug", "routes/package.$.tsx"),
+] satisfies RouteConfig;
