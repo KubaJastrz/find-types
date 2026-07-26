@@ -2,9 +2,9 @@ import { npmsSuggestionsReact } from "#app/mocks/npms-suggestions.response";
 
 import { expect, test } from "./test";
 
-test("opens a suggestion box and navigates to selected package", async ({ page, worker }) => {
+test("opens a suggestion box and navigates to selected package", async ({ page, network }) => {
+	network.use(npmsSuggestionsReact());
 	await page.goto("/");
-	await worker.use(npmsSuggestionsReact());
 	const responsePromise = page.waitForResponse("https://api.npms.io/v2/search/suggestions?**");
 
 	const search = page.getByRole("combobox", { name: /npm package/i });
@@ -32,9 +32,9 @@ test("opens a suggestion box and navigates to selected package", async ({ page, 
 	await expect(search2).toHaveValue("react-dom");
 });
 
-test("navigates to package page without suggestions", async ({ page, worker }) => {
+test("navigates to package page without suggestions", async ({ page, network }) => {
+	network.use(npmsSuggestionsReact());
 	await page.goto("/");
-	await worker.use(npmsSuggestionsReact());
 	const responsePromise = page.waitForResponse("https://api.npms.io/v2/search/suggestions?**");
 
 	const search = page.getByRole("combobox", { name: /npm package/i });

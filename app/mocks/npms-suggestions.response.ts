@@ -30,7 +30,7 @@ export function npmsSuggestionsReact() {
 		},
 	];
 	return http.get("https://api.npms.io/v2/search/suggestions", async () => {
-		await delay(5000);
+		await delay(3000);
 		return HttpResponse.json(data);
 	});
 }
@@ -38,7 +38,7 @@ export function npmsSuggestionsReact() {
 export function npmsSuggestionsEmpty() {
 	const data: SuggestionsResponseData[] = [];
 	return http.get("https://api.npms.io/v2/search/suggestions", async () => {
-		await delay(5000);
+		await delay(3000);
 		return HttpResponse.json(data);
 	});
 }

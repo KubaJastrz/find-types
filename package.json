@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.5",
+    "@msw/playwright": "^0.6.7",
     "@playwright/test": "^1.62.0",
     "@react-router/dev": "^8.3.0",
     "@tailwindcss/vite": "^4.3.3",
@@ -46,7 +47,6 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.2.0",
     "msw": "^2.15.0",
-    "playwright-msw": "^3.0.1",
     "tailwindcss": "^4.3.3",
     "taze": "^19.16.0",
     "type-fest": "^5.8.0",

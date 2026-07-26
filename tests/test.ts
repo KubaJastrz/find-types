@@ -1,10 +1,25 @@
+import { defineNetworkFixture, type NetworkFixture } from "@msw/playwright";
 import { test as baseTest } from "@playwright/test";
-import { createWorkerFixture, type MockServiceWorker } from "playwright-msw";
+import type { AnyHandler } from "msw";
 
-export const test = baseTest.extend<{
-	worker: MockServiceWorker;
-}>({
-	worker: createWorkerFixture(),
+interface Fixtures {
+	handlers: AnyHandler[];
+	network: NetworkFixture;
+}
+
+export const test = baseTest.extend<Fixtures>({
+	handlers: [],
+
+	network: [
+		async ({ context, handlers }, use) => {
+			const network = defineNetworkFixture({ context, handlers });
+
+			await network.enable();
+			await use(network);
+			await network.disable();
+		},
+		{ auto: true },
+	],
 });
 
 export { expect } from "@playwright/test";

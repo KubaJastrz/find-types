@@ -26,7 +26,10 @@ export default defineConfig({
 		video: process.env.CI ? "retain-on-failure" : "off",
 	},
 
-	/* Configure projects for major browsers */
+	/**
+	 * Configure projects for major browsers
+	 * `pnpm exec playwright install chromium`
+	 */
 	projects: [
 		{
 			name: "chromium",
