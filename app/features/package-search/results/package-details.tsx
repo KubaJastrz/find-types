@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "cnfast";
 
 import { Code } from "#app/components/icons";
 import { InlineLink } from "#app/components/inline-link";

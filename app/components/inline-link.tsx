@@ -1,5 +1,5 @@
+import { twMerge } from "cnfast";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
 
 type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
 	children: ReactNode;

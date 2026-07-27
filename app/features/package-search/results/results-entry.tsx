@@ -1,5 +1,5 @@
+import { twMerge } from "cnfast";
 import type { ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
 
 export type ResultType = "success" | "warning" | "neutral";
 

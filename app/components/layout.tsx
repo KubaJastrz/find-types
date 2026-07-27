@@ -1,6 +1,6 @@
+import { twMerge } from "cnfast";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
-import { twMerge } from "tailwind-merge";
 
 import { GitHub } from "#app/components/icons";
 import { InlineLink } from "#app/components/inline-link";
