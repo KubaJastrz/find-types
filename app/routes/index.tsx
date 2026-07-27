@@ -1,4 +1,4 @@
-import { type MetaFunction, redirect, useNavigation } from "react-router";
+import { redirect, useNavigation } from "react-router";
 
 import { LoadingResults, PackageSearch } from "#app/features/package-search";
 
@@ -12,10 +12,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 		return redirect(`/package/${packageName}`);
 	}
 	return null;
-};
-
-export const meta: MetaFunction = () => {
-	return [{ title: "Find Types" }];
 };
 
 export default function Index() {

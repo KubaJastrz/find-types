@@ -5,4 +5,6 @@ export default [
 
 	route("package", "routes/package.index.tsx"),
 	route("package/:slug", "routes/package.$.tsx"),
+
+	route("*", "routes/$.tsx"),
 ] satisfies RouteConfig;

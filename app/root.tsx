@@ -15,6 +15,7 @@ import {
 } from "react-router";
 import { MainLayout } from "#app/components/layout";
 import styles from "./tailwind.css?url";
+import { title } from "./utils/general";
 
 export const links: LinksFunction = () => {
 	return [
@@ -32,6 +33,7 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => {
 	return [
+		title(),
 		{
 			name: "description",
 			content: "Search engine for TypeScript definitions",
