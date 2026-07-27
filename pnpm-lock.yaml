@@ -44,9 +44,6 @@ importers:
       react-router:
         specifier: ^8.3.0
         version: 8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      remix-utils:
-        specifier: ^10.0.0
-        version: 10.0.0(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
     devDependencies:
       '@biomejs/biome':
         specifier: 2.5.5
@@ -1795,42 +1792,6 @@ packages:
   readdirp@5.0.0:
     resolution: {integrity: sha512-9u/XQ1pvrQtYyMpZe7DXKv2p5CNvyVwzUB6uhLAnQwHMSgKMBR62lc7AHljaeteeHXn11XTAaLLUVZYVZyuRBQ==}
     engines: {node: '>= 20.19.0'}
-
-  remix-utils@10.0.0:
-    resolution: {integrity: sha512-v5voIsJQof6e/1m8te4qyH5YXATWxv+zEgbxd98CwtVxRLCXVc+P9rQ2uDRRYPLCvF9A2ZBOizK0ZTUfm4qJpw==}
-    engines: {node: '>=22.22.0'}
-    peerDependencies:
-      '@edgefirst-dev/batcher': ^1.0.0
-      '@edgefirst-dev/jwt': ^1.2.0
-      '@edgefirst-dev/server-timing': ^0.0.1
-      '@oslojs/crypto': ^1.0.1
-      '@oslojs/encoding': ^1.1.0
-      '@standard-schema/spec': ^1.0.0
-      intl-parse-accept-language: ^1.0.0
-      is-ip: ^5.0.1
-      react: '>=19.2.7'
-      react-router: ^8.0.0
-    peerDependenciesMeta:
-      '@edgefirst-dev/batcher':
-        optional: true
-      '@edgefirst-dev/jwt':
-        optional: true
-      '@edgefirst-dev/server-timing':
-        optional: true
-      '@oslojs/crypto':
-        optional: true
-      '@oslojs/encoding':
-        optional: true
-      '@standard-schema/spec':
-        optional: true
-      intl-parse-accept-language:
-        optional: true
-      is-ip:
-        optional: true
-      react:
-        optional: true
-      react-router:
-        optional: true
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -3589,11 +3550,6 @@ snapshots:
   react@19.2.8: {}
 
   readdirp@5.0.0: {}
-
-  remix-utils@10.0.0(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8):
-    optionalDependencies:
-      react: 19.2.8
-      react-router: 8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
 
   require-directory@2.1.1: {}
 

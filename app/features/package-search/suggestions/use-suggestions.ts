@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useDebouncedValue } from "#app/utils/hooks";
 import type { SuggestionsResponseData } from "./models";
 
 async function fetchSuggestions(packageKey: string) {
@@ -23,20 +23,4 @@ export function useSuggestions(packageName: string) {
 		enabled: !!packageKey,
 		staleTime: Infinity,
 	});
-}
-
-function useDebouncedValue(value: string, delay: number) {
-	const [debouncedValue, setDebouncedValue] = useState(value);
-
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setDebouncedValue(value);
-		}, delay);
-
-		return () => {
-			clearTimeout(timer);
-		};
-	}, [value, delay]);
-
-	return debouncedValue;
 }

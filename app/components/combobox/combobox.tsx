@@ -1,11 +1,10 @@
 import { twMerge } from "cnfast";
 import { useCombobox } from "downshift";
 import { useEffect, useRef } from "react";
-import { ClientOnly } from "remix-utils/client-only";
-
 import { Search } from "#app/components/icons";
 import { Flow } from "#app/components/loading";
 import { Tooltip } from "#app/components/tooltip";
+import { ClientOnly } from "#app/utils/client-only";
 
 import { Suggestion } from "./suggestion";
 
