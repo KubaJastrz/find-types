@@ -1,6 +1,5 @@
-import { useDebouncedValue } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
-
+import { useEffect, useState } from "react";
 import type { SuggestionsResponseData } from "./models";
 
 async function fetchSuggestions(packageKey: string) {
@@ -16,14 +15,28 @@ async function fetchSuggestions(packageKey: string) {
 }
 
 export function useSuggestions(packageName: string) {
-	const [packageKey] = useDebouncedValue(packageName, 200, {
-		leading: true,
-	});
+	const packageKey = useDebouncedValue(packageName, 300);
 
 	return useQuery({
 		queryKey: ["suggestions", packageKey],
 		queryFn: async () => fetchSuggestions(packageKey),
-		enabled: Boolean(packageKey),
+		enabled: !!packageKey,
 		staleTime: Infinity,
 	});
+}
+
+function useDebouncedValue(value: string, delay: number) {
+	const [debouncedValue, setDebouncedValue] = useState(value);
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedValue(value);
+		}, delay);
+
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [value, delay]);
+
+	return debouncedValue;
 }

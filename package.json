@@ -19,7 +19,6 @@
     "taze": "taze"
   },
   "dependencies": {
-    "@mantine/hooks": "^9.4.2",
     "@radix-ui/react-tooltip": "^1.2.16",
     "@react-router/node": "^8.3.0",
     "@react-router/serve": "^8.3.0",

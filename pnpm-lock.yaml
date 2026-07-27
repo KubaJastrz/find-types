@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@mantine/hooks':
-        specifier: ^9.4.2
-        version: 9.4.2(react@19.2.8)
       '@radix-ui/react-tooltip':
         specifier: ^1.2.16
         version: 1.2.16(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -386,11 +383,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
-
-  '@mantine/hooks@9.4.2':
-    resolution: {integrity: sha512-1SUuhnbvcV7EfwYN2FcdI9nX2TXhQQMefR7uWsigdor+2Twk0yEKMKct8t9gw6PQtkWF9GZxkg8aJRA3KmhaSA==}
-    peerDependencies:
-      react: ^19.2.0
 
   '@msw/playwright@0.6.7':
     resolution: {integrity: sha512-q7m2JtnN1Iz25xauqx5lkD+tbbDM3oXZBg67aXr4EbxK7IZKTh6c71bbTCnDi/F2SuHq/jPUfS8NJXPcdroARA==}
@@ -2430,10 +2422,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
-
-  '@mantine/hooks@9.4.2(react@19.2.8)':
-    dependencies:
-      react: 19.2.8
 
   '@msw/playwright@0.6.7(msw@2.15.0(@types/node@26.1.1)(typescript@7.0.2))':
     dependencies:
