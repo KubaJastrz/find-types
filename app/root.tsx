@@ -14,12 +14,11 @@ import {
 	useRouteError,
 } from "react-router";
 import { MainLayout } from "#app/components/layout";
-import styles from "./tailwind.css?url";
 import { title } from "./utils/general";
+import "./tailwind.css";
 
 export const links: LinksFunction = () => {
 	return [
-		{ rel: "stylesheet", href: styles },
 		{ rel: "manifest", href: "/manifest.webmanifest" },
 		{
 			rel: "apple-touch-icon",
