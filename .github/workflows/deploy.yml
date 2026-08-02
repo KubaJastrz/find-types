@@ -67,7 +67,7 @@ jobs:
           op-vps-host: op://app-types/vps/ipv4
           op-vps-user: op://app-types/vps/username
           op-vps-port: op://app-types/vps/port
-          op-ssh-private-key: op://app-types/ssh/private key?ssh-format=openssh
+          op-ssh-private-key: op://app-types/deploy-ssh-key/private key?ssh-format=openssh
 
       - name: Sync deploy artifacts
         uses: kubajastrz/actions/sync-artifacts@v2
