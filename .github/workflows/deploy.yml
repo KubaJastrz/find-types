@@ -64,7 +64,7 @@ jobs:
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
         with:
-          op-vps-host: op://app-types/vps/host
+          op-vps-host: op://app-types/vps/ipv4
           op-vps-user: op://app-types/vps/username
           op-vps-port: op://app-types/vps/port
           op-ssh-private-key: op://app-types/ssh/private key?ssh-format=openssh
