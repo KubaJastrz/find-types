@@ -1,0 +1,16 @@
+services:
+  web:
+    image: ghcr.io/kubajastrz/find-types:${GIT_SHA}
+    networks:
+      - proxy
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      update_config:
+        order: start-first
+        failure_action: rollback
+
+networks:
+  proxy:
+    external: true

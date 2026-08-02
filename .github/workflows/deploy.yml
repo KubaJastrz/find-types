@@ -1,0 +1,76 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    uses: ./.github/workflows/validate.yml
+
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Log in to GHCR
+        uses: kubajastrz/actions/login-ghcr@v2
+
+      - name: Image name (lowercase)
+        id: meta
+        run: |
+          set -euo pipefail
+          name="$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')"
+          echo "tags=ghcr.io/${name}" >>"${GITHUB_OUTPUT}"
+
+      - name: Docker metadata
+        id: docker_meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.meta.outputs.tags }}
+          tags: |
+            type=sha,prefix=,format=long
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
+          provenance: false
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup VPS SSH
+        uses: kubajastrz/actions/setup-vps-ssh@v2
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+        with:
+          op-vps-host: op://app-types/vps/host
+          op-vps-user: op://app-types/vps/username
+          op-vps-port: op://app-types/vps/port
+          op-ssh-private-key: op://app-types/ssh/private key?ssh-format=openssh
+
+      - name: Sync deploy artifacts
+        uses: kubajastrz/actions/sync-artifacts@v2
+
+      - name: Remote deploy stack
+        uses: kubajastrz/actions/remote-deploy-stack@v2

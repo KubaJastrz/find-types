@@ -1,0 +1,13 @@
+node_modules
+build
+.git
+.github
+tests
+playwright-report
+test-results
+playwright/.cache
+coverage
+.env*
+*.md
+.husky
+.vscode
