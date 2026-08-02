@@ -1,4 +1,4 @@
 types.kubajastrz.com {
 	encode
-	reverse_proxy find-types_web:3000
+	reverse_proxy types_web:3000
 }
